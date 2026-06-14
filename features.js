@@ -295,7 +295,6 @@
     captions.forEach(function (k, i) {
       html += '<div class="atelier-cell ' + cells[i] + '">' +
         '<image-slot id="atelier-' + i + '" fit="cover" placeholder="' + t(k) + '"></image-slot>' +
-        '<span class="caption" data-feat-i18n="' + k + '"></span>' +
       '</div>';
     });
     html += '</div></div>';
