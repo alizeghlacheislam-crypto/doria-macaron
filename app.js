@@ -514,6 +514,11 @@
       wf.target = '_blank';
       wf.rel = 'noopener';
     }
+    var badge = $('#waBadge');
+    if (badge) {
+      var labels = { ar: 'اطلب الآن', fr: 'Commander', en: 'Order' };
+      badge.textContent = labels[LANG] || labels.ar;
+    }
     $$('.wa-num').forEach(function (n) {
       var d = WA_NUMBER;
       n.textContent = '+' + d.slice(0, 3) + ' ' + d.slice(3).replace(/(\d{3})(?=\d)/g, '$1 ').trim();

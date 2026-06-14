@@ -1,5 +1,5 @@
 /* Dori Yums — minimal service worker (offline-first caching) */
-var CACHE = 'doriyums-v7';
+var CACHE = 'doriyums-v8';
 var ASSETS = [
   'Dori Yums.html',
   'app.js',
@@ -11,8 +11,13 @@ var ASSETS = [
   'promo.css',
   'image-slot.js',
   'logo.png',
-  'bg-dark.png',
-  'manifest.webmanifest'
+  'manifest.webmanifest',
+  'images/m-rose.png',
+  'images/m-pistachio.png',
+  'images/m-chocolate.png',
+  'images/m-vanilla.png',
+  'images/m-lemon.png',
+  'images/m-orange.png'
 ];
 self.addEventListener('install', function (e) {
   e.waitUntil(

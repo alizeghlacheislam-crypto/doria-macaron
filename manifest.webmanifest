@@ -2,7 +2,8 @@
   "name": "Dori Yums — Maison de Macarons",
   "short_name": "Dori Yums",
   "description": "Maison de Macarons artisanale — Alger. Commandez sur WhatsApp.",
-  "start_url": "index.html",
+  "id": "/",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#0a0805",
   "theme_color": "#D4AF37",
@@ -11,6 +12,6 @@
   "dir": "rtl",
   "icons": [
     { "src": "logo.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    { "src": "logo.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }

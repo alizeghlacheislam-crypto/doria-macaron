@@ -1,0 +1,3 @@
+# Cloudflare Pages — Dori Yums redirect rules
+# Serve the main HTML file at the root URL
+/   /Dori%20Yums.html  200

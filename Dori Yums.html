@@ -8,6 +8,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@400;500;600&family=Tajawal:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="preload" as="image" href="logo.png" fetchpriority="high" />
+<link rel="preload" as="image" href="images/m-rose.png" fetchpriority="high" />
+<!-- Open Graph / Social Sharing -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Dori Yums — معرض الماكارون الفاخر · الجزائر" />
+<meta property="og:description" content="ماكارون فرنسي أصيل يُصنع يدويًا، قطعةً قطعة، في قلب الجزائر. اطلب عبر واتساب." />
+<meta property="og:image" content="images/m-pistachio.png" />
+<meta property="og:locale" content="ar_DZ" />
+<meta property="og:locale:alternate" content="fr_FR" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Dori Yums — Maison de Macarons · Alger" />
+<meta name="twitter:description" content="Macarons français artisanaux, faits à la main pièce par pièce au cœur d'Alger." />
+<meta name="twitter:image" content="images/m-pistachio.png" />
 <style>
 /* ─────────────────────────────────────────────────────────
    Dori Yums — Maison de Macarons · design tokens
@@ -956,10 +969,21 @@ html[lang="ar"] .story-quote{direction:rtl;}
   animation:waGlow 2.8s ease-in-out infinite;border:0;
   text-decoration:none;
   transition:transform .25s var(--ease);
+  position:relative;
 }
 .wa svg{width:32px;height:32px;color:#0A0A0A;}
 @keyframes waGlow{0%,100%{box-shadow:0 8px 24px rgba(0,0,0,.4),0 0 0 0 rgba(212,175,55,.5);}50%{box-shadow:0 8px 30px rgba(0,0,0,.45),0 0 0 14px rgba(212,175,55,0);}}
 .wa:hover{transform:scale(1.08);}
+.wa-badge{
+  position:absolute;top:-6px;inset-inline-end:-4px;
+  background:#25D366;color:#fff;
+  font-family:var(--ar-body);font-size:9px;font-weight:700;
+  padding:2px 7px;border-radius:99px;
+  white-space:nowrap;letter-spacing:.02em;
+  box-shadow:0 2px 6px rgba(0,0,0,.3);
+  pointer-events:none;
+}
+html[data-theme="maison"] .wa-badge{background:#25D366;}
 
 .ig{
   width:60px;height:60px;border-radius:50%;
@@ -1327,13 +1351,9 @@ html[lang="fr"] .del-opt-l, html[lang="en"] .del-opt-l{ font-family:var(--lat); 
   background:rgba(255,255,255,.06);
   border:1px solid rgba(212,175,55,.35);
   color:var(--cream);
-  padding:11px 13px;font-family:var(--lat);font-size:14px;border-radius:6px;
-  outline:none;transition:border-color .2s var(--ease),background .2s var(--ease),box-shadow .2s var(--ease);
-}
-  border-radius:7px;padding:10px 12px;
-  color:var(--cream);font-family:var(--ar-body);font-size:13.5px;
+  padding:11px 13px;font-family:var(--ar-body);font-size:14px;border-radius:6px;
   outline:none;width:100%;box-sizing:border-box;
-  transition:border-color .25s var(--ease), background .25s var(--ease);
+  transition:border-color .2s var(--ease),background .2s var(--ease),box-shadow .2s var(--ease);
 }
 .del-phone.lat{ font-family:var(--lat); }
 .del-note{resize:vertical;min-height:46px;font-family:var(--ar-body);}
@@ -1427,7 +1447,7 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
 }
 @media (max-width:540px){
   :root{--frame-w:200px;--frame-h:267px;}
-  .grid{grid-template-columns:1fr;max-width:340px;margin-inline:auto;}
+  .grid{grid-template-columns:repeat(2,1fr);gap:14px;}
   .footer-grid{grid-template-columns:1fr;}
   .footer-grid .fcol-contact{grid-column:auto;}
   .trust-grid{grid-template-columns:1fr;}
@@ -1438,6 +1458,9 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
   .wa svg{width:28px;height:28px;}
   .ig svg{width:26px;height:26px;}
   .wa:hover,.ig:hover{transform:scale(1.06);}
+}
+@media (max-width:380px){
+  .grid{grid-template-columns:1fr;max-width:320px;margin-inline:auto;}
 }
 </style>
 <link rel="stylesheet" href="features.css" />
@@ -1577,7 +1600,7 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
         <div class="story-img-wrap gframe reveal">
           <div class="mat"><div class="art">
             <div class="story-video-wrap" id="storyVideoWrap">
-              <video id="storyVideo" src="dori-promo.mp4" preload="auto" playsinline muted loop></video>
+              <video id="storyVideo" src="dori-promo.mp4" preload="none" poster="IMG_4751.JPG" playsinline muted loop></video>
               <button class="video-play" id="storyVideoPlay" type="button" aria-label="Play">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7L8 5z"/></svg>
               </button>
@@ -1650,6 +1673,7 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
 <div class="social-dock">
   <a class="wa" id="waFloat" href="https://web.whatsapp.com/send?phone=213551401704" target="_blank" rel="noopener" aria-label="WhatsApp">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.13h-.01a8.2 8.2 0 0 1-4.18-1.14l-.3-.18-3.11.82.83-3.04-.2-.31a8.16 8.16 0 0 1-1.25-4.36c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.23-8.23 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42-.14 0-.31-.02-.47-.02-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
+    <span class="wa-badge" id="waBadge">اطلب الآن</span>
   </a>
   <a class="ig" id="igFloat" href="https://www.instagram.com/dori_yums/" target="_blank" rel="noopener" aria-label="Instagram">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".9" fill="currentColor" stroke="none"/></svg>
