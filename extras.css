@@ -1,0 +1,349 @@
+/* ════════════════════════════════════════════════════════════
+   DORI YUMS — Extras
+   Splash · Scroll Progress · Cart · Music toggle
+   ════════════════════════════════════════════════════════════ */
+
+/* ─── shared tokens (mirror site palette) ─── */
+:root{
+  --x-bg:#0a0805;
+  --x-bg2:#15110a;
+  --x-gold:#d4af37;
+  --x-gold-l:#e8c547;
+  --x-gold-d:#b8941f;
+  --x-cream:#faf3e0;
+  --x-muted:rgba(250,243,224,.55);
+  --x-line:rgba(212,175,55,.25);
+  --x-ease:cubic-bezier(.4,0,.2,1);
+}
+
+/* ════════════════════════════════════════════════════════════
+   1) WELCOME SPLASH
+   ════════════════════════════════════════════════════════════ */
+.dy-splash{
+  position:fixed;inset:0;z-index:99999;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(20,15,8,.95),#000 80%),
+    #000;
+  display:flex;align-items:center;justify-content:center;
+  pointer-events:auto;
+  transition:opacity .9s ease, visibility .9s;
+}
+.dy-splash.is-gone{opacity:0;visibility:hidden;pointer-events:none;}
+.dy-splash canvas{position:absolute;inset:0;width:100%;height:100%;}
+.dy-splash-logo{
+  position:relative;z-index:2;
+  width:min(180px,32vw);height:min(180px,32vw);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transform:scale(.7);
+  transition:opacity 1s ease, transform 1.4s cubic-bezier(.3,1.4,.4,1);
+  filter:drop-shadow(0 0 40px rgba(212,175,55,.4));
+}
+.dy-splash.show-logo .dy-splash-logo{opacity:1;transform:scale(1);}
+.dy-splash-logo img{width:100%;height:100%;object-fit:contain;}
+.dy-splash-tag{
+  position:absolute;z-index:2;bottom:14%;left:50%;transform:translateX(-50%);
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  color:rgba(232,197,71,.55);font-size:13px;letter-spacing:.45em;
+  text-transform:uppercase;
+  opacity:0;transition:opacity .8s ease .7s;
+  white-space:nowrap;
+}
+.dy-splash.show-logo .dy-splash-tag{opacity:1;}
+
+/* ════════════════════════════════════════════════════════════
+   2) SCROLL PROGRESS RIBBON
+   ════════════════════════════════════════════════════════════ */
+.dy-scroll-rail{
+  position:fixed;top:0;left:0;right:0;height:2px;z-index:850;
+  background:rgba(212,175,55,.07);
+  pointer-events:none;
+}
+.dy-scroll-fill{
+  position:absolute;left:0;top:0;bottom:0;width:0%;
+  background:linear-gradient(90deg,
+    transparent 0%,
+    rgba(232,197,71,.7) 20%,
+    var(--x-gold-l) 50%,
+    rgba(232,197,71,.7) 80%,
+    transparent 100%);
+  background-size:200% 100%;
+  box-shadow:0 0 14px rgba(212,175,55,.6),0 0 4px rgba(232,197,71,.9);
+  transition:width .15s linear;
+  animation:dyScrollShimmer 3s linear infinite;
+}
+@keyframes dyScrollShimmer{
+  0%{background-position:200% 0;}
+  100%{background-position:-200% 0;}
+}
+html[dir="rtl"] .dy-scroll-fill{ left:auto;right:0;}
+
+/* ════════════════════════════════════════════════════════════
+   3) CART
+   ════════════════════════════════════════════════════════════ */
+
+/* — nav cart button — */
+.dy-cart-nav{
+  position:relative;display:flex;align-items:center;gap:6px;
+  background:transparent;border:1px solid var(--x-line);
+  color:var(--x-gold);padding:8px 14px;border-radius:2px;cursor:pointer;
+  font-family:var(--lat,'Cormorant Garamond');font-size:11.5px;letter-spacing:.32em;
+  text-transform:uppercase;text-decoration:none;
+  transition:.25s var(--x-ease);
+  margin-inline-start:8px;
+}
+.dy-cart-nav:hover{ background:rgba(212,175,55,.08);border-color:var(--x-gold);}
+.dy-cart-nav svg{width:16px;height:16px;}
+.dy-cart-nav .dy-cart-badge{
+  position:absolute;top:-6px;inset-inline-end:-6px;
+  min-width:18px;height:18px;padding:0 5px;border-radius:9px;
+  background:var(--x-gold-l);color:#1a1408;
+  font-family:'EB Garamond',serif;font-weight:700;font-size:11px;line-height:18px;text-align:center;
+  letter-spacing:0;
+  box-shadow:0 0 12px rgba(212,175,55,.6);
+  transform:scale(0);transition:.3s cubic-bezier(.4,1.6,.5,1);
+}
+.dy-cart-nav .dy-cart-badge.is-on{ transform:scale(1);}
+
+/* — add-to-cart button (inside detail) — */
+/* CTA row: order + add-to-cart side by side, with breathing room below */
+.dy-cta-row{
+  display:flex;gap:10px;flex-wrap:wrap;
+  margin-bottom:18px;
+  padding-bottom:6px;
+}
+
+.dy-add-cart{
+  background:transparent;border:1.5px solid var(--x-gold);color:var(--x-gold);
+  font-family:var(--ar-body,'Amiri'),serif;font-weight:600;font-size:15px;
+  padding:14px 18px;border-radius:3px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:10px;justify-content:center;
+  letter-spacing:.02em;
+  white-space:nowrap;
+  text-overflow:ellipsis;overflow:hidden;
+  min-height:54px;
+  box-sizing:border-box;
+  transition:.25s var(--x-ease);
+}
+.dy-add-cart:hover{ background:rgba(212,175,55,.1);border-color:var(--x-gold-l);color:var(--x-gold-l);transform:translateY(-2px);}
+.dy-add-cart svg{ width:18px;height:18px;flex-shrink:0;}
+html[dir="ltr"] .dy-add-cart{ font-family:var(--lat,'Cormorant Garamond'),serif;font-weight:600;font-size:14.5px;letter-spacing:.04em;}
+
+html[data-theme="maison"] .dy-add-cart{ border-color:#9C5666; color:#9C5666; background:rgba(255,250,236,.5);}
+html[data-theme="maison"] .dy-add-cart:hover{ border-color:#E0959E; color:#9C5666; background:rgba(224,149,158,.18);}
+.dy-add-cart.shake{ animation:dyShake .4s;}
+@keyframes dyShake{
+  0%,100%{transform:translateX(0);}
+  25%{transform:translateX(-6px);}
+  75%{transform:translateX(6px);}
+}
+
+/* — cart drawer — */
+.dy-cart-veil{
+  position:fixed;inset:0;z-index:9500;
+  background:rgba(5,3,1,.7);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  opacity:0;pointer-events:none;
+  transition:opacity .35s var(--x-ease);
+}
+.dy-cart-veil.is-open{ opacity:1;pointer-events:auto;}
+.dy-cart{
+  position:fixed;top:0;bottom:0;inset-inline-end:0;z-index:9600;
+  width:min(440px,100vw);
+  background:linear-gradient(165deg,var(--x-bg2),var(--x-bg) 70%);
+  border-inline-start:1px solid var(--x-line);
+  box-shadow:-30px 0 80px rgba(0,0,0,.6);
+  display:flex;flex-direction:column;
+  transform:translateX(105%);
+  transition:transform .5s cubic-bezier(.5,1.3,.4,1);
+}
+html[dir="rtl"] .dy-cart{
+  transform:translateX(-105%);
+  box-shadow:30px 0 80px rgba(0,0,0,.6);
+}
+.dy-cart.is-open{transform:translateX(0)!important;}
+
+.dy-cart-head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:24px 28px;border-bottom:1px solid var(--x-line);
+}
+.dy-cart-head h3{
+  font-family:var(--ar-head,'Amiri'),serif;font-size:26px;color:var(--x-cream);margin:0;
+  display:flex;align-items:center;gap:10px;
+}
+.dy-cart-head .lat{font-family:var(--lat,'Cormorant Garamond');font-style:italic;font-size:13px;color:var(--x-muted);letter-spacing:.2em;}
+.dy-cart-close{
+  background:transparent;border:1px solid var(--x-line);color:var(--x-gold);
+  width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:18px;line-height:1;
+  display:flex;align-items:center;justify-content:center;transition:.2s var(--x-ease);
+}
+.dy-cart-close:hover{background:rgba(212,175,55,.1);border-color:var(--x-gold);}
+
+.dy-cart-body{
+  flex:1;overflow-y:auto;padding:20px 24px;
+}
+.dy-cart-body::-webkit-scrollbar{width:6px;}
+.dy-cart-body::-webkit-scrollbar-track{background:transparent;}
+.dy-cart-body::-webkit-scrollbar-thumb{background:var(--x-line);border-radius:3px;}
+
+.dy-cart-empty{
+  text-align:center;padding:80px 20px;
+}
+.dy-cart-empty svg{ width:64px;height:64px;color:var(--x-gold);opacity:.35;margin-bottom:18px;}
+.dy-cart-empty h4{font-family:var(--ar-head,'Amiri'),serif;font-size:22px;color:var(--x-cream);margin:0 0 8px;}
+.dy-cart-empty p{font-family:var(--ar-body,'Amiri'),serif;font-size:14px;color:var(--x-muted);}
+
+.dy-cart-item{
+  display:grid;grid-template-columns:auto 1fr auto;gap:14px;
+  padding:18px 0;border-bottom:1px dashed rgba(212,175,55,.18);
+  animation:dyCartIn .4s var(--x-ease) both;
+}
+@keyframes dyCartIn{ from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:translateY(0);}}
+.dy-cart-item:last-child{border-bottom:none;}
+.dy-cart-thumb{
+  width:60px;height:60px;border-radius:6px;
+  position:relative;overflow:hidden;
+  border:2px solid var(--x-gold);
+  background:#0c0a06;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(0,0,0,.5);
+}
+.dy-cart-thumb .puck{
+  width:38px;height:38px;border-radius:50%;
+  box-shadow:0 3px 8px rgba(0,0,0,.5),inset 0 -3px 6px rgba(0,0,0,.25),inset 0 3px 5px rgba(255,255,255,.22);
+}
+.dy-cart-thumb .badge-n{
+  position:absolute;bottom:-1px;right:-1px;
+  background:var(--x-gold-l);color:#1a1408;
+  font-family:'EB Garamond',serif;font-weight:700;font-size:10px;
+  width:18px;height:18px;border-radius:9px 0 5px 0;
+  display:flex;align-items:center;justify-content:center;
+}
+.dy-cart-info{display:flex;flex-direction:column;gap:3px;min-width:0;}
+.dy-cart-info .nm{
+  font-family:var(--ar-head,'Amiri'),serif;font-size:16px;color:var(--x-cream);
+  text-overflow:ellipsis;white-space:nowrap;overflow:hidden;
+}
+.dy-cart-info .fl{font-family:var(--lat,'Cormorant Garamond');font-style:italic;font-size:11.5px;color:var(--x-muted);}
+.dy-cart-info .meta{
+  display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;
+}
+.dy-cart-info .pill{
+  font-family:var(--lat,'Cormorant Garamond');font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;
+  padding:3px 8px;border:1px solid var(--x-line);border-radius:1px;color:var(--x-gold-l);
+}
+.dy-cart-info .mix{
+  font-family:var(--ar-body,'Amiri'),serif;font-size:11.5px;color:var(--x-muted);
+  margin-top:4px;line-height:1.5;
+}
+html[dir="ltr"] .dy-cart-info .mix{font-family:var(--lat,'Cormorant Garamond');font-style:italic;}
+.dy-cart-side{
+  display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;gap:8px;
+}
+.dy-cart-side .pr{
+  font-family:'EB Garamond',serif;font-weight:600;font-size:16px;color:var(--x-gold);
+  white-space:nowrap;
+}
+.dy-cart-side .pr .lat{font-style:normal;}
+.dy-cart-rm{
+  background:transparent;border:none;color:var(--x-muted);cursor:pointer;
+  width:22px;height:22px;border-radius:50%;font-size:14px;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  transition:.2s var(--x-ease);padding:0;
+}
+.dy-cart-rm:hover{color:#e57373;background:rgba(229,115,115,.1);}
+
+.dy-cart-foot{
+  border-top:1px solid var(--x-line);
+  background:linear-gradient(180deg,transparent,rgba(212,175,55,.04));
+  padding:18px 28px 24px;
+}
+.dy-cart-totals{ margin-bottom:14px;}
+.dy-tline{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:5px 0;font-family:var(--ar-body,'Amiri'),serif;color:var(--x-muted);font-size:13.5px;
+}
+.dy-tline .v{font-family:'EB Garamond',serif;color:var(--x-cream);font-weight:500;}
+.dy-tline.grand{
+  border-top:1px solid var(--x-line);padding-top:10px;margin-top:6px;font-size:16px;color:var(--x-cream);
+}
+.dy-tline.grand .v{color:var(--x-gold);font-weight:700;font-size:22px;}
+
+.dy-cart-send{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:10px;
+  background:linear-gradient(180deg,var(--x-gold-l),var(--x-gold-d));
+  color:#1a1408;font-family:var(--ar-head,'Amiri'),serif;font-size:17px;
+  border:none;border-radius:2px;padding:16px;cursor:pointer;
+  text-decoration:none;
+  box-shadow:0 12px 30px rgba(0,0,0,.5),0 0 24px rgba(212,175,55,.2),inset 0 1px 0 rgba(255,255,255,.4);
+  transition:.3s var(--x-ease);
+}
+.dy-cart-send:hover{ transform:translateY(-2px); box-shadow:0 18px 40px rgba(0,0,0,.6),0 0 36px rgba(212,175,55,.4),inset 0 1px 0 rgba(255,255,255,.4);}
+.dy-cart-send svg{width:20px;height:20px;}
+
+/* — toast — */
+.dy-toast{
+  position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(120%);
+  z-index:9700;
+  background:linear-gradient(180deg,#1a1408,#0e0a04);
+  border:1px solid var(--x-gold);
+  color:var(--x-cream);
+  font-family:var(--ar-body,'Amiri'),serif;font-size:14.5px;
+  padding:14px 22px;border-radius:2px;
+  display:flex;align-items:center;gap:12px;
+  box-shadow:0 14px 40px rgba(0,0,0,.6),0 0 30px rgba(212,175,55,.2);
+  transition:transform .5s cubic-bezier(.4,1.4,.5,1),opacity .4s;
+  opacity:0;pointer-events:none;
+  max-width:90vw;
+}
+.dy-toast.is-on{
+  transform:translateX(-50%) translateY(0);opacity:1;pointer-events:auto;
+}
+.dy-toast svg{width:22px;height:22px;color:var(--x-gold-l);flex-shrink:0;}
+.dy-toast button{
+  background:transparent;border:1px solid var(--x-line);color:var(--x-gold);
+  font-family:var(--lat,'Cormorant Garamond');font-size:11px;letter-spacing:.25em;text-transform:uppercase;
+  padding:6px 14px;border-radius:2px;cursor:pointer;margin-inline-start:6px;
+  transition:.2s var(--x-ease);
+}
+.dy-toast button:hover{background:rgba(212,175,55,.1);border-color:var(--x-gold);}
+
+/* ════════════════════════════════════════════════════════════
+   4) MUSIC TOGGLE
+   ════════════════════════════════════════════════════════════ */
+.dy-music{
+  position:fixed;bottom:26px;right:26px;z-index:800;
+  width:48px;height:48px;border-radius:50%;
+  background:rgba(20,16,8,.85);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  border:1px solid var(--x-gold);
+  color:var(--x-gold);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  box-shadow:0 8px 22px rgba(0,0,0,.5),0 0 16px rgba(212,175,55,.18);
+  transition:.3s var(--x-ease);
+  padding:0;
+}
+.dy-music:hover{ background:var(--x-gold);color:#1a1408;transform:scale(1.08); box-shadow:0 12px 28px rgba(0,0,0,.6),0 0 28px rgba(212,175,55,.5);}
+.dy-music svg{width:20px;height:20px;}
+.dy-music .ic-on,.dy-music .ic-off{position:absolute;transition:opacity .25s;}
+.dy-music .ic-on{opacity:0;}
+.dy-music.is-playing .ic-on{opacity:1;}
+.dy-music.is-playing .ic-off{opacity:0;}
+
+/* gentle pulse when playing */
+.dy-music.is-playing{
+  animation:dyMusicPulse 2.4s ease-in-out infinite;
+}
+@keyframes dyMusicPulse{
+  0%,100%{ box-shadow:0 8px 22px rgba(0,0,0,.5),0 0 16px rgba(212,175,55,.2);}
+  50%    { box-shadow:0 8px 22px rgba(0,0,0,.5),0 0 30px rgba(212,175,55,.55);}
+}
+
+@media (max-width:640px){
+  .dy-music{ bottom:96px; right:22px; width:42px;height:42px;}
+  .dy-cart-nav{padding:6px 10px;font-size:10.5px;}
+  .dy-cart{width:100vw;}
+  .dy-cart-head{padding:18px 20px;}
+  .dy-cart-body{padding:16px 18px;}
+  .dy-cart-foot{padding:14px 20px 18px;}
+}
