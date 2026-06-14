@@ -38,10 +38,10 @@
 .atelier-band{ padding-block:120px;position:relative; }
 .atelier-grid{
   display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  grid-template-rows:repeat(2, minmax(180px, 20vw));
+  grid-template-columns:repeat(2, 1fr);
+  grid-template-rows:repeat(2, minmax(220px, 24vw));
   gap:14px;
-  max-width:1000px;margin:0 auto;
+  max-width:860px;margin:0 auto;
 }
 .atelier-cell{ min-height:0; min-width:0; }
 .atelier-cell{
@@ -78,9 +78,9 @@
   content:"";position:absolute;inset:0;pointer-events:none;z-index:2;
   background:linear-gradient(180deg,transparent 60%,rgba(0,0,0,.4));
 }
-@media (max-width:860px){
-  .atelier-grid{ grid-template-columns:1fr 1fr;grid-template-rows:auto; }
-  .atelier-cell.tall{ grid-row:span 1; grid-column:span 2; min-height:240px;}
+@media (max-width:540px){
+  .atelier-grid{ grid-template-columns:1fr;grid-template-rows:auto; }
+  .atelier-cell{ min-height:200px; }
 }
 
 /* ════════════════════════════════════════════════════════════

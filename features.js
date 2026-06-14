@@ -280,9 +280,9 @@
 
   function buildAtelier() {
     var host = $('#atelier-section'); if (!host) return;
-    var captions = ['atelier.c1','atelier.c2','atelier.c3','atelier.c4','atelier.c5','atelier.c6'];
-    /* uniform 3×2 grid */
-    var cells = ['','','','','',''];
+    var captions = ['atelier.c1','atelier.c2','atelier.c3','atelier.c4'];
+    /* uniform 2×2 grid */
+    var cells = ['','','',''];
     var html = '' +
       '<div class="wrap">' +
         '<div class="section-head center reveal">' +
