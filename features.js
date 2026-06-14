@@ -281,6 +281,12 @@
   function buildAtelier() {
     var host = $('#atelier-section'); if (!host) return;
     var captions = ['atelier.c1','atelier.c2','atelier.c3','atelier.c4'];
+    var srcs = [
+      'IMG_4858.JPG',
+      'macarons_hero_1780868400049.png',
+      'IMG_4237.JPG',
+      'IMG_4751.JPG'
+    ];
     /* uniform 2×2 grid */
     var cells = ['','','',''];
     var html = '' +
@@ -294,7 +300,7 @@
         '<div class="atelier-grid reveal">';
     captions.forEach(function (k, i) {
       html += '<div class="atelier-cell ' + cells[i] + '">' +
-        '<image-slot id="atelier-' + i + '" fit="cover" placeholder="' + t(k) + '"></image-slot>' +
+        '<image-slot id="atelier-' + i + '" fit="cover" src="' + srcs[i] + '" placeholder="' + t(k) + '"></image-slot>' +
       '</div>';
     });
     html += '</div></div>';

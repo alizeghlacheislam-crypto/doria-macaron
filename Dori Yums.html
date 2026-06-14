@@ -600,7 +600,7 @@ html[data-theme="maison"] .drag-hint svg{ color:var(--gold-deep); }
     inset 0 1px 0 rgba(232,197,71,.18);
   overflow:hidden;
   transform-origin:top center;
-  transition:opacity .5s var(--ease), transform .55s cubic-bezier(.22,.61,.36,1), filter .4s var(--ease);
+  transition:opacity .5s var(--ease), transform .55s cubic-bezier(.22,.61,.36,1);
 }
 
 /* gold “wax” threads at the top corners */
@@ -671,10 +671,10 @@ html[data-theme="maison"] .drag-hint svg{ color:var(--gold-deep); }
   animation:plDrop .8s cubic-bezier(.22,.61,.36,1) both;
 }
 @keyframes plDrop{
-  0%   { opacity:0; transform:translateY(-26px) scaleY(.85); filter:blur(4px); }
-  55%  { opacity:1; transform:translateY(3px)   scaleY(1.02); filter:blur(0); }
+  0%   { opacity:0; transform:translateY(-26px) scaleY(.85); }
+  55%  { opacity:1; transform:translateY(3px)   scaleY(1.02); }
   78%  { transform:translateY(-1px) scaleY(.998); }
-  100% { opacity:1; transform:translateY(0)    scaleY(1); filter:blur(0); }
+  100% { opacity:1; transform:translateY(0)    scaleY(1); }
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -1416,8 +1416,7 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
   .nav-cta-desktop{display:none;}
   .burger{display:block;}
   .nav-menu{
-    position:fixed;inset:var(--nav-h) 0 auto 0;background:rgba(6,6,6,.97);
-    -webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
+    position:fixed;inset:var(--nav-h) 0 auto 0;background:rgba(6,6,6,.98);
     flex-direction:column;gap:0;padding:8px 0 24px;
     border-bottom:1px solid rgba(212,175,55,.16);
     transform:translateY(-120%);transition:transform .45s var(--ease);
@@ -1461,6 +1460,22 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
 }
 @media (max-width:380px){
   .grid{grid-template-columns:1fr;max-width:320px;margin-inline:auto;}
+}
+/* ── mobile perf: remove expensive blur effects ── */
+@media (max-width:860px){
+  .nav.scrolled{
+    -webkit-backdrop-filter:none;backdrop-filter:none;
+    background:rgba(6,5,3,.96);
+  }
+  .drag-hint{
+    -webkit-backdrop-filter:none;backdrop-filter:none;
+    background:rgba(6,5,3,.88);
+  }
+  .trust{-webkit-backdrop-filter:none;backdrop-filter:none;}
+  .footer{-webkit-backdrop-filter:none;backdrop-filter:none;}
+  .logo-mark{animation:none;}
+  .scroll-hint .line{animation:none;opacity:.55;}
+  .placard{transition:opacity .4s ease, transform .4s ease;}
 }
 </style>
 <link rel="stylesheet" href="features.css" />
