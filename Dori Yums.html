@@ -1461,6 +1461,44 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
 @media (max-width:380px){
   .grid{grid-template-columns:1fr;max-width:320px;margin-inline:auto;}
 }
+/* ── splash / intro screen ── */
+#splash{
+  position:fixed;inset:0;z-index:99999;
+  background:#060503;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;
+  transition:opacity .7s ease,visibility .7s ease;
+}
+#splash.out{opacity:0;visibility:hidden;pointer-events:none;}
+.spl-logo{
+  width:110px;height:110px;
+  background:url('logo.png') center/contain no-repeat;
+  animation:splLogoIn .9s cubic-bezier(.22,.61,.36,1) both;
+}
+.spl-name{
+  font-family:'Cormorant Garamond',serif;
+  color:#D4AF37;font-size:20px;
+  letter-spacing:.3em;text-transform:uppercase;
+  margin-top:18px;
+  animation:splFade .8s ease .4s both;
+}
+.spl-bar{
+  width:72px;height:1px;
+  background:rgba(212,175,55,.18);
+  margin-top:22px;overflow:hidden;
+  animation:splFade .5s ease .3s both;
+}
+.spl-bar span{
+  display:block;height:100%;width:0;
+  background:linear-gradient(90deg,#9A7B26,#D4AF37,#E8C547);
+  animation:splBar 1.5s ease .3s forwards;
+}
+@keyframes splLogoIn{
+  0%{opacity:0;transform:scale(.82);}
+  100%{opacity:1;transform:scale(1);}
+}
+@keyframes splFade{from{opacity:0;}to{opacity:1;}}
+@keyframes splBar{to{width:100%;}}
 /* ── mobile perf: remove expensive blur effects ── */
 @media (max-width:860px){
   .nav.scrolled{
@@ -1488,6 +1526,22 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
 <link rel="apple-touch-icon" href="logo.png" />
 </head>
 <body>
+
+<!-- ══════════ SPLASH ══════════ -->
+<div id="splash">
+  <div class="spl-logo"></div>
+  <p class="spl-name">Dori Yums</p>
+  <div class="spl-bar"><span></span></div>
+</div>
+<script>
+(function(){
+  var s=document.getElementById('splash');
+  var loaded=false,minDone=false;
+  function done(){ if(loaded&&minDone){ s.classList.add('out'); setTimeout(function(){ if(s.parentNode) s.remove(); },750); } }
+  setTimeout(function(){ minDone=true; done(); },1400);
+  window.addEventListener('load',function(){ loaded=true; done(); });
+})();
+</script>
 
 <!-- ══════════ NAV ══════════ -->
 <header class="nav" id="nav">
