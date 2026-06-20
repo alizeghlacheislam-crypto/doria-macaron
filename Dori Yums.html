@@ -110,9 +110,7 @@ html[data-theme="maison"] .card-reveal{ background:linear-gradient(to top, rgba(
 html[data-theme="maison"] .cr-name{ color:#FFFAEC; }
 html[data-theme="maison"] .cr-order{ background:#E0959E; color:#FFFAEC; }
 html[data-theme="maison"] .cr-order:hover{ background:#F2C2C9; }
-html[data-theme="maison"] .story{ background:transparent; }
-html[data-theme="maison"] .story-quote{ color:#9C5666; }
-html[data-theme="maison"] .story .sig{ color:#3A1F1F; }
+
 html[data-theme="maison"] .how{ background:transparent; }
 html[data-theme="maison"] .step h3{ color:#3A1F1F; }
 html[data-theme="maison"] .step .circle{ background:#F5EBD1; color:#E0959E; border-color:#E0959E; box-shadow:0 0 0 6px rgba(245,235,209,1), inset 0 0 24px rgba(224,149,158,.1); }
@@ -831,72 +829,6 @@ html[data-theme="maison"] main > .feat-section + .feat-section::after{
   .cr-name,.cr-flavor,.cr-rule,.cr-price,.cr-order{opacity:1;transform:none;transition-delay:0s;}
 }
 
-/* ═══════════════ ARTISAN STORY ═══════════════ */
-.story{background:transparent;}
-.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,5vw,80px);align-items:center;}
-.story-img-wrap{--mold:18px;--matw:24px;position:relative;}
-.story-img-wrap .art{aspect-ratio:4/5;background:var(--cream);}
-.story-img-wrap .story-logo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000;}
-.story-img-wrap[data-theme="maison"] .story-logo{padding:0;}
-
-/* video controls + play button overlay */
-.story-img-wrap .story-video-wrap{
-  position:absolute;inset:0;display:block;background:#000;cursor:pointer;
-}
-.story-img-wrap .story-video-wrap video{
-  width:100%;height:100%;object-fit:cover;display:block;
-  position:absolute;left:0;top:0;
-}
-.story-img-wrap .video-play{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  width:78px;height:78px;border-radius:50%;border:none;cursor:pointer;
-  background:rgba(0,0,0,.55);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
-  border:1.5px solid var(--gold);
-  color:var(--gold);
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 36px rgba(212,175,55,.45), inset 0 0 0 1px rgba(255,255,255,.08);
-  transition:opacity .35s ease, transform .3s ease, box-shadow .3s ease;
-  z-index:3;
-  opacity:0;pointer-events:none;
-}
-.story-img-wrap:hover .video-play{ opacity:1;pointer-events:auto; }
-.story-img-wrap .video-play svg{ width:30px;height:30px; margin-inline-start:4px;}
-.story-img-wrap .video-play:hover{
-  transform:translate(-50%,-50%) scale(1.06);
-  box-shadow:0 0 52px rgba(212,175,55,.7), inset 0 0 0 1px rgba(255,255,255,.12);
-}
-.story-img-wrap.is-playing .video-play{ opacity:0;pointer-events:none; }
-.story-img-wrap.is-playing:hover .video-play{ opacity:0;pointer-events:none; }
-
-/* film-grain gold ring around the video, makes it feel like a screening */
-.story-img-wrap .video-tape{
-  position:absolute;left:18px;top:18px;z-index:4;pointer-events:none;
-  display:flex;align-items:center;gap:8px;
-  padding:6px 12px;border-radius:1px;
-  background:rgba(0,0,0,.55);
-  border:1px solid rgba(212,175,55,.5);
-  font-family:var(--lat);font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);
-}
-.story-img-wrap .video-tape::before{
-  content:"";width:7px;height:7px;border-radius:50%;background:#E25555;
-  box-shadow:0 0 8px rgba(226,85,85,.7);
-  animation:recPulse 1.6s ease-in-out infinite;
-}
-@keyframes recPulse{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
-.story-quote{font-family:var(--lat);font-style:normal;font-size:clamp(22px,2.4vw,30px);color:var(--gold);line-height:1.5;margin:30px 0 0;position:relative;isolation:isolate;}
-.story-quote::before{
-  content:"";position:absolute;inset:-8px -16px;z-index:-1;
-  background:radial-gradient(ellipse at center, rgba(10,8,5,.92) 0%, rgba(10,8,5,.7) 55%, transparent 85%);
-  border-radius:6px;
-}
-html[data-theme="maison"] .story-quote{ color:var(--gold-deep); }
-html[data-theme="maison"] .story-quote::before{
-  background:radial-gradient(ellipse at center, rgba(251,244,228,.95) 0%, rgba(251,244,228,.75) 55%, transparent 85%);
-}
-html[lang="ar"] .story-quote{direction:rtl;}
-.story p{color:var(--muted);font-size:16px;margin:18px 0 0;}
-.story .sig{font-family:var(--lat);font-style:normal;font-size:26px;color:var(--champagne);margin-top:26px;opacity:.85;direction:ltr;letter-spacing:.04em;}
 
 /* ═══════════════ HOW TO ORDER ═══════════════ */
 .how{background:transparent;}
@@ -1609,32 +1541,6 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
     <div id="atelier-section"></div>
   </section>
 
-  <!-- ══════════ STORY ══════════ -->
-  <section class="section story" id="story">
-    <div class="wrap">
-      <div class="story-grid">
-        <div class="story-img-wrap gframe reveal">
-          <div class="mat"><div class="art">
-            <div class="story-video-wrap" id="storyVideoWrap">
-              <video id="storyVideo" src="dori-promo.mp4" preload="none" poster="IMG_4751.JPG" playsinline muted loop></video>
-              <button class="video-play" id="storyVideoPlay" type="button" aria-label="Play">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7L8 5z"/></svg>
-              </button>
-            </div>
-            <span class="glass"></span>
-          </div></div>
-        </div>
-        <div class="reveal">
-          <span class="eyebrow solo" data-i18n="story.eyebrow">قصّة المعرض</span>
-          <h2 class="section-title" data-i18n="story.title">من الجزائر، بحبٍّ باريسي</h2>
-          <p data-i18n="story.p1">بدأت الحكاية بشغفٍ صغير وميزانٍ دقيق: كيف نُعيد صياغة الماكارون الباريسي الأصيل بروحٍ جزائرية. كل صباحٍ نطحن اللوز، نخفق المرنغ الإيطالي، وننتظر القشرة حتى تكتسب لمعتها الحريرية.</p>
-          <p data-i18n="story.p2">لا نصنع بالكمية، بل بالقطعة. كل ماكارون يُختبر، يُوزن، ويوضع في إطاره كما تُعلّق لوحةٌ في معرض — لأنه عندنا ليس حلوى عابرة، بل لحظة تُقتنى.</p>
-          <p class="story-quote" data-i18n="story.quote">«الماكارون ليس حلوى، هو لحظة.»</p>
-          <div class="sig">— Doria</div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ══════════ TESTIMONIALS ══════════ -->
   <section class="section" id="reviews">
@@ -1704,36 +1610,7 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
 <div id="tweaksMount"></div>
 
 <script src="image-slot.js"></script>
-<script>
-  /* story video play/pause toggle with cinematic fade */
-  (function(){
-    var wrap = document.getElementById('storyVideoWrap');
-    var vid  = document.getElementById('storyVideo');
-    var btn  = document.getElementById('storyVideoPlay');
-    if(!wrap||!vid||!btn) return;
-    /* show LAST frame as poster: once metadata is known, seek to end while paused */
-    vid.addEventListener('loadedmetadata', function(){
-      try { vid.currentTime = Math.max(0, vid.duration - 0.05); } catch(e){}
-    });
-    function togglePlay(){
-      if(vid.paused){
-        try { vid.currentTime = 0; } catch(e){}
-        vid.muted = false;
-        var p = vid.play();
-        if(p && p.catch) p.catch(function(){ vid.muted=true; vid.play(); });
-        wrap.classList.add('is-playing');
-      } else {
-        vid.pause();
-        try { vid.currentTime = Math.max(0, vid.duration - 0.05); } catch(e){}
-        wrap.classList.remove('is-playing');
-      }
-    }
-    btn.addEventListener('click', function(e){ e.stopPropagation(); togglePlay(); });
-    wrap.addEventListener('click', function(){ togglePlay(); });
-    vid.addEventListener('pause', function(){ wrap.classList.remove('is-playing'); });
-    vid.addEventListener('play',  function(){ wrap.classList.add('is-playing'); });
-  })();
-</script>
+
 <script src="app.js"></script>
 <script src="features.js"></script>
 <script src="extras.js"></script>
