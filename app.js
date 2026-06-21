@@ -787,16 +787,9 @@
   }
 
   function wireNav() {
-    var nav = $('#nav'), burger = $('#burger');
+    var nav = $('#nav');
     var onScroll = function () { nav.classList.toggle('scrolled', window.scrollY > 30); };
     onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
-    burger.addEventListener('click', function () {
-      var open = document.body.classList.toggle('menu-open');
-      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    $$('#navMenu a').forEach(function (a) {
-      a.addEventListener('click', function () { document.body.classList.remove('menu-open'); burger.setAttribute('aria-expanded', 'false'); });
-    });
   }
 
   var revealIO = null;

@@ -400,14 +400,7 @@ html[data-theme="maison"] .theme-toggle::after{ opacity:1; }
 .lang-switch button[aria-pressed="true"]{background:var(--gold);color:#0A0A0A;opacity:1;box-shadow:0 2px 10px rgba(212,175,55,.3);}
 .lang-switch button:hover{opacity:1;}
 
-.burger{display:none;background:none;border:0;width:34px;height:34px;position:relative;}
-.burger span{position:absolute;left:5px;right:5px;height:1.5px;background:var(--champagne);transition:all .3s var(--ease);}
-.burger span:nth-child(1){top:11px;}
-.burger span:nth-child(2){top:17px;}
-.burger span:nth-child(3){top:23px;}
-body.menu-open .burger span:nth-child(1){top:17px;transform:rotate(45deg);}
-body.menu-open .burger span:nth-child(2){opacity:0;}
-body.menu-open .burger span:nth-child(3){top:17px;transform:rotate(-45deg);}
+
 
 /* ═══════════════ HERO ═══════════════ */
 .hero{
@@ -1307,20 +1300,11 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
 }
 @media (max-width:860px){
   :root{--frame-w:230px;--frame-h:307px;}
-  .nav-cta-desktop{display:none;}
-  .burger{display:block;}
-  .nav-menu{
-    position:fixed;inset:var(--nav-h) 0 auto 0;background:rgba(6,6,6,.98);
-    flex-direction:column;gap:0;padding:8px 0 24px;
-    border-bottom:1px solid rgba(212,175,55,.16);
-    transform:translateY(-120%);transition:transform .45s var(--ease);
-    display:flex !important;
-  }
-  body.menu-open .nav-menu{transform:translateY(0);}
-  .nav-menu .nav-links{flex-direction:column;width:100%;gap:0;}
-  .nav-menu .nav-links li{width:100%;}
-  .nav-menu a{padding:16px 32px;font-size:17px;width:100%;}
-  .nav-menu .nav-cta{display:block !important;margin:16px 32px 0;text-align:center;}
+  .nav-menu{position:static;background:none;border:none;
+    flex-direction:row;gap:2px;padding:0;transform:none !important;}
+  .nav-menu .nav-links{flex-direction:row;gap:0;}
+  .nav-menu a{padding:8px 10px;font-size:13px;}
+  .nav-menu .nav-cta{display:none !important;}
   .trust-grid{grid-template-columns:repeat(2,1fr);}
   .trust-item:nth-child(2)::before,.trust-item:nth-child(4)::before{display:none;}
   .hero{min-height:92vh;}
@@ -1407,9 +1391,6 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
         <button type="button" data-lang="ar" aria-pressed="true" aria-label="العربية">AR</button>
       </div>
       <button class="nav-cta order-btn nav-cta-desktop" type="button" data-i18n="nav.order">اطلب الآن</button>
-      <button class="burger" id="burger" type="button" aria-label="القائمة" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
     </div>
   </div>
 </header>
