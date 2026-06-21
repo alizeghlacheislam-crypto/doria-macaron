@@ -41,93 +41,7 @@
   function t(k){ return localized(T[k]||{}) || k; }
 
   /* ════════════════════════════════════════════════════════════
-     1) SPLASH SCREEN — particle reveal
-     ════════════════════════════════════════════════════════════ */
-  function buildSplash(){
-    /* once per session */
-    try { if (sessionStorage.getItem('dy-splash-seen')) return; } catch(e) {}
-
-    var splash = el('div','dy-splash'); splash.id='dySplash';
-    splash.innerHTML =
-      '<canvas></canvas>' +
-      '<div class="dy-splash-logo"><img src="' + ((window.__resources && window.__resources.logoImg) || 'logo.png') + '" alt="Dori Yums" /></div>' +
-      '<div class="dy-splash-tag">Maison de Macarons · Est. 2026</div>';
-    document.body.appendChild(splash);
-
-    var cv = splash.querySelector('canvas');
-    var ctx = cv.getContext('2d');
-    function resize(){ cv.width = window.innerWidth; cv.height = window.innerHeight; }
-    resize();
-
-    /* spawn ~140 sparkle particles drifting toward center */
-    var cx = cv.width/2, cy = cv.height/2;
-    var N = window.innerWidth < 600 ? 70 : 140;
-    var particles = [];
-    for (var i=0;i<N;i++){
-      var ang = Math.random()*Math.PI*2;
-      var rad = Math.max(cv.width, cv.height) * (0.45 + Math.random()*0.35);
-      particles.push({
-        x: cx + Math.cos(ang)*rad,
-        y: cy + Math.sin(ang)*rad,
-        tx: cx + (Math.random()-0.5)*180,
-        ty: cy + (Math.random()-0.5)*180,
-        r: 0.8 + Math.random()*2.4,
-        delay: Math.random()*0.4,
-        hue: 38 + Math.random()*14,
-        light: 50 + Math.random()*30,
-        twink: Math.random()*Math.PI*2
-      });
-    }
-
-    var T0 = performance.now();
-    var DUR = 1500;
-    function frame(now){
-      var t = (now - T0) / DUR;
-      ctx.clearRect(0,0,cv.width,cv.height);
-      /* radial glow buildup */
-      var g = ctx.createRadialGradient(cx,cy,0,cx,cy,Math.max(cv.width,cv.height)*0.5);
-      g.addColorStop(0,'rgba(212,175,55,'+(Math.min(1,t*0.7)*0.22)+')');
-      g.addColorStop(1,'rgba(212,175,55,0)');
-      ctx.fillStyle = g;
-      ctx.fillRect(0,0,cv.width,cv.height);
-
-      particles.forEach(function(p){
-        var pt = Math.max(0, Math.min(1, (t - p.delay) / 0.75));
-        /* easeOutCubic */
-        var k = 1 - Math.pow(1-pt, 3);
-        var x = p.x + (p.tx - p.x) * k;
-        var y = p.y + (p.ty - p.y) * k;
-        var alpha = Math.min(1, pt*1.8) * (1 - Math.max(0, (t-0.9)*5));
-        if (alpha <= 0) return;
-        ctx.beginPath();
-        ctx.fillStyle = 'hsla('+p.hue+','+85+'%,'+p.light+'%,'+alpha+')';
-        ctx.arc(x, y, p.r * (0.7 + 0.4 * Math.sin(now*0.006 + p.twink)), 0, Math.PI*2);
-        ctx.fill();
-        /* trailing glow */
-        ctx.beginPath();
-        ctx.fillStyle = 'hsla('+p.hue+','+95+'%,65%,'+(alpha*0.18)+')';
-        ctx.arc(x, y, p.r*4, 0, Math.PI*2);
-        ctx.fill();
-      });
-
-      if (t < 1.3) requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
-
-    /* reveal logo halfway through */
-    setTimeout(function(){ splash.classList.add('show-logo'); }, 700);
-    /* dismiss */
-    setTimeout(function(){
-      splash.classList.add('is-gone');
-      try { sessionStorage.setItem('dy-splash-seen','1'); } catch(e){}
-      setTimeout(function(){ splash.remove(); }, 1100);
-    }, 2200);
-
-    window.addEventListener('resize', resize);
-  }
-
-  /* ════════════════════════════════════════════════════════════
-     2) SCROLL PROGRESS RIBBON
+     1) SCROLL PROGRESS RIBBON
      ════════════════════════════════════════════════════════════ */
   function buildScrollRibbon(){
     if ($('.dy-scroll-rail')) return;
@@ -621,7 +535,6 @@
      INIT
      ════════════════════════════════════════════════════════════ */
   function init(){
-    buildSplash();
     buildScrollRibbon();
     injectCartButton();
     buildDrawer();
