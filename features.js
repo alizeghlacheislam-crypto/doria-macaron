@@ -282,10 +282,10 @@
     var host = $('#atelier-section'); if (!host) return;
     var captions = ['atelier.c1','atelier.c2','atelier.c3','atelier.c4'];
     var srcs = [
-      'IMG_4858.JPG',
-      'macarons_hero_1780868400049.png',
-      'IMG_4237.JPG',
-      'IMG_4751.JPG'
+      'atelier-0.webp',
+      'macarons_hero.webp',
+      'atelier-2.webp',
+      'atelier-3.webp'
     ];
     /* uniform 2×2 grid */
     var cells = ['','','',''];
@@ -1045,7 +1045,7 @@
     var hostHtml = '' +
       '<div class="ig-frame reveal">' +
         '<div class="ig-head">' +
-          '<div class="av"><div class="av-inner"><img src="logo.png" alt="Dori Yums" onerror="this.style.display=\'none\'"/></div></div>' +
+          '<div class="av"><div class="av-inner"><img src="logo.webp" alt="Dori Yums" onerror="this.style.display=\'none\'"/></div></div>' +
           '<div class="meta"><b>dori_yums</b><div class="sub">Algeria \u00b7 P\u00e2tisserie</div></div>' +
           '<span class="more" aria-hidden="true">\u2022\u2022\u2022</span>' +
         '</div>' +

@@ -9,8 +9,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@400;500;600&family=Tajawal:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@400;500;600&family=Tajawal:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" /></noscript>
-<link rel="preload" as="image" href="logo.png" fetchpriority="high" />
-<link rel="preload" as="image" href="images/m-rose.png" fetchpriority="high" />
+<link rel="preload" as="image" href="logo.webp" fetchpriority="high" type="image/webp" />
+<link rel="preload" as="image" href="images/m-rose.webp" fetchpriority="high" type="image/webp" />
 <!-- Open Graph / Social Sharing -->
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Dori Yums — معرض الماكارون الفاخر · الجزائر" />
@@ -287,7 +287,7 @@ button{font-family:inherit;cursor:pointer;}
   width:74px;height:74px;flex-shrink:0;
   border-radius:50%;
   background:transparent center/100% 100% no-repeat;
-  background-image:url('logo.png?v=2');
+  background-image:url('logo.webp');
   transform-style:preserve-3d;
   animation:logoFloat 6s ease-in-out infinite;
   transition:transform .5s var(--ease);
@@ -1424,7 +1424,7 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
 <meta name="theme-color" content="#D4AF37" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-title" content="Dori Yums" />
-<link rel="apple-touch-icon" href="logo.png" />
+<link rel="apple-touch-icon" href="logo.png" /><!-- keep PNG for apple-touch-icon -->
 </head>
 <body>
 

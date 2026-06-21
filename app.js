@@ -259,18 +259,18 @@
 
   // name = الاسم العربي · flavor = le nom français · cat = clé de catégorie
   var MACARONS = [
-    { name: 'الفراولة',                  flavor: 'Fraise',               cat: 'fruits',    price: 180, shell: '#E8B4B8', cream: '#F2D9DC', photo: ((window.__resources && window.__resources['macRose']) || 'images/m-rose.png') },
-    { name: 'الفستق الحلبي',        flavor: "Pistache d'Alep",      cat: 'noix',      price: 200, shell: '#A7B89A', cream: '#CBD6BE', photo: ((window.__resources && window.__resources['macPistachio']) || 'images/m-pistachio.png') },
-    { name: 'الشوكولاتة السوداء',     flavor: 'Chocolat Noir 70%',    cat: 'chocolat',  price: 190, shell: '#5C3A2E', cream: '#8A5E48', photo: ((window.__resources && window.__resources['macChocolate']) || 'images/m-chocolate.png') },
-    { name: 'موز بالشوكولاتة',         flavor: 'Banane Chocolat',      cat: 'chocolat',  price: 180, shell: '#D4B896', cream: '#ECDABA', photo: ((window.__resources && window.__resources['macBanana']) || 'images/m-banana.png') },
-    { name: 'فراولة بالتوت',           flavor: 'Fraise Framboise',     cat: 'fruits',    price: 180, shell: '#B8475C', cream: '#D67E8E', photo: ((window.__resources && window.__resources['macStrawberry']) || 'images/m-strawberry.png') },
-    { name: 'الليمون',                  flavor: 'Citron',               cat: 'fruits',    price: 170, shell: '#E8C547', cream: '#F2DE8A', photo: ((window.__resources && window.__resources['macLemon']) || 'images/m-lemon.png') },
-    { name: 'الأناناس',                  flavor: 'Ananas',               cat: 'fruits',    price: 200, shell: '#F2D04B', cream: '#F7E580', photo: ((window.__resources && window.__resources['macCoconut']) || 'images/m-coconut.png') },
-    { name: 'البندق والبرالين',       flavor: 'Noisette Praliné',     cat: 'noix',      price: 210, shell: '#B79268', cream: '#D2B48C', photo: ((window.__resources && window.__resources['macPecan']) || 'images/m-pecan.png') },
-    { name: 'الفانيلا بالكراميل',     flavor: 'Vanille Caramel',      cat: 'classique', price: 170, shell: '#EAD9B0', cream: '#F4E9CC', photo: ((window.__resources && window.__resources['macVanilla']) || 'images/m-vanilla.png') },
-    { name: 'كرز بالشوكولاتة',         flavor: 'Cerise au Chocolat',   cat: 'fruits',    price: 180, shell: '#A8253A', cream: '#C9434E', photo: ((window.__resources && window.__resources['macCherry']) || 'images/m-cherry.png') },
-    { name: 'جوز الهند بالشوكولاتة',  flavor: 'Coco Chocolat',        cat: 'chocolat',  price: 190, shell: '#A9794E', cream: '#C99E72', photo: ((window.__resources && window.__resources['macCoconutChoc']) || 'images/m-coconut-choc.png') },
-    { name: 'برتقال',                       flavor: 'Orange',               cat: 'fruits',    price: 190, shell: '#F0A040', cream: '#F7C580', photo: ((window.__resources && window.__resources['macOrange']) || 'images/m-orange.png') }
+    { name: 'الفراولة',                  flavor: 'Fraise',               cat: 'fruits',    price: 180, shell: '#E8B4B8', cream: '#F2D9DC', photo: ((window.__resources && window.__resources['macRose']) || 'images/m-rose.webp') },
+    { name: 'الفستق الحلبي',        flavor: "Pistache d'Alep",      cat: 'noix',      price: 200, shell: '#A7B89A', cream: '#CBD6BE', photo: ((window.__resources && window.__resources['macPistachio']) || 'images/m-pistachio.webp') },
+    { name: 'الشوكولاتة السوداء',     flavor: 'Chocolat Noir 70%',    cat: 'chocolat',  price: 190, shell: '#5C3A2E', cream: '#8A5E48', photo: ((window.__resources && window.__resources['macChocolate']) || 'images/m-chocolate.webp') },
+    { name: 'موز بالشوكولاتة',         flavor: 'Banane Chocolat',      cat: 'chocolat',  price: 180, shell: '#D4B896', cream: '#ECDABA', photo: ((window.__resources && window.__resources['macBanana']) || 'images/m-banana.webp') },
+    { name: 'فراولة بالتوت',           flavor: 'Fraise Framboise',     cat: 'fruits',    price: 180, shell: '#B8475C', cream: '#D67E8E', photo: ((window.__resources && window.__resources['macStrawberry']) || 'images/m-strawberry.webp') },
+    { name: 'الليمون',                  flavor: 'Citron',               cat: 'fruits',    price: 170, shell: '#E8C547', cream: '#F2DE8A', photo: ((window.__resources && window.__resources['macLemon']) || 'images/m-lemon.webp') },
+    { name: 'الأناناس',                  flavor: 'Ananas',               cat: 'fruits',    price: 200, shell: '#F2D04B', cream: '#F7E580', photo: ((window.__resources && window.__resources['macCoconut']) || 'images/m-coconut.webp') },
+    { name: 'البندق والبرالين',       flavor: 'Noisette Praliné',     cat: 'noix',      price: 210, shell: '#B79268', cream: '#D2B48C', photo: ((window.__resources && window.__resources['macPecan']) || 'images/m-pecan.webp') },
+    { name: 'الفانيلا بالكراميل',     flavor: 'Vanille Caramel',      cat: 'classique', price: 170, shell: '#EAD9B0', cream: '#F4E9CC', photo: ((window.__resources && window.__resources['macVanilla']) || 'images/m-vanilla.webp') },
+    { name: 'كرز بالشوكولاتة',         flavor: 'Cerise au Chocolat',   cat: 'fruits',    price: 180, shell: '#A8253A', cream: '#C9434E', photo: ((window.__resources && window.__resources['macCherry']) || 'images/m-cherry.webp') },
+    { name: 'جوز الهند بالشوكولاتة',  flavor: 'Coco Chocolat',        cat: 'chocolat',  price: 190, shell: '#A9794E', cream: '#C99E72', photo: ((window.__resources && window.__resources['macCoconutChoc']) || 'images/m-coconut-choc.webp') },
+    { name: 'برتقال',                       flavor: 'Orange',               cat: 'fruits',    price: 190, shell: '#F0A040', cream: '#F7C580', photo: ((window.__resources && window.__resources['macOrange']) || 'images/m-orange.webp') }
   ];
 
   /* show all macarons in the hero carousel */

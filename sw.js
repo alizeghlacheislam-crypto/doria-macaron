@@ -1,5 +1,5 @@
 /* Dori Yums — minimal service worker (offline-first caching) */
-var CACHE = 'doriyums-v9';
+var CACHE = 'doriyums-v10';
 var ASSETS = [
   'Dori Yums.html',
   'app.js',
@@ -10,25 +10,24 @@ var ASSETS = [
   'promo.js',
   'promo.css',
   'image-slot.js',
-  'logo.png',
+  'logo.webp',
   'manifest.webmanifest',
-  'images/m-rose.png',
-  'images/m-pistachio.png',
-  'images/m-chocolate.png',
-  'images/m-vanilla.png',
-  'images/m-lemon.png',
-  'images/m-orange.png',
-  'images/m-banana.png',
-  'images/m-cherry.png',
-  'images/m-coconut.png',
-  'images/m-coconut-choc.png',
-  'images/m-orange.png',
-  'images/m-pecan.png',
-  'images/m-strawberry.png',
-  'IMG_4858.JPG',
-  'IMG_4237.JPG',
-  'IMG_4751.JPG',
-  'macarons_hero_1780868400049.png'
+  'images/m-rose.webp',
+  'images/m-pistachio.webp',
+  'images/m-chocolate.webp',
+  'images/m-vanilla.webp',
+  'images/m-lemon.webp',
+  'images/m-orange.webp',
+  'images/m-banana.webp',
+  'images/m-cherry.webp',
+  'images/m-coconut.webp',
+  'images/m-coconut-choc.webp',
+  'images/m-pecan.webp',
+  'images/m-strawberry.webp',
+  'atelier-0.webp',
+  'atelier-2.webp',
+  'atelier-3.webp',
+  'macarons_hero.webp'
 ];
 self.addEventListener('install', function (e) {
   e.waitUntil(
