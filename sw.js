@@ -1,8 +1,8 @@
 /* Dori Yums — minimal service worker (offline-first caching) */
-var CACHE = 'doriyums-v11';
+var CACHE = 'doriyums-v12';
 var ASSETS = [
   '/',
-  'Dori Yums.html',
+  'index.html',
   'logo.png',
   'app.js',
   'features.js',
@@ -58,7 +58,7 @@ self.addEventListener('fetch', function (e) {
         caches.open(CACHE).then(function (c) { c.put(e.request, copy).catch(function(){}); });
         return resp;
       }).catch(function () {
-        return cached || caches.match('Dori Yums.html');
+        return cached || caches.match('index.html');
       });
     })
   );
