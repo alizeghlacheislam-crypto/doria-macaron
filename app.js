@@ -1671,6 +1671,7 @@
     df.getBoundingClientRect(); // force reflow
     requestAnimationFrame(function () {
       detailEl.classList.add('open');
+      document.body.classList.add('detail-open');
       df.style.transition = 'transform .74s cubic-bezier(.66,0,.2,1)';
       df.style.transform = 'none';
     });
@@ -1681,6 +1682,7 @@
     var df = $('.detail-frame', detailEl);
     var r1 = df.getBoundingClientRect();
     detailEl.classList.remove('open');
+    document.body.classList.remove('detail-open');
     if (dOrigin) {
       var r0 = dOrigin.getBoundingClientRect();
       var dx = r0.left - r1.left, dy = r0.top - r1.top;

@@ -843,10 +843,12 @@ html[data-theme="maison"] main > .feat-section + .feat-section::after{
 
 /* ═══════════════ FLOATING SOCIAL DOCK ═══════════════ */
 .social-dock{
-  position:fixed;right:26px;bottom:26px;z-index:9999;
+  position:fixed;right:26px;bottom:26px;z-index:800;
   display:flex;flex-direction:column;gap:14px;
   pointer-events:none;
+  transition:opacity .25s ease;
 }
+body.detail-open .social-dock{opacity:0;pointer-events:none;}
 .social-dock > a{ pointer-events:auto; }
 
 .wa{
@@ -1399,7 +1401,7 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
 
   <!-- ══════════ HERO ══════════ -->
   <section class="hero" id="gallery">
-    <div class="hero-head reveal">
+    <div class="hero-head">
       <h1 data-i18n="hero.title">كلّ قطعةٍ تحفةٌ صغيرة</h1>
       <p class="hero-sub" data-i18n="hero.sub">ماكارون فرنسي صُنع يدويًا في الجزائر</p>
     </div>
