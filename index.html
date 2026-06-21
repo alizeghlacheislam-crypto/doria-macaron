@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Dori Yums — معرض الماكارون الفاخر · الجزائر</title>
-<script>(function(){try{var l=localStorage.getItem('doriyums_lang')||'ar';if(l!=='fr'&&l!=='en')l='ar';document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';var th=localStorage.getItem('doriyums_theme');if(th==='maison')document.documentElement.setAttribute('data-theme','maison');}catch(e){}})();</script>
+<script>(function(){try{var l=localStorage.getItem('doriyums_lang')||'ar';if(l!=='en')l='ar';document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';var th=localStorage.getItem('doriyums_theme');if(th==='maison')document.documentElement.setAttribute('data-theme','maison');}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@400;500;600&family=Tajawal:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
@@ -112,15 +112,6 @@ html[data-theme="maison"] .cr-name{ color:#FFFAEC; }
 html[data-theme="maison"] .cr-order{ background:#E0959E; color:#FFFAEC; }
 html[data-theme="maison"] .cr-order:hover{ background:#F2C2C9; }
 
-html[data-theme="maison"] .how{ background:transparent; }
-html[data-theme="maison"] .step h3{ color:#3A1F1F; }
-html[data-theme="maison"] .step .circle{ background:#F5EBD1; color:#E0959E; border-color:#E0959E; box-shadow:0 0 0 6px rgba(245,235,209,1), inset 0 0 24px rgba(224,149,158,.1); }
-html[data-theme="maison"] .step p{ color:#7A5C5C; }
-html[data-theme="maison"] .steps::before{ background-image:linear-gradient(90deg, #E0959E 50%, transparent 0); }
-html[data-theme="maison"] .tcard{ background:#FFFAEC; border-color:rgba(224,149,158,.25); }
-html[data-theme="maison"] .tcard p{ color:#3A1F1F; }
-html[data-theme="maison"] .tcard .who b{ color:#3A1F1F; }
-html[data-theme="maison"] .tcard .who, html[data-theme="maison"] .tcard .mark, html[data-theme="maison"] .tcard .stars{ color:#9C5666; }
 html[data-theme="maison"] .trust{ background:rgba(255,250,236,.55); backdrop-filter:blur(2px); border-color:rgba(224,149,158,.2); }
 html[data-theme="maison"] .trust-item span{ color:#3A1F1F; }
 html[data-theme="maison"] .trust-item svg{ color:#E0959E; }
@@ -832,36 +823,6 @@ html[data-theme="maison"] main > .feat-section + .feat-section::after{
 
 
 /* ═══════════════ HOW TO ORDER ═══════════════ */
-.how{background:transparent;}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;position:relative;margin-top:clamp(34px,5vh,60px);}
-.steps::before{
-  content:"";position:absolute;top:46px;right:16%;left:16%;height:1px;
-  background-image:linear-gradient(90deg,var(--gold-deep) 50%,transparent 0);
-  background-size:14px 1px;opacity:.5;z-index:0;
-}
-.step{text-align:center;position:relative;z-index:1;}
-.step .circle{
-  width:92px;height:92px;border-radius:50%;border:1px solid var(--gold);
-  display:flex;align-items:center;justify-content:center;margin:0 auto 26px;
-  background:var(--bg-3);
-  font-family:var(--lat);font-size:30px;color:var(--gold);letter-spacing:.04em;
-  box-shadow:0 0 0 6px rgba(8,8,8,1), inset 0 0 24px rgba(212,175,55,.06);
-}
-.step h3{font-family:var(--ar-head);font-size:24px;color:var(--cream);margin:0 0 10px;}
-.step p{color:var(--muted);font-size:15px;margin:0;max-width:30ch;margin-inline:auto;}
-
-/* ═══════════════ TESTIMONIALS ═══════════════ */
-.tcards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,2.4vw,30px);margin-top:clamp(34px,5vh,56px);}
-.tcard{
-  background:var(--bg-2);border:1px solid rgba(212,175,55,.18);
-  padding:38px 32px 32px;position:relative;
-}
-.tcard .mark{font-family:var(--lat);font-size:80px;line-height:.6;color:var(--gold);opacity:.55;height:34px;direction:ltr;}
-.tcard .stars{color:var(--gold);letter-spacing:4px;font-size:14px;margin:14px 0 16px;}
-.tcard p{font-style:normal;color:var(--champagne);font-size:16px;margin:0;font-family:var(--ar-body);font-weight:400;}
-.tcard .who{margin-top:22px;font-size:14px;color:var(--muted);}
-.tcard .who b{color:var(--cream);font-weight:500;display:block;font-size:15px;font-style:normal;}
-
 /* ═══════════════ FOOTER ═══════════════ */
 .footer{background:rgba(5,4,2,.55);backdrop-filter:blur(2px);padding:clamp(60px,8vh,96px) 0 34px;border-top:1px solid rgba(212,175,55,.1);}
 .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1.2fr;gap:clamp(34px,5vw,72px);}
@@ -1360,9 +1321,6 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
   .nav-menu .nav-links li{width:100%;}
   .nav-menu a{padding:16px 32px;font-size:17px;width:100%;}
   .nav-menu .nav-cta{display:block !important;margin:16px 32px 0;text-align:center;}
-.steps{grid-template-columns:1fr;gap:44px;}
-  .steps::before{display:none;}
-  .tcards{grid-template-columns:1fr;}
   .trust-grid{grid-template-columns:repeat(2,1fr);}
   .trust-item:nth-child(2)::before,.trust-item:nth-child(4)::before{display:none;}
   .hero{min-height:92vh;}
@@ -1445,7 +1403,6 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
     <div class="nav-actions">
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle palette" title="Palette"><span class="knob"></span></button>
       <div class="lang-switch" id="langSwitch" role="group" aria-label="Language / اللغة">
-        <button type="button" data-lang="fr" aria-pressed="false" aria-label="Français">FR</button>
         <button type="button" data-lang="en" aria-pressed="false" aria-label="English">EN</button>
         <button type="button" data-lang="ar" aria-pressed="true" aria-label="العربية">AR</button>
       </div>
@@ -1497,34 +1454,6 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
     </div>
   </section>
 
-  <!-- ══════════ HOW TO ORDER ══════════ -->
-  <section class="section how" id="how">
-    <div class="wrap">
-      <div class="section-head center reveal">
-        <span class="eyebrow" data-i18n="how.eyebrow">Comment Commander</span>
-        <h2 class="section-title" data-i18n="how.title">خطوات الطلب</h2>
-        <div class="gold-rule"></div>
-      </div>
-      <div class="steps reveal">
-        <div class="step">
-          <div class="circle">Ⅰ</div>
-          <h3 data-i18n="how.s1t">اختر</h3>
-          <p data-i18n="how.s1p">تصفّح المعرض واختر نكهاتك المفضّلة من المجموعة.</p>
-        </div>
-        <div class="step">
-          <div class="circle">Ⅱ</div>
-          <h3 data-i18n="how.s2t">أرسل</h3>
-          <p data-i18n="how.s2p">راسلنا عبر واتساب بطلبك وعدد القطع والمناسبة.</p>
-        </div>
-        <div class="step">
-          <div class="circle">Ⅲ</div>
-          <h3 data-i18n="how.s3t">استلم</h3>
-          <p data-i18n="how.s3p">نوصّل طلبك بعناية خلال 24 إلى 48 ساعة.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ══════════ CATALOG ══════════ -->
   <section class="section" id="catalog">
     <div class="wrap">
@@ -1545,17 +1474,6 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
   </section>
 
 
-  <!-- ══════════ TESTIMONIALS ══════════ -->
-  <section class="section" id="reviews">
-    <div class="wrap">
-      <div class="section-head center reveal">
-        <span class="eyebrow" data-i18n="rev.eyebrow">Témoignages</span>
-        <h2 class="section-title" data-i18n="rev.title">آراء الزبائن</h2>
-        <div class="gold-rule"></div>
-      </div>
-      <div class="tcards" id="tcards"></div>
-    </div>
-  </section>
 
 </main>
 
@@ -1577,7 +1495,6 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
         <ul class="footer-links">
           <li><a href="#catalog" data-i18n="nav.collection">المجموعة</a></li>
           <li><a href="#contact" data-i18n="nav.contact">التواصل</a></li>
-          <li><a href="#reviews" data-i18n="rev.title">آراء الزبائن</a></li>
         </ul>
       </div>
       <div class="fcol-contact">

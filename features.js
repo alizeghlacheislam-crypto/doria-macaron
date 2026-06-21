@@ -1092,7 +1092,6 @@
     buildQuiz();
     buildBuilder();
     buildWeddings();
-    buildPhotoTestimonials();
     injectNavLinks();
     applyFeatI18n();
     /* re-apply when language changes */
