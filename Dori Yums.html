@@ -7,7 +7,8 @@
 <script>(function(){try{var l=localStorage.getItem('doriyums_lang')||'ar';if(l!=='fr'&&l!=='en')l='ar';document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';var th=localStorage.getItem('doriyums_theme');if(th==='maison')document.documentElement.setAttribute('data-theme','maison');}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@400;500;600&family=Tajawal:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@400;500;600&family=Tajawal:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@400;500;600&family=Tajawal:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" /></noscript>
 <link rel="preload" as="image" href="logo.png" fetchpriority="high" />
 <link rel="preload" as="image" href="images/m-rose.png" fetchpriority="high" />
 <!-- Open Graph / Social Sharing -->
@@ -1411,9 +1412,14 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
   .placard{transition:opacity .4s ease, transform .4s ease;}
 }
 </style>
-<link rel="stylesheet" href="features.css" />
-<link rel="stylesheet" href="extras.css" />
-<link rel="stylesheet" href="promo.css" />
+<link rel="preload" as="style" href="features.css" onload="this.onload=null;this.rel='stylesheet'" />
+<link rel="preload" as="style" href="extras.css" onload="this.onload=null;this.rel='stylesheet'" />
+<link rel="preload" as="style" href="promo.css" onload="this.onload=null;this.rel='stylesheet'" />
+<noscript>
+  <link rel="stylesheet" href="features.css" />
+  <link rel="stylesheet" href="extras.css" />
+  <link rel="stylesheet" href="promo.css" />
+</noscript>
 <link rel="manifest" href="manifest.webmanifest" />
 <meta name="theme-color" content="#D4AF37" />
 <meta name="apple-mobile-web-app-capable" content="yes" />

@@ -1,5 +1,5 @@
 /* Dori Yums — minimal service worker (offline-first caching) */
-var CACHE = 'doriyums-v8';
+var CACHE = 'doriyums-v9';
 var ASSETS = [
   'Dori Yums.html',
   'app.js',
@@ -17,7 +17,18 @@ var ASSETS = [
   'images/m-chocolate.png',
   'images/m-vanilla.png',
   'images/m-lemon.png',
-  'images/m-orange.png'
+  'images/m-orange.png',
+  'images/m-banana.png',
+  'images/m-cherry.png',
+  'images/m-coconut.png',
+  'images/m-coconut-choc.png',
+  'images/m-orange.png',
+  'images/m-pecan.png',
+  'images/m-strawberry.png',
+  'IMG_4858.JPG',
+  'IMG_4237.JPG',
+  'IMG_4751.JPG',
+  'macarons_hero_1780868400049.png'
 ];
 self.addEventListener('install', function (e) {
   e.waitUntil(
