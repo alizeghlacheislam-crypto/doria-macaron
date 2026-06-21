@@ -216,10 +216,14 @@
     showPwa();
   });
 
-  /* register service worker (best effort) */
+  /* register service worker + auto-reload on update */
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () {
+      var hadController = !!navigator.serviceWorker.controller;
       navigator.serviceWorker.register('sw.js').catch(function () {});
+      navigator.serviceWorker.addEventListener('controllerchange', function () {
+        if (hadController) window.location.reload();
+      });
     });
   }
 
