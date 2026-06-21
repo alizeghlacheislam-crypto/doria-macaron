@@ -7,7 +7,7 @@
   /* ─── config ─── */
   var WA_NUMBER = '213551401704'; // ← ضع رقم واتساب هنا (بصيغة دولية بلا +)
   var IG_URL = 'https://www.instagram.com/dori_yums/';
-  var FB_URL = '#';
+  var FB_URL = 'https://web.facebook.com/Dori.Yums';
   var LANG_KEY = 'doriyums_lang';
 
   /* ─── language state ─── */
