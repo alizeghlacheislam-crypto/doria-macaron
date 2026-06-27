@@ -280,7 +280,7 @@
   // primary/secondary names depend on language
   function pName(m) { return LANG === 'ar' ? m.name : m.flavor; }
   function pSub(m)  { return LANG === 'ar' ? m.flavor : m.name; }
-  function priceHTML(m) { return '<span class="lat">' + m.price + '</span> ' + t('curr'); }
+  function priceHTML(m) { return '<span class="lat">' + m.price + '</span> ' + t('curr') + '<span class="cr-unit">/pièce</span>'; }
 
   /* ─── helpers ─── */
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -1213,26 +1213,48 @@
     return qty >= 200 ? 15 : qty >= 100 ? 10 : qty >= 50 ? 5 : 0;
   }
 
+  var QTY_PRESETS = [6, 12, 20];
+
   function renderQtyInput() {
     var host = $('.di-boxes', detailEl);
     host.innerHTML = '';
-    var row = el('div', 'di-qty-row');
+
+    /* preset quick-pick buttons */
+    var presetRow = el('div', 'di-qty-presets');
+    QTY_PRESETS.forEach(function (n) {
+      var b = el('button', 'di-qp' + (dBoxSize === n ? ' on' : ''));
+      b.type = 'button';
+      b.textContent = n;
+      b.addEventListener('click', function () { setBoxSize(n); });
+      presetRow.appendChild(b);
+    });
+    host.appendChild(presetRow);
+
+    /* custom input row — always visible */
+    var customLbl = el('div', 'di-qty-custom-lbl');
+    customLbl.textContent = 'Quantité personnalisée :';
+    var row = el('div', 'di-qty-row' + (QTY_PRESETS.indexOf(dBoxSize) === -1 ? ' on' : ''));
     row.innerHTML =
-      '<button type="button" class="di-qty-btn" id="diQtyMinus">−</button>' +
-      '<input type="number" class="di-qty-inp" id="diQtyInp" min="1" value="' + dBoxSize + '" />' +
-      '<button type="button" class="di-qty-btn" id="diQtyPlus">+</button>';
+      '<button type="button" class="di-qty-btn">−</button>' +
+      '<input type="number" class="di-qty-inp" min="1" value="' + dBoxSize + '" />' +
+      '<button type="button" class="di-qty-btn">+</button>';
+    host.appendChild(customLbl);
+    host.appendChild(row);
+
+    var inp = row.querySelector('.di-qty-inp');
+    row.querySelectorAll('.di-qty-btn')[0].addEventListener('click', function () { setBoxSize(dBoxSize - 1); });
+    row.querySelectorAll('.di-qty-btn')[1].addEventListener('click', function () { setBoxSize(dBoxSize + 1); });
+    inp.addEventListener('change', function () { setBoxSize(Math.max(1, Math.floor(+inp.value) || 1)); });
+    inp.addEventListener('input',  function () { var v = Math.floor(+inp.value); if (v >= 1) setBoxSize(v); });
+
+    /* discount tiers */
     var hint = el('div', 'di-qty-hint');
     hint.innerHTML =
       '<span class="di-disc-tier' + (dBoxSize >= 200 ? ' on' : '') + '">200 pcs — ‑15 DA/pcs</span>' +
       '<span class="di-disc-tier' + (dBoxSize >= 100 && dBoxSize < 200 ? ' on' : '') + '">100 pcs — ‑10 DA/pcs</span>' +
       '<span class="di-disc-tier' + (dBoxSize >= 50 && dBoxSize < 100 ? ' on' : '') + '">50 pcs — ‑5 DA/pcs</span>';
-    host.appendChild(row);
     host.appendChild(hint);
-    var inp = host.querySelector('#diQtyInp');
-    host.querySelector('#diQtyMinus').addEventListener('click', function () { setBoxSize(dBoxSize - 1); });
-    host.querySelector('#diQtyPlus').addEventListener('click',  function () { setBoxSize(dBoxSize + 1); });
-    inp.addEventListener('change', function () { setBoxSize(Math.max(1, Math.floor(+inp.value) || 1)); });
-    inp.addEventListener('input',  function () { var v = Math.floor(+inp.value); if (v >= 1) setBoxSize(v); });
+
     $('.di-box-cap', detailEl).textContent = '';
   }
 
