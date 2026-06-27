@@ -258,12 +258,11 @@
 
   function buildCartWa(subtotal, discAmt, fee, grand){
     var wa = (window.__getWaNumber && window.__getWaNumber()) || '213551401704';
-    var lang = L();
     var sep = '━━━━━━━━━━━━━━━━━━';
-    var lines = [t('wa.cart.hdr'), sep, ''];
+    var lines = ['🌟 *Dori Yums — Nouvelle commande*', sep, ''];
     cart.forEach(function(it, i){
-      lines.push('*' + t('wa.cart.item') + ' ' + (i+1) + ' :*');
-      lines.push('  ' + (it.name || '') + ' — ' + t('cart.box') + ' ' + it.size + ' ' + t('cart.pcs'));
+      lines.push('*Article ' + (i+1) + ' :*');
+      lines.push('  ' + (it.name || '') + ' — Boîte ' + it.size + ' pièces');
       if (it.picks){
         Object.keys(it.picks).forEach(function(k){
           if (it.picks[k] > 0) {
@@ -272,10 +271,9 @@
           }
         });
       }
-      lines.push('     _' + fmtN(it.price) + ' ' + t('cart.curr') + '_');
+      lines.push('     _' + fmtN(it.price) + ' DA_');
       lines.push('');
     });
-    /* delivery */
     var firstDel = cart.find(function(it){ return it.del && it.del.mode; });
     if (firstDel && firstDel.del.mode !== 'pickup' && (firstDel.del.phone || firstDel.del.addr)) {
       lines.push(sep);
@@ -285,12 +283,12 @@
       lines.push('');
     }
     lines.push(sep);
-    lines.push('*' + t('cart.subtotal') + ':* ' + fmtN(subtotal) + ' ' + t('cart.curr'));
-    if (discAmt > 0) lines.push('*' + t('cart.discount') + ':* - ' + fmtN(discAmt) + ' ' + t('cart.curr'));
-    if (fee > 0) lines.push('*' + t('cart.delivery') + ':* ' + fmtN(fee) + ' ' + t('cart.curr'));
-    lines.push('*' + t('cart.total') + ':* ' + fmtN(grand) + ' ' + t('cart.curr'));
+    lines.push('*Sous-total :* ' + fmtN(subtotal) + ' DA');
+    if (discAmt > 0) lines.push('*Remise quantité :* - ' + fmtN(discAmt) + ' DA');
+    if (fee > 0) lines.push('*Livraison :* ' + fmtN(fee) + ' DA');
+    lines.push('*TOTAL :* ' + fmtN(grand) + ' DA');
     lines.push('');
-    lines.push(t('wa.cart.thanks'));
+    lines.push("Merci d’avoir choisi Dori Yums 🤎");
     return 'https://wa.me/' + wa + '?text=' + encodeURIComponent(lines.join('\n'));
   }
 

@@ -494,8 +494,8 @@
       : 'https://web.whatsapp.com/send?phone=' + WA_NUMBER + '&text=';
   }
   function waLink(name) {
-    var msg = t('wa.greet');
-    if (name) msg += '\n' + t('wa.flavor') + ': ' + name;
+    var msg = 'Bonjour 🌿 je souhaite commander des macarons chez Dori Yums';
+    if (name) msg += '\nSaveur : ' + name;
     return waBase() + encodeURIComponent(msg);
   }
   function wireOrder() {
@@ -1077,11 +1077,9 @@
      DETAIL LIGHTBOX  (cinematic FLIP + golden star burst)
      ════════════════════════════════════════════════════════════ */
   var detailEl = null, dCurIdx = 0, dCurM = null, dOrigin = null;
-  var BOX_SIZES = [6, 12, 20, 50];
   var dBoxSize = 6;
   var dPicks = {};   /* idx -> count */
-  var DMODE = 'single';   /* 'single' | 'preset' | 'custom' | 'ai' */
-  var dPresetKey = null;
+  var DMODE = 'single';   /* 'single' | 'custom' */
 
   /* delivery state — persisted across opens so the user re-orders quickly */
   var DEL_KEY = 'doriyums_del';
@@ -1096,47 +1094,6 @@
   function delFee() { var o = DEL_OPTIONS.filter(function(o){return o.key===dDel.mode;})[0]; return o ? o.fee : 0; }
   function persistDel() { try { localStorage.setItem(DEL_KEY, JSON.stringify(dDel)); } catch (e) {} }
 
-  /* curated chef's mixes per box size — every preset sums to its box size */
-  var PRESETS = {
-    6: [
-      { key:'class', picks:{ 0:2, 2:2, 8:2 },
-        name:{ ar:'الكلاسيك', fr:'Classique', en:'Classic' },
-        hint:{ ar:'ورد · شوكولا · فانيلا', fr:'Rose · Chocolat · Vanille', en:'Rose · Chocolate · Vanilla' } },
-      { key:'trad', picks:{ 3:2, 1:2, 8:2 },
-        name:{ ar:'التقليدية', fr:'Tradition', en:'Tradition' },
-        hint:{ ar:'كراميل · فستق · فانيلا', fr:'Caramel · Pistache · Vanille', en:'Caramel · Pistachio · Vanilla' } },
-      { key:'gold', picks:{ 0:2, 10:2, 1:2 },
-        name:{ ar:'الذهبيّة', fr:"Galerie d'or", en:'Gold Gallery' },
-        hint:{ ar:'ورد · كراميل · فستق', fr:'Rose · Caramel · Pistache', en:'Rose · Caramel · Pistachio' } }
-    ],
-    12: [
-      { key:'fam', picks:{ 0:2, 2:2, 9:2, 3:2, 1:2, 8:2 },
-        name:{ ar:'العائلية', fr:'Famille', en:'Family' },
-        hint:{ ar:'ستّ نكهات خالدة', fr:'Six classiques intemporels', en:'Six timeless classics' } },
-      { key:'disco', picks:{ 0:1, 1:1, 2:1, 3:1, 4:1, 5:1, 6:1, 7:1, 8:1, 9:1, 10:1, 11:1 },
-        name:{ ar:'رحلة الاستكشاف', fr:'Découverte', en:'Discovery' },
-        hint:{ ar:'كلّ النكهات في علبة واحدة', fr:'Toutes les saveurs en une boîte', en:'Every flavour in one box' } },
-      { key:'lux', picks:{ 0:2, 10:2, 1:2, 11:2, 6:2, 7:2 },
-        name:{ ar:'الفاخرة', fr:'Premium', en:'Premium' },
-        hint:{ ar:'تشكيلة راقية للمناسبات', fr:'Sélection raffinée', en:'Refined selection' } }
-    ],
-    20: [
-      { key:'grand', picks:{ 0:3, 2:3, 9:3, 3:2, 1:2, 8:2, 4:2, 6:2, 7:1 },
-        name:{ ar:'الكبرى', fr:'Grande Sélection', en:'Grand Selection' },
-        hint:{ ar:'توازن بين الكلاسيك والفواكه', fr:'Équilibre classiques & fruits', en:'Classics & fruit, balanced' } },
-      { key:'wed', picks:{ 0:3, 1:3, 10:2, 9:3, 6:2, 7:2, 11:2, 2:3 },
-        name:{ ar:'العرس', fr:'Mariage', en:'Wedding' },
-        hint:{ ar:'للحفلات الثمينة', fr:'Pour les grandes célébrations', en:'For grand celebrations' } }
-    ],
-    50: [
-      { key:'rec', picks:{ 0:5, 1:5, 2:5, 3:5, 9:5, 8:4, 4:4, 6:4, 7:4, 5:4, 10:3, 11:2 },
-        name:{ ar:'الاستقبال', fr:'Réception', en:'Reception' },
-        hint:{ ar:'كلّ النكهات، توزيع خبير', fr:'Toutes les saveurs, dosées', en:'Every flavour, perfectly dosed' } },
-      { key:'lux50', picks:{ 0:6, 10:5, 1:5, 11:5, 9:4, 2:4, 3:4, 6:4, 7:4, 5:3, 8:3, 4:3 },
-        name:{ ar:'الملوكية', fr:'Royale', en:'Royal' },
-        hint:{ ar:'تركيز على التوقيعات الفاخرة', fr:'Cap sur les signatures prestige', en:'Prestige signatures, generously' } }
-    ]
-  };
 
   var WA_ICON = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.52 11.97c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42h-.47c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74 2.48 1.07 2.48.71 2.93.67.45-.04 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18z"/></svg>';
 
@@ -1240,12 +1197,6 @@
     DMODE = m;
     if (m === 'single') {
       dPicks = {}; dPicks[dCurIdx] = dBoxSize;
-      dPresetKey = null;
-    } else if (m === 'preset') {
-      dPresetKey = null;
-      dPicks = {};
-    } else if (m === 'ai') {
-      /* keep picks for review */
     }
     renderModeTabs(); renderModeBody(); renderTotals();
   }
@@ -1253,48 +1204,52 @@
   function renderModeBody() {
     var body = $('.di-mode-body', detailEl);
     body.innerHTML = '';
-    if (DMODE === 'single')      body.appendChild(renderSingleMode());
-    else if (DMODE === 'preset') body.appendChild(renderPresetMode());
+    if (DMODE === 'single') body.appendChild(renderSingleMode());
     else if (DMODE === 'custom') body.appendChild(renderCustomMode());
-    else if (DMODE === 'ai')     body.appendChild(renderAIMode());
   }
 
-  /* ── BOX SIZE ── */
-  function renderBoxes() {
+  /* ── QUANTITY INPUT ── */
+  function discPerPiece(qty) {
+    return qty >= 200 ? 15 : qty >= 100 ? 10 : qty >= 50 ? 5 : 0;
+  }
+
+  function renderQtyInput() {
     var host = $('.di-boxes', detailEl);
     host.innerHTML = '';
-    BOX_SIZES.forEach(function (n) {
-      var b = el('button', 'di-box' + (n === dBoxSize ? ' on' : ''));
-      b.type = 'button';
-      b.setAttribute('role', 'radio');
-      b.setAttribute('aria-checked', n === dBoxSize ? 'true' : 'false');
-      b.innerHTML =
-        '<span class="di-box-n lat">' + n + '</span>' +
-        '<span class="di-box-u">' + t('detail.pcs') + '</span>';
-      b.addEventListener('click', function () { setBoxSize(n); });
-      host.appendChild(b);
-    });
-    $('.di-box-cap', detailEl).innerHTML = '<span class="lat">' + dBoxSize + '</span> ' + t('detail.pcs');
+    var row = el('div', 'di-qty-row');
+    row.innerHTML =
+      '<button type="button" class="di-qty-btn" id="diQtyMinus">−</button>' +
+      '<input type="number" class="di-qty-inp" id="diQtyInp" min="1" value="' + dBoxSize + '" />' +
+      '<button type="button" class="di-qty-btn" id="diQtyPlus">+</button>';
+    var hint = el('div', 'di-qty-hint');
+    hint.innerHTML =
+      '<span class="di-disc-tier' + (dBoxSize >= 200 ? ' on' : '') + '">200 pcs — ‑15 DA/pcs</span>' +
+      '<span class="di-disc-tier' + (dBoxSize >= 100 && dBoxSize < 200 ? ' on' : '') + '">100 pcs — ‑10 DA/pcs</span>' +
+      '<span class="di-disc-tier' + (dBoxSize >= 50 && dBoxSize < 100 ? ' on' : '') + '">50 pcs — ‑5 DA/pcs</span>';
+    host.appendChild(row);
+    host.appendChild(hint);
+    var inp = host.querySelector('#diQtyInp');
+    host.querySelector('#diQtyMinus').addEventListener('click', function () { setBoxSize(dBoxSize - 1); });
+    host.querySelector('#diQtyPlus').addEventListener('click',  function () { setBoxSize(dBoxSize + 1); });
+    inp.addEventListener('change', function () { setBoxSize(Math.max(1, Math.floor(+inp.value) || 1)); });
+    inp.addEventListener('input',  function () { var v = Math.floor(+inp.value); if (v >= 1) setBoxSize(v); });
+    $('.di-box-cap', detailEl).textContent = '';
   }
 
   function setBoxSize(n) {
+    n = Math.max(1, Math.floor(n) || 1);
     dBoxSize = n;
     if (DMODE === 'single') {
       dPicks = {}; dPicks[dCurIdx] = dBoxSize;
-    } else if (DMODE === 'preset') {
-      dPresetKey = null; dPicks = {};
     } else if (DMODE === 'custom') {
-      /* trim from highest-qty flavors */
       var keys = Object.keys(dPicks).sort(function (a, b) { return (dPicks[b] || 0) - (dPicks[a] || 0); });
       while (totalPieces() > dBoxSize) {
         for (var i = 0; i < keys.length && totalPieces() > dBoxSize; i++) {
           if (dPicks[keys[i]] > 0) dPicks[keys[i]]--;
         }
       }
-    } else if (DMODE === 'ai') {
-      dPicks = {};
     }
-    renderBoxes(); renderModeBody(); renderTotals();
+    renderQtyInput(); renderModeBody(); renderTotals();
   }
 
   /* ── MODE: SINGLE ── */
@@ -1311,36 +1266,6 @@
           '<div class="ms-flavor">' + pSub(dCurM) + '</div>' +
         '</div>' +
       '</div>';
-    return wrap;
-  }
-
-  /* ── MODE: PRESET ── */
-  function renderPresetMode() {
-    var wrap = el('div', 'mode-preset');
-    var list = PRESETS[dBoxSize] || [];
-    list.forEach(function (p) {
-      var card = el('button', 'mp-card' + (p.key === dPresetKey ? ' on' : ''));
-      card.type = 'button';
-      var pickList = Object.keys(p.picks);
-      var total = pickList.reduce(function (s, idx) { return s + MACARONS[idx].price * p.picks[idx]; }, 0);
-      var swatches = pickList.map(function (idx) {
-        return '<span class="mp-sw" style="background:' + MACARONS[idx].shell + ';" title="' + pName(MACARONS[idx]) + '"></span>';
-      }).join('');
-      card.innerHTML =
-        '<div class="mp-swatches">' + swatches + '</div>' +
-        '<div class="mp-meta">' +
-          '<div class="mp-name">' + (p.name[LANG] || p.name.ar) + '</div>' +
-          '<div class="mp-hint">' + (p.hint[LANG] || p.hint.ar) + '</div>' +
-        '</div>' +
-        '<div class="mp-price lat">' + total.toLocaleString('fr-FR') + ' ' + t('curr') + '</div>';
-      card.addEventListener('click', function () {
-        dPresetKey = p.key;
-        dPicks = {};
-        Object.keys(p.picks).forEach(function (idx) { dPicks[idx] = p.picks[idx]; });
-        renderModeBody(); renderTotals();
-      });
-      wrap.appendChild(card);
-    });
     return wrap;
   }
 
@@ -1389,115 +1314,6 @@
     if (next === cur) return;
     dPicks[idx] = next;
     renderModeBody(); renderTotals();
-  }
-
-  /* ── MODE: AI ── */
-  function renderAIMode() {
-    var wrap = el('div', 'mode-ai');
-    wrap.innerHTML =
-      '<label class="ai-l">' + t('ai.label') + '</label>' +
-      '<div class="ai-input-row">' +
-        '<input type="text" class="ai-input" placeholder="' + t('ai.placeholder') + '" />' +
-        '<button type="button" class="ai-suggest">' + MODE_ICONS.ai + '<span>' + t('ai.suggest') + '</span></button>' +
-      '</div>' +
-      '<div class="ai-status" aria-live="polite"></div>';
-    var input = $('.ai-input', wrap);
-    var btn = $('.ai-suggest', wrap);
-    var status = $('.ai-status', wrap);
-    function go() {
-      var occ = (input.value || '').trim();
-      if (!occ) { input.focus(); return; }
-      runAI(occ, status, btn);
-    }
-    btn.addEventListener('click', go);
-    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') go(); });
-    setTimeout(function () { try { input.focus(); } catch (e) {} }, 60);
-    return wrap;
-  }
-
-  function runAI(occasion, status, btn) {
-    btn.disabled = true;
-    status.className = 'ai-status loading';
-    status.innerHTML = '<span class="ai-spin"></span>' + t('ai.loading');
-
-    var menu = MACARONS.map(function (m, i) { return i + '. ' + m.flavor + ' (' + m.price + ' DA, ' + m.cat + ')'; }).join('\n');
-    var prompt =
-      'You are a French pastry chef at Dori Yums, a fine macaron house in Algiers.\n' +
-      'Compose a box of EXACTLY ' + dBoxSize + ' macarons that perfectly fits this occasion: "' + occasion + '".\n\n' +
-      'Menu (indices are stable):\n' + menu + '\n\n' +
-      'Rules:\n' +
-      '- Use 3 to ' + Math.min(dBoxSize, 8) + ' different flavours.\n' +
-      '- Quantities must sum to EXACTLY ' + dBoxSize + '.\n' +
-      '- Match the flavours to the occasion (e.g. wedding → rose/prestige; kids → sweeter classics; dinner → chocolate/coffee/refined).\n\n' +
-      'Return ONLY a JSON object — no prose, no markdown:\n' +
-      '{"picks":[{"idx":<number>,"qty":<number>}, ...]}';
-
-    function ok(out) {
-      try {
-        var match = String(out).match(/\{[\s\S]*\}/);
-        if (!match) throw new Error('no json');
-        var json = JSON.parse(match[0]);
-        if (!json.picks || !json.picks.length) throw new Error('empty');
-        var picks = {}; var total = 0;
-        json.picks.forEach(function (p) {
-          var i = +p.idx, q = +p.qty;
-          if (i >= 0 && i < MACARONS.length && q > 0) { picks[i] = (picks[i] || 0) + q; total += q; }
-        });
-        if (total === 0) throw new Error('zero');
-        /* normalize to exactly dBoxSize if model under/overshot */
-        if (total !== dBoxSize) {
-          var diff = dBoxSize - total;
-          var keys = Object.keys(picks);
-          if (diff > 0) {
-            for (var k = 0; k < diff; k++) picks[keys[k % keys.length]]++;
-          } else {
-            keys.sort(function (a, b) { return picks[b] - picks[a]; });
-            for (var j = 0; j < -diff; j++) {
-              if (picks[keys[j % keys.length]] > 1) picks[keys[j % keys.length]]--;
-            }
-          }
-        }
-        dPicks = picks; dPresetKey = null;
-        renderTotals();
-        status.className = 'ai-status done';
-        status.textContent = t('ai.done');
-        setTimeout(function () { switchMode('custom'); }, 1100);
-      } catch (e) {
-        status.className = 'ai-status error';
-        status.textContent = t('ai.error');
-        btn.disabled = false;
-      }
-    }
-    function fail() {
-      /* fallback: pick a sensible default mix locally */
-      var seed = occasion.length;
-      var picks = {}, left = dBoxSize;
-      var pool = [0, 11, 2, 3, 1, 9, 15, 12, 8, 14, 13].filter(function (i) { return i < MACARONS.length; });
-      var per = Math.max(1, Math.floor(dBoxSize / 5));
-      for (var i = 0; i < 5 && left > 0; i++) {
-        var idx = pool[(i + seed) % pool.length];
-        var q = Math.min(per, left);
-        picks[idx] = (picks[idx] || 0) + q;
-        left -= q;
-      }
-      while (left > 0) { var k = Object.keys(picks)[0]; picks[k]++; left--; }
-      dPicks = picks; dPresetKey = null;
-      renderTotals();
-      status.className = 'ai-status done';
-      status.textContent = t('ai.done');
-      setTimeout(function () { switchMode('custom'); }, 1100);
-    }
-
-    if (window.claude && typeof window.claude.complete === 'function') {
-      try {
-        var p = window.claude.complete(prompt);
-        if (p && typeof p.then === 'function') {
-          p.then(ok).catch(function () { fail(); });
-        } else { ok(p); }
-      } catch (e) { fail(); }
-    } else {
-      setTimeout(fail, 900);
-    }
   }
 
   /* ── TOTALS ── */
@@ -1580,10 +1396,16 @@
         rem.className = 'di-remain';
       }
     }
-    var pieces = totalPrice();
+    var subtotal = totalPrice();
+    var qty = totalPieces();
+    var disc = qty * discPerPiece(qty);
     var fee = delFee();
-    var grand = pieces + fee;
-    var html = t('detail.total') + ' · <b><span class="lat">' + pieces.toLocaleString('fr-FR') + '</span> ' + t('curr') + '</b>';
+    var grand = subtotal - disc + fee;
+    var html = t('detail.total') + ' · <b><span class="lat">' + subtotal.toLocaleString('fr-FR') + '</span> ' + t('curr') + '</b>';
+    if (disc > 0) {
+      html += '<span class="di-total-add" style="color:#6abf6a;">− <span class="lat">' + disc.toLocaleString('fr-FR') + '</span> ' + t('curr') + ' (' + discPerPiece(qty) + ' DA/pcs)</span>';
+      html += '<span class="di-total-grand">Net · <b><span class="lat">' + (subtotal - disc).toLocaleString('fr-FR') + '</span> ' + t('curr') + '</b></span>';
+    }
     if (fee > 0) {
       html += '<span class="di-total-add">+ <span class="lat">' + fee.toLocaleString('fr-FR') + '</span> ' + t('curr') + ' ' + t('del.fee').toLowerCase() + '</span>';
       html += '<span class="di-total-grand">' + t('del.summary') + ' · <b><span class="lat">' + grand.toLocaleString('fr-FR') + '</span> ' + t('curr') + '</b></span>';
@@ -1591,27 +1413,37 @@
     $('.di-total', detailEl).innerHTML = html;
   }
 
+  var FR_DEL_LABELS = {
+    pickup: 'Retrait à la boutique',
+    alger:  'Livraison Alger',
+    near:   'Wilayas voisines',
+    far:    'Autres wilayas'
+  };
+
   function waOrder() {
-    var lines = [t('wa.greet')];
+    var qty = totalPieces();
+    var subtotal = totalPrice();
+    var disc = qty * discPerPiece(qty);
+    var fee = delFee();
+    var grand = subtotal - disc + fee;
+    var lines = ['Bonjour 🌿 je souhaite commander des macarons chez Dori Yums'];
     lines.push('');
-    lines.push(t('wa.box') + ': ' + dBoxSize + ' ' + t('detail.pcs'));
-    lines.push(t('wa.items') + ':');
+    lines.push('Boîte : ' + qty + ' pièces');
+    lines.push('Saveurs :');
     MACARONS.forEach(function (m, idx) {
       var q = dPicks[idx] || 0;
-      if (q > 0) lines.push('  • ' + pName(m) + ' × ' + q);
+      if (q > 0) lines.push('  • ' + m.flavor + ' × ' + q);
     });
     lines.push('');
-    var opt = DEL_OPTIONS.filter(function(o){return o.key===dDel.mode;})[0];
-    lines.push(t('wa.delivery') + ': ' + t(opt.labelK) + ' (' + t(opt.hintK) + ')');
-    if (dDel.phone) lines.push(t('wa.phone') + ': ' + dDel.phone);
-    if (dDel.addr)  lines.push(t('wa.addr')  + ': ' + dDel.addr);
-    if (dDel.note)  lines.push(t('wa.note')  + ': ' + dDel.note);
+    lines.push('Livraison : ' + (FR_DEL_LABELS[dDel.mode] || dDel.mode));
+    if (dDel.phone) lines.push('Téléphone : ' + dDel.phone);
+    if (dDel.addr)  lines.push('Adresse : ' + dDel.addr);
+    if (dDel.note)  lines.push('Note : ' + dDel.note);
     lines.push('');
-    lines.push(t('wa.total') + ': ' + totalPrice() + ' ' + t('curr'));
-    if (delFee() > 0) {
-      lines.push(t('wa.fee')   + ': ' + delFee()    + ' ' + t('curr'));
-      lines.push(t('wa.grand') + ': ' + (totalPrice() + delFee()) + ' ' + t('curr'));
-    }
+    lines.push('Sous-total : ' + subtotal + ' DA');
+    if (disc > 0) lines.push('Remise (' + discPerPiece(qty) + ' DA/pcs) : −' + disc + ' DA');
+    if (fee > 0)  lines.push('Frais de livraison : ' + fee + ' DA');
+    lines.push('*TOTAL : ' + grand + ' DA*');
     return waBase() + encodeURIComponent(lines.join('\n'));
   }
 
@@ -1621,7 +1453,7 @@
     return {
       idx: dCurIdx, size: dBoxSize,
       picks: Object.assign({}, dPicks),
-      mode: DMODE, preset: dPresetKey,
+      mode: DMODE,
       del: Object.assign({}, dDel),
       price: totalPrice(), fee: delFee(),
       name: pName(dCurM), flavor: pSub(dCurM),
@@ -1639,15 +1471,14 @@
   function fillDetail(idx) {
     var m = MACARONS[idx]; dCurM = m; dCurIdx = idx;
     DMODE = 'single';
-    dPresetKey = null;
     dPicks = {}; dPicks[idx] = dBoxSize;
     $('.di-roman', detailEl).textContent = ROMAN[idx] || '';
     $('.di-name', detailEl).textContent = pName(m);
     $('.di-flavor', detailEl).textContent = pSub(m);
     $('.di-note', detailEl).textContent = t('note.' + m.cat) || '';
-    $('.di-section-l', detailEl).textContent = t('detail.box');
+    $('.di-section-l', detailEl).textContent = t('detail.qty');
     $('.di-order-t', detailEl).textContent = t('detail.order');
-    renderModeTabs(); renderBoxes(); renderModeBody(); renderDelivery(); renderTotals();
+    renderModeTabs(); renderQtyInput(); renderModeBody(); renderDelivery(); renderTotals();
   }
 
   function openDetail(idx, frameEl) {
