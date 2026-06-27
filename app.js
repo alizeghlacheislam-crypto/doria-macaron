@@ -1214,38 +1214,46 @@
   }
 
   var QTY_PRESETS = [6, 12, 20];
+  var dShowCustomQty = false;
 
   function renderQtyInput() {
     var host = $('.di-boxes', detailEl);
     host.innerHTML = '';
+    var isCustom = dBoxSize > 20 || dShowCustomQty;
 
-    /* preset quick-pick buttons */
+    /* preset quick-pick + ">20" toggle */
     var presetRow = el('div', 'di-qty-presets');
     QTY_PRESETS.forEach(function (n) {
-      var b = el('button', 'di-qp' + (dBoxSize === n ? ' on' : ''));
+      var b = el('button', 'di-qp' + (!isCustom && dBoxSize === n ? ' on' : ''));
       b.type = 'button';
       b.textContent = n;
-      b.addEventListener('click', function () { setBoxSize(n); });
+      b.addEventListener('click', function () { dShowCustomQty = false; setBoxSize(n); });
       presetRow.appendChild(b);
     });
+    var autreBtn = el('button', 'di-qp di-qp-autre' + (isCustom ? ' on' : ''));
+    autreBtn.type = 'button';
+    autreBtn.textContent = '>20';
+    autreBtn.addEventListener('click', function () {
+      dShowCustomQty = true;
+      if (dBoxSize <= 20) setBoxSize(21); else renderQtyInput();
+    });
+    presetRow.appendChild(autreBtn);
     host.appendChild(presetRow);
 
-    /* custom input row — always visible */
-    var customLbl = el('div', 'di-qty-custom-lbl');
-    customLbl.textContent = 'Quantité personnalisée :';
-    var row = el('div', 'di-qty-row' + (QTY_PRESETS.indexOf(dBoxSize) === -1 ? ' on' : ''));
-    row.innerHTML =
-      '<button type="button" class="di-qty-btn">−</button>' +
-      '<input type="number" class="di-qty-inp" min="1" value="' + dBoxSize + '" />' +
-      '<button type="button" class="di-qty-btn">+</button>';
-    host.appendChild(customLbl);
-    host.appendChild(row);
-
-    var inp = row.querySelector('.di-qty-inp');
-    row.querySelectorAll('.di-qty-btn')[0].addEventListener('click', function () { setBoxSize(dBoxSize - 1); });
-    row.querySelectorAll('.di-qty-btn')[1].addEventListener('click', function () { setBoxSize(dBoxSize + 1); });
-    inp.addEventListener('change', function () { setBoxSize(Math.max(1, Math.floor(+inp.value) || 1)); });
-    inp.addEventListener('input',  function () { var v = Math.floor(+inp.value); if (v >= 1) setBoxSize(v); });
+    /* custom input — only when >20 */
+    if (isCustom) {
+      var row = el('div', 'di-qty-row on');
+      row.innerHTML =
+        '<button type="button" class="di-qty-btn">−</button>' +
+        '<input type="number" class="di-qty-inp" min="21" value="' + dBoxSize + '" />' +
+        '<button type="button" class="di-qty-btn">+</button>';
+      host.appendChild(row);
+      var inp = row.querySelector('.di-qty-inp');
+      row.querySelectorAll('.di-qty-btn')[0].addEventListener('click', function () { setBoxSize(Math.max(21, dBoxSize - 1)); });
+      row.querySelectorAll('.di-qty-btn')[1].addEventListener('click', function () { setBoxSize(dBoxSize + 1); });
+      inp.addEventListener('change', function () { setBoxSize(Math.max(21, Math.floor(+inp.value) || 21)); });
+      inp.addEventListener('input',  function () { var v = Math.floor(+inp.value); if (v >= 21) setBoxSize(v); });
+    }
 
     /* discount tiers */
     var hint = el('div', 'di-qty-hint');
@@ -1493,6 +1501,8 @@
   function fillDetail(idx) {
     var m = MACARONS[idx]; dCurM = m; dCurIdx = idx;
     DMODE = 'single';
+    dShowCustomQty = false;
+    if (dBoxSize > 20) dBoxSize = 6;
     dPicks = {}; dPicks[idx] = dBoxSize;
     $('.di-roman', detailEl).textContent = ROMAN[idx] || '';
     $('.di-name', detailEl).textContent = pName(m);
