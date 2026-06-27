@@ -993,10 +993,23 @@ html[dir="ltr"] .di-order{ font-family:var(--lat);font-weight:600;font-size:14.5
   box-shadow:0 4px 14px rgba(212,175,55,.2);
 }
 
-.di-qp-autre{
-  border-style:dashed;font-size:13px;letter-spacing:.04em;opacity:.8;
-}
+.di-qp-autre{border-style:dashed;font-size:13px;letter-spacing:.04em;opacity:.8;}
 .di-qp-autre.on{border-style:solid;opacity:1;}
+
+/* large qty quick picks: 50 / 100 / 200 */
+.di-qty-large{display:flex;gap:8px;}
+.di-ql{
+  flex:1;padding:8px 4px;border-radius:5px;
+  border:1px solid rgba(212,175,55,.5);
+  background:rgba(212,175,55,.08);color:var(--gold-light);
+  font-family:var(--lat);font-size:15px;font-weight:600;cursor:pointer;
+  transition:all .2s var(--ease);letter-spacing:.04em;
+}
+.di-ql:hover{background:rgba(212,175,55,.2);border-color:var(--gold);}
+.di-ql.on{background:rgba(212,175,55,.25);border-color:var(--gold);color:var(--gold-light);box-shadow:0 3px 10px rgba(212,175,55,.2);}
+html[data-theme="maison"] .di-ql{border-color:rgba(224,149,158,.55);background:rgba(224,149,158,.1);color:#9C5666;}
+html[data-theme="maison"] .di-ql:hover{background:rgba(224,149,158,.22);}
+html[data-theme="maison"] .di-ql.on{background:rgba(224,149,158,.28);border-color:var(--gold-deep);color:var(--gold-deep);}
 
 /* custom input row */
 .di-qty-row{

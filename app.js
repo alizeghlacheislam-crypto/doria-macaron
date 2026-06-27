@@ -1242,6 +1242,18 @@
 
     /* custom input — only when >20 */
     if (isCustom) {
+      /* large-qty quick picks */
+      var largeRow = el('div', 'di-qty-large');
+      [50, 100, 200].forEach(function (n) {
+        var b = el('button', 'di-ql' + (dBoxSize === n ? ' on' : ''));
+        b.type = 'button';
+        b.textContent = n;
+        b.addEventListener('click', function () { setBoxSize(n); });
+        largeRow.appendChild(b);
+      });
+      host.appendChild(largeRow);
+
+      /* free input for truly custom amounts */
       var row = el('div', 'di-qty-row on');
       row.innerHTML =
         '<button type="button" class="di-qty-btn">−</button>' +
