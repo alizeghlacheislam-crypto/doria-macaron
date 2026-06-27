@@ -560,7 +560,7 @@
   function wireHeroDrag() {
     var stage = $('#stage');
     if (!stage || !track) return;
-    var dragging = false, hasMoved = false, startX = 0, dx = 0, spacing = 300;
+    var dragging = false, hasMoved = false, startX = 0, startY = 0, dx = 0, spacing = 300;
 
     function getSpacing() {
       var fw = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--frame-w')) || 300;
@@ -635,10 +635,16 @@
     }, true);
 
     /* touch */
-    stage.addEventListener('touchstart', function (e) { begin(e.touches[0].clientX); }, { passive: true });
-    stage.addEventListener('touchmove',  function (e) {
+    stage.addEventListener('touchstart', function (e) {
+      startY = e.touches[0].clientY;
+      begin(e.touches[0].clientX);
+    }, { passive: true });
+    stage.addEventListener('touchmove', function (e) {
       if (!dragging) return;
-      if (Math.abs(e.touches[0].clientX - startX) > 6) e.preventDefault();
+      var adx = Math.abs(e.touches[0].clientX - startX);
+      var ady = Math.abs(e.touches[0].clientY - startY);
+      if (adx > ady && adx > 6) e.preventDefault();
+      else { dragging = false; return; }
       update(e.touches[0].clientX);
     }, { passive: false });
     stage.addEventListener('touchend',    finish);
@@ -856,7 +862,7 @@
      TWEAKS  (vanilla — host protocol compatible)
      ════════════════════════════════════════════════════════════ */
   var TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-    "theme": "gallery",
+    "theme": "maison",
     "goldTone": ["#D4AF37", "#E8C547", "#9A7B26"],
     "bgDepth": "charcoal",
     "arHead": "Amiri",
@@ -868,7 +874,7 @@
   }/*EDITMODE-END*/;
 
   var T = window.__T = Object.assign({}, TWEAK_DEFAULTS);
-  try { var savedTh = localStorage.getItem(THEME_KEY); if (savedTh === 'maison' || savedTh === 'gallery') T.theme = savedTh; } catch (e) {}
+  T.theme = 'maison';
 
   var BG = {
     charcoal: ['#0A0A0A', '#141414', '#080808', '#050505'],
