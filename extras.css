@@ -229,6 +229,7 @@ html[dir="ltr"] .dy-cart-info .mix{font-family:var(--lat,'Cormorant Garamond');f
   padding:5px 0;font-family:var(--ar-body,'Amiri'),serif;color:var(--x-muted);font-size:13.5px;
 }
 .dy-tline .v{font-family:'EB Garamond',serif;color:var(--x-cream);font-weight:500;}
+.dy-tline.disc-row .v.disc{ color:#6abf6a;font-weight:600; }
 .dy-tline.grand{
   border-top:1px solid var(--x-line);padding-top:10px;margin-top:6px;font-size:16px;color:var(--x-cream);
 }

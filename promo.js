@@ -229,7 +229,6 @@
 
   /* ─── init ─── */
   function init() {
-    buildPromoBar();
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);

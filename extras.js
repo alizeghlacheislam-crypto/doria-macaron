@@ -21,6 +21,7 @@
     'cart.added':       {ar:'أُضيف إلى سلّتك',  fr:'Ajouté au panier', en:'Added to cart'},
     'cart.view':        {ar:'عرض السلّة',       fr:'Voir le panier',   en:'View cart'},
     'cart.subtotal':    {ar:'المجموع الفرعي',    fr:'Sous-total',     en:'Subtotal'},
+    'cart.discount':    {ar:'خصم الكمية',       fr:'Remise quantité', en:'Bulk Discount'},
     'cart.delivery':    {ar:'التوصيل',          fr:'Livraison',       en:'Delivery'},
     'cart.delivery.tbd':{ar:'يُحدَّد لاحقاً',     fr:'à confirmer',    en:'to confirm'},
     'cart.total':       {ar:'الإجمالي',         fr:'Total',           en:'Total'},
@@ -125,6 +126,7 @@
       '<div class="dy-cart-foot" id="dyCartFoot" hidden>' +
         '<div class="dy-cart-totals">' +
           '<div class="dy-tline"><span data-x-i18n="cart.subtotal"></span><span class="v" id="dyCartSub"></span></div>' +
+          '<div class="dy-tline disc-row" id="dyCartDiscRow" hidden><span data-x-i18n="cart.discount"></span><span class="v disc" id="dyCartDisc"></span></div>' +
           '<div class="dy-tline"><span data-x-i18n="cart.delivery"></span><span class="v" id="dyCartFee"></span></div>' +
           '<div class="dy-tline grand"><span data-x-i18n="cart.total"></span><span class="v" id="dyCartGrand"></span></div>' +
         '</div>' +
@@ -219,19 +221,28 @@
 
     /* totals — only the LAST item's delivery counts (one delivery for the whole order) */
     var subtotal = cart.reduce(function(s,it){ return s + (it.price||0); }, 0);
+    var totalQty = cart.reduce(function(s,it){ return s + (it.size||0); }, 0);
+    var discPerUnit = totalQty >= 200 ? 15 : totalQty >= 100 ? 10 : totalQty >= 50 ? 5 : 0;
+    var discAmt = totalQty * discPerUnit;
     var fee = 0;
     var anyDelivery = cart.filter(function(it){ return it.del && it.del.mode && it.del.mode !== 'pickup'; });
     if (anyDelivery.length) {
-      /* use the highest fee (e.g. wilaya > algiers) */
       fee = Math.max.apply(null, anyDelivery.map(function(it){ return it.fee || 0; }));
     }
-    var grand = subtotal + fee;
+    var grand = subtotal - discAmt + fee;
     $('#dyCartSub').innerHTML = '<span class="lat">' + fmtN(subtotal) + '</span> ' + t('cart.curr');
+    var discRow = $('#dyCartDiscRow');
+    if (discAmt > 0) {
+      discRow.hidden = false;
+      $('#dyCartDisc').innerHTML = '<span class="lat">- ' + fmtN(discAmt) + '</span> ' + t('cart.curr');
+    } else {
+      discRow.hidden = true;
+    }
     $('#dyCartFee').innerHTML = fee > 0 ? '<span class="lat">' + fmtN(fee) + '</span> ' + t('cart.curr') : '<em style="opacity:.6">'+t('cart.delivery.tbd')+'</em>';
     $('#dyCartGrand').innerHTML = '<span class="lat">' + fmtN(grand) + '</span> ' + t('cart.curr');
 
     /* WA link */
-    $('#dyCartSend').href = buildCartWa(subtotal, fee, grand);
+    $('#dyCartSend').href = buildCartWa(subtotal, discAmt, fee, grand);
     applyI18n();
   }
 
@@ -245,7 +256,7 @@
     return 'rgb('+r+','+g+','+b+')';
   }
 
-  function buildCartWa(subtotal, fee, grand){
+  function buildCartWa(subtotal, discAmt, fee, grand){
     var wa = (window.__getWaNumber && window.__getWaNumber()) || '213551401704';
     var lang = L();
     var sep = '━━━━━━━━━━━━━━━━━━';
@@ -275,6 +286,7 @@
     }
     lines.push(sep);
     lines.push('*' + t('cart.subtotal') + ':* ' + fmtN(subtotal) + ' ' + t('cart.curr'));
+    if (discAmt > 0) lines.push('*' + t('cart.discount') + ':* - ' + fmtN(discAmt) + ' ' + t('cart.curr'));
     if (fee > 0) lines.push('*' + t('cart.delivery') + ':* ' + fmtN(fee) + ' ' + t('cart.curr'));
     lines.push('*' + t('cart.total') + ':* ' + fmtN(grand) + ' ' + t('cart.curr'));
     lines.push('');

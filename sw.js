@@ -1,5 +1,5 @@
 /* Dori Yums — minimal service worker (offline-first caching) */
-var CACHE = 'doriyums-v12';
+var CACHE = 'doriyums-v13';
 var ASSETS = [
   '/',
   'index.html',
