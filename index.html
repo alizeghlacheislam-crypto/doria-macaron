@@ -1377,6 +1377,15 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
   .wa svg{width:28px;height:28px;}
   .ig svg{width:26px;height:26px;}
   .wa:hover,.ig:hover{transform:scale(1.06);}
+  /* tighten vertical breathing room so sections don't look empty */
+  .section{padding:clamp(48px,8vh,88px) 0;}
+  .section-head{margin-bottom:clamp(28px,4vh,44px);}
+  /* shrink card caption so text never overflows tiny mobile cards */
+  .card-reveal{padding:14px 8px 8px;}
+  .cr-name{font-size:13px;line-height:1.15;}
+  .cr-flavor{font-size:9px;letter-spacing:.03em;}
+  .cr-price{font-size:10.5px;padding:2px 6px;margin-top:3px;}
+  .cr-order{padding:6px 14px;font-size:11px;margin-top:6px;}
 }
 @media (max-width:380px){
   .grid{grid-template-columns:1fr;max-width:320px;margin-inline:auto;}
@@ -1555,11 +1564,22 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
 <!-- tweaks mount -->
 <div id="tweaksMount"></div>
 
-<script src="image-slot.js"></script>
-
-<script src="app.js"></script>
-<script src="features.js"></script>
-<script src="extras.js"></script>
-<script src="promo.js"></script>
+<script defer src="image-slot.js"></script>
+<script defer src="app.js"></script>
+<script defer src="features.js"></script>
+<script defer src="extras.js"></script>
+<script defer src="promo.js"></script>
+<script>
+/* Reveal safety net: if IntersectionObserver fails or scripts are slow,
+   force any .reveal element to show after 1.6s so no blank/white gaps remain. */
+(function(){
+  var t=setTimeout(function(){
+    document.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in');});
+  },1600);
+  window.addEventListener('load',function(){clearTimeout(t);setTimeout(function(){
+    document.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in');});
+  },800);});
+})();
+</script>
 </body>
 </html>

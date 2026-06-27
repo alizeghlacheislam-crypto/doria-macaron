@@ -1,0 +1,18 @@
+﻿{
+  "name": "Dori Yums — Maison de Macarons",
+  "short_name": "Dori Yums",
+  "description": "ماكارون فرنسي فاخر يُصنع يدويًا في الجزائر",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FBF4E4",
+  "theme_color": "#9C5666",
+  "orientation": "portrait",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    { "src": "logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "logo.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
