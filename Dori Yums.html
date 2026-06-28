@@ -1577,9 +1577,12 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
   .trust-item:nth-child(2)::before,.trust-item:nth-child(4)::before{display:none;}
   .hero{min-height:92vh;}
   .detail-inner{flex-direction:column;gap:22px;max-height:none;height:100%;
-    overflow-y:auto;-webkit-overflow-scrolling:touch;
-    padding:84px 18px calc(120px + env(safe-area-inset-bottom,0px));
+    overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;
+    touch-action:pan-y;
+    overscroll-behavior:contain;
+    padding:84px 18px calc(140px + env(safe-area-inset-bottom,0px));
     justify-content:flex-start;}
+  .detail-info .del-field input,.detail-info .del-field textarea{touch-action:manipulation;}
   .dy-cta-row{
     position:sticky !important;bottom:calc(12px + env(safe-area-inset-bottom,0px));
     z-index:5;padding:10px;

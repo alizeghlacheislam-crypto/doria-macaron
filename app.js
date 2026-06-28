@@ -1360,8 +1360,9 @@
 
   /* ── TOTALS ── */
   function renderDelivery() {
-    /* Simplified: no fee tiers, no option buttons - just one note + the form */
-    dDel.mode = 'far'; /* internal mode for order URL */
+    /* Simplified: no fee tiers, no option buttons - just one note + the form
+       Use 'pickup' (fee=0) so no delivery cost is shown to the customer. */
+    dDel.mode = 'pickup';
     $('.di-del-l', detailEl).textContent = t('del.title');
     $('.di-del-fee', detailEl).innerHTML = '';
 
