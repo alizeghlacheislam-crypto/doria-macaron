@@ -1990,7 +1990,7 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
 /* In-app update checker: runs only inside installed APK/PWA, checks every 24h.
    Bump APP_VERSION_CODE before each release to mark this build's version. */
 (function(){
-  var APP_VERSION_CODE = 3;             /* === BUMP THIS ON EACH RELEASE === */
+  var APP_VERSION_CODE = 4;             /* === BUMP THIS ON EACH RELEASE === */
   var VERSION_URL = 'https://doria-macaron.pages.dev/version.json';
   var CHECK_INTERVAL_MS = 24 * 60 * 60 * 1000;  /* 24 hours */
   var BANNER_SHOW_DELAY = 4500;         /* show 4.5s after page settled */
@@ -2035,7 +2035,7 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
       '</div>' +
       (notes ? '<p class="ub-notes">' + notes.replace(/[<>]/g,'') + '</p>' : '') +
       '<div class="ub-actions">' +
-        '<a class="ub-install" href="' + (info.downloadUrl || 'https://doria-macaron.pages.dev/download.html') + '" target="_blank" rel="noopener">Ø­Ù…Ù‘Ù„ Ø§Ù„ØªØ­Ø¯ÙŠØ«</a>' +
+        '<a class="ub-install" href="' + (info.directApkUrl || 'https://doria-macaron.pages.dev/dori-yums.apk') + '" target="_blank" rel="noopener" download>Ø­Ù…Ù‘Ù„ Ø§Ù„ØªØ­Ø¯ÙŠØ«</a>' +
         (mandatory ? '' : '<button class="ub-later" type="button">Ù„Ø§Ø­Ù‚Ø§Ù‹</button>') +
       '</div>';
     document.body.appendChild(b);

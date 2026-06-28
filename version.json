@@ -1,13 +1,13 @@
 ﻿{
-    "versionCode":  3,
-    "versionName":  "1.0.2",
+    "versionCode":  4,
+    "versionName":  "1.0.3",
     "released":  "2026-06-28",
     "downloadUrl":  "https://doria-macaron.pages.dev/download.html",
     "directApkUrl":  "https://doria-macaron.pages.dev/dori-yums.apk",
     "mandatory":  false,
     "notes":  {
-                  "ar":  "زر الطلب الآن يبقى ظاهر في صفحة التفاصيل، وتنبيه عند توفّر تحديث جديد",
-                  "fr":  "Bouton commande toujours visible, notification de mise a jour",
-                  "en":  "Order button always visible, update notifications"
+                  "ar":  "ØªØ­Ø¯ÙŠØ« ÙˆØªØ­Ø³ÙŠÙ†Ø§Øª",
+                  "fr":  "Mises a jour et ameliorations",
+                  "en":  "Updates and improvements"
               }
 }

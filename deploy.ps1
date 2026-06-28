@@ -226,8 +226,16 @@ if ($NoPush) {
         OK "Committed: $msg"
 
         Info "Pushing to origin..."
-        git push 2>&1 | Out-Null
-        if ($LASTEXITCODE -ne 0) { Fail "git push failed - check your internet" }
+        # git writes progress to stderr; temporarily relax error handling
+        $prevPref = $ErrorActionPreference
+        $ErrorActionPreference = 'Continue'
+        $pushOut = & git push 2>&1
+        $pushCode = $LASTEXITCODE
+        $ErrorActionPreference = $prevPref
+        if ($pushCode -ne 0) {
+            Write-Host ($pushOut -join "`n") -ForegroundColor Red
+            Fail "git push failed - check your internet"
+        }
         OK "Pushed - Cloudflare will deploy in ~30 seconds"
     }
 }
