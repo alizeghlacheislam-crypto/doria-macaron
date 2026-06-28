@@ -2016,9 +2016,8 @@ html:not([data-theme="maison"]) .del-allwilayas svg{color:var(--gold);}
 /* In-app update checker: runs only inside installed APK/PWA, checks every 24h.
    Bump APP_VERSION_CODE before each release to mark this build's version. */
 (function(){
-  var APP_VERSION_CODE = 9;             /* === BUMP THIS ON EACH RELEASE === */
+  var APP_VERSION_CODE = 10;             /* === BUMP THIS ON EACH RELEASE === */
   var VERSION_URL = 'https://doria-macaron.pages.dev/version.json';
-  var CHECK_INTERVAL_MS = 24 * 60 * 60 * 1000;  /* 24 hours */
   var BANNER_SHOW_DELAY = 4500;         /* show 4.5s after page settled */
 
   /* Only run for installed users â€” skip on plain website visitors */
@@ -2030,10 +2029,8 @@ html:not([data-theme="maison"]) .del-allwilayas svg{color:var(--gold);}
   function lang(){ return (document.documentElement.lang || 'ar'); }
 
   function checkUpdate(){
-    var last = parseInt(store('doriyums_last_check')||'0', 10);
-    if (Date.now() - last < CHECK_INTERVAL_MS) return;
-    store('doriyums_last_check', String(Date.now()));
-
+    /* Always check on each launch - the fetch is ~500 bytes, dismissed-version
+       logic below prevents nagging the user about a version they already declined. */
     fetch(VERSION_URL + '?t=' + Date.now(), { cache: 'no-store' })
       .then(function(r){ if(!r.ok) throw new Error('bad'); return r.json(); })
       .then(function(info){

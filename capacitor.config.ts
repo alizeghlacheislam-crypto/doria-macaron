@@ -1,13 +1,16 @@
-﻿import type { CapacitorConfig } from '@capacitor/cli';
+import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.azikstudio.doriyums',
   appName: 'Dori Yums',
   webDir: 'www',
   server: {
+    // Live shell: WebView loads directly from Cloudflare. Any edit -> deploy -> next launch shows it.
+    // www/ stays as the offline fallback (used if the URL is unreachable).
+    url: 'https://doria-macaron.pages.dev',
     androidScheme: 'https',
-    hostname: 'app.doriyums.local',
-    cleartext: false
+    cleartext: false,
+    allowNavigation: ['doria-macaron.pages.dev', '*.doria-macaron.pages.dev']
   },
   android: {
     allowMixedContent: false,
