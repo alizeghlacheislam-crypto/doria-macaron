@@ -404,8 +404,8 @@ html[data-theme="maison"] .nav-settings[aria-expanded="true"]{background:rgba(22
 
 .settings-panel{
   position:absolute;top:calc(100% + 10px);
-  inset-inline-start:0;
-  width:260px;padding:10px;z-index:200;
+  inset-inline-end:0;
+  width:min(260px, calc(100vw - 32px));padding:10px;z-index:200;
   background:rgba(8,8,8,.92);
   -webkit-backdrop-filter:blur(14px) saturate(140%);
   backdrop-filter:blur(14px) saturate(140%);
@@ -466,55 +466,76 @@ html[data-theme="maison"] .sp-lang button[aria-pressed="true"]{
 html[data-theme="maison"] .sp-item{color:#3A1F1F;}
 html[data-theme="maison"] .sp-item:hover{background:rgba(224,149,158,.14);}
 html[data-theme="maison"] .sp-item svg{color:#9C5666;}
+/* Accent variant for primary CTA (download app) */
+.sp-item-accent{
+  background:rgba(224,149,158,.18) !important;
+  font-weight:700;
+}
+.sp-item-accent:hover{background:rgba(224,149,158,.28) !important;}
 
-/* ── New: logo image (replaces "Alger" text) on the right of brand ── */
-.logo-loc{
-  padding-inline-start:14px;
-  border-inline-start:1px solid rgba(212,175,55,.45);
-  background:none;
-}
-.logo-loc img{
-  width:38px;height:38px;border-radius:50%;
+/* ─── 3-zone nav: settings (LEFT) | brand text (CENTER) | logo (RIGHT) ─── */
+.nav .wrap{position:relative;}
+.logo{gap:0;padding:0;}
+.nav .logo-mark,.nav .logo-name,.nav .logo-loc{display:none !important;}
+.nav-logo-img{
+  width:44px;height:44px;border-radius:50%;
   display:block;object-fit:contain;
-  filter:drop-shadow(0 2px 6px rgba(0,0,0,.18));
+  filter:drop-shadow(0 2px 6px rgba(156,86,102,.22));
 }
-html[data-theme="maison"] .logo-loc{border-inline-start-color:rgba(224,149,158,.45);}
+.nav-brand{
+  position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Cormorant Garamond',serif;
+  font-size:24px;font-weight:500;letter-spacing:.16em;
+  color:var(--gold);
+  white-space:nowrap;text-decoration:none;
+}
+html[data-theme="maison"] .nav-brand{color:#9C5666;}
+@media (max-width:540px){
+  .nav-brand{font-size:21px;letter-spacing:.12em;}
+  .nav-logo-img{width:40px;height:40px;}
+}
+/* hide menu links on mobile/tablet so 3-zone layout stays clean */
+@media (max-width:860px){
+  .nav-menu{display:none !important;}
+}
+
+/* ─── Hero gallery smoothness on mobile (cut expensive transitions) ─── */
+@media (max-width:860px){
+  .frame{
+    /* only transform + opacity + filter — these are GPU-only, never reflow */
+    transition:
+      transform .55s cubic-bezier(.22,.61,.36,1),
+      opacity .35s cubic-bezier(.22,.61,.36,1),
+      filter .35s cubic-bezier(.22,.61,.36,1) !important;
+    will-change:transform,opacity;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    transform-style:preserve-3d;
+  }
+  .frame.is-active{
+    /* drop the second/third box-shadows on mobile — keep just one for depth */
+    box-shadow:0 18px 36px rgba(0,0,0,.55),0 0 0 1px var(--gilt-edge) !important;
+  }
+  .gframe{
+    /* simpler shadow stack on mobile */
+    box-shadow:
+      0 14px 28px rgba(0,0,0,.45),
+      inset 0 1px 1px rgba(255,248,220,.5),
+      0 0 0 1px var(--gilt-edge) !important;
+  }
+  .gframe .glass{display:none;}
+  /* hint browser these layers stay on GPU */
+  .stage,.track{will-change:transform;contain:layout style paint;}
+}
 
 /* ─── #4: cream placeholder under catalog images so cards don't flash dark ─── */
 .card-frame .mat,.card-frame .art{background-color:#FBF4E4;}
 html:not([data-theme="maison"]) .card-frame .mat,
 html:not([data-theme="maison"]) .card-frame .art{background-color:#1a1208;}
 
-/* ─── #5: sticky bottom CTA bar on mobile ─── */
-.mobile-cta{display:none;}
-@media (max-width:540px){
-  .mobile-cta{
-    display:block;position:fixed;left:0;right:0;bottom:0;z-index:700;
-    padding:10px 14px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));
-    background:rgba(251,244,228,.94);
-    -webkit-backdrop-filter:blur(14px) saturate(140%);
-    backdrop-filter:blur(14px) saturate(140%);
-    border-top:1px solid rgba(156,86,102,.18);
-  }
-  html:not([data-theme="maison"]) .mobile-cta{background:rgba(8,8,8,.9);border-top-color:rgba(212,175,55,.2);}
-  .mobile-cta-btn{
-    display:flex;align-items:center;justify-content:center;gap:10px;
-    width:100%;padding:13px 18px;
-    background:#25D366;color:#fff;
-    border:0;border-radius:10px;cursor:pointer;
-    font-family:var(--ar-body);font-weight:700;font-size:15px;
-    text-decoration:none;letter-spacing:.02em;
-    box-shadow:0 6px 18px rgba(37,211,102,.4);
-    transition:transform .15s var(--ease);
-  }
-  .mobile-cta-btn:active{transform:scale(.97);}
-  .mobile-cta-btn svg{width:22px;height:22px;flex-shrink:0;}
-  /* push body so sticky CTA doesn't cover footer content */
-  body{padding-bottom:78px;}
-  /* hide floating WA since the bar replaces it */
-  .social-dock .wa{display:none;}
-  .social-dock{bottom:88px;}
-}
+/* ─── #5: REMOVED — kept original floating WhatsApp dock instead ─── */
+.mobile-cta{display:none !important;}
 
 /* ─── #7: PWA install banner ─── */
 .install-banner{
@@ -1610,10 +1631,9 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
 <header class="nav" id="nav">
   <div class="wrap">
     <a href="#top" class="logo" aria-label="Dori Yums">
-      <span class="logo-mark" aria-hidden="true"></span>
-      <span class="logo-name">Dori Yums</span>
-      <span class="logo-loc"><img src="logo.webp" alt="" width="38" height="38" loading="eager" decoding="async" /></span>
+      <img src="logo.webp" alt="" width="44" height="44" loading="eager" decoding="async" class="nav-logo-img" />
     </a>
+    <a href="#top" class="nav-brand">Dori Yums</a>
     <nav class="nav-menu" id="navMenu" aria-label="القائمة الرئيسية">
       <ul class="nav-links">
         <li><a href="#gallery" data-i18n="nav.gallery">المعرض</a></li>
@@ -1645,6 +1665,10 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
           </button>
         </div>
         <div class="sp-section">
+          <a class="sp-item sp-item-accent" href="download.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>حمّل التطبيق على هاتفك</span>
+          </a>
           <a class="sp-item" id="spWhatsapp" href="https://wa.me/213551401704" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>
             <span>تواصل واتساب</span>
@@ -1740,6 +1764,7 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
         <ul class="footer-links">
           <li><a href="#catalog" data-i18n="nav.collection">المجموعة</a></li>
           <li><a href="#contact" data-i18n="nav.contact">التواصل</a></li>
+          <li><a href="download.html" style="color:#F2C2C9;font-weight:700;">📱 حمّل التطبيق</a></li>
         </ul>
       </div>
       <div class="fcol-contact">
@@ -1754,14 +1779,6 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
     <div class="footer-bottom">© <span class="lat">2026</span> Dori Yums — <span data-i18n="foot.bottom">صُنع بحرفيةٍ في الجزائر</span></div>
   </div>
 </footer>
-
-<!-- mobile sticky order CTA -->
-<div class="mobile-cta" id="mobileCta">
-  <a class="mobile-cta-btn" href="https://wa.me/213551401704" target="_blank" rel="noopener" aria-label="اطلب عبر واتساب">
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>
-    اطلب الآن عبر واتساب
-  </a>
-</div>
 
 <!-- floating social dock -->
 <div class="social-dock">

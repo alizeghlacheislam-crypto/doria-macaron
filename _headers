@@ -21,3 +21,15 @@
 /manifest.webmanifest
   Content-Type: application/manifest+json
   Cache-Control: public, max-age=86400
+
+/dori-yums.apk
+  Content-Type: application/vnd.android.package-archive
+  Content-Disposition: attachment; filename="Dori-Yums.apk"
+  Cache-Control: public, max-age=3600
+  X-Content-Type-Options: nosniff
+
+/qr-download.png
+  Cache-Control: public, max-age=86400
+
+/download.html
+  Cache-Control: public, max-age=0, must-revalidate
