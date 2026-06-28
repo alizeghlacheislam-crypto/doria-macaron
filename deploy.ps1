@@ -112,7 +112,10 @@ $newVer = [ordered]@{
         en = $notesEN
     }
 }
-$newVer | ConvertTo-Json -Depth 5 | Set-Content $VersionFile -Encoding UTF8
+# Write as UTF-8 WITHOUT BOM (PowerShell's Set-Content -Encoding UTF8 adds BOM which breaks strict JSON parsers)
+$jsonText = ($newVer | ConvertTo-Json -Depth 5)
+$utf8NoBom = New-Object System.Text.UTF8Encoding $false
+[System.IO.File]::WriteAllText($VersionFile, $jsonText, $utf8NoBom)
 OK "version.json -> versionCode=$newCode"
 
 # ----------------------------------------------------------------
