@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8" />
@@ -1875,4 +1875,131 @@ html:not([data-theme="maison"]) .del-allwilayas svg{color:var(--gold);}
       <div class="fcol-contact">
         <h4 data-i18n="foot.contact">تواصل معنا</h4>
         <div class="footer-contact">
-          <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.
+          <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><span class="wa-num lat">+213 0 00 00 00 00</span></div>
+          <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="foot.addr">الجزائر العاصمة، الجزائر</span></div>
+          <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="foot.hours">كل يوم — 9 ص حتى 8 م</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">© <span class="lat">2026</span> Dori Yums — <span data-i18n="foot.bottom">صُنع بحرفيةٍ في الجزائر</span></div>
+  </div>
+</footer>
+
+<!-- floating social dock -->
+<div class="social-dock">
+  <a class="wa" id="waFloat" href="https://web.whatsapp.com/send?phone=213551401704" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>
+    <span class="wa-badge" id="waBadge">اطلب الآن</span>
+  </a>
+  <a class="ig" id="igFloat" href="https://www.instagram.com/dori_yums/" target="_blank" rel="noopener" aria-label="Instagram">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".9" fill="currentColor" stroke="none"/></svg>
+  </a>
+</div>
+
+<!-- custom cursor -->
+<div class="cursor-ring" id="curRing" aria-hidden="true"></div>
+<div class="cursor-dot" id="curDot" aria-hidden="true"></div>
+
+<!-- tweaks mount -->
+<div id="tweaksMount"></div>
+
+<script defer src="image-slot.js"></script>
+<script defer src="app.js"></script>
+<script defer src="features.js"></script>
+<script defer src="extras.js"></script>
+<script defer src="promo.js"></script>
+<script>
+/* Reveal safety net: force any .reveal element to show after 1.6s */
+(function(){
+  var t=setTimeout(function(){
+    document.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in');});
+  },1600);
+  window.addEventListener('load',function(){clearTimeout(t);setTimeout(function(){
+    document.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in');});
+  },800);});
+})();
+
+/* Settings panel: toggle, theme, share */
+(function(){
+  var btn=document.getElementById('navSettings');
+  var panel=document.getElementById('settingsPanel');
+  var spTheme=document.getElementById('spTheme');
+  var spShare=document.getElementById('spShare');
+  if(!btn||!panel) return;
+  function close(){panel.classList.remove('open');panel.setAttribute('aria-hidden','true');btn.setAttribute('aria-expanded','false');}
+  function open(){panel.classList.add('open');panel.setAttribute('aria-hidden','false');btn.setAttribute('aria-expanded','true');}
+  btn.addEventListener('click',function(e){e.stopPropagation();if(panel.classList.contains('open'))close();else open();});
+  document.addEventListener('click',function(e){if(!panel.classList.contains('open'))return;if(panel.contains(e.target)||btn.contains(e.target))return;close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  function applyThemeLabel(){var dark=document.documentElement.getAttribute('data-theme')!=='maison';var lbl=spTheme&&spTheme.querySelector('.sp-label');if(lbl)lbl.textContent=dark?'المظهر الفاتح':'المظهر الليلي';}
+  applyThemeLabel();
+  if(spTheme){spTheme.addEventListener('click',function(){var dark=document.documentElement.getAttribute('data-theme')!=='maison';var next=dark?'maison':'gallery';document.documentElement.setAttribute('data-theme',next);try{localStorage.setItem('doriyums_theme',next==='maison'?'light':'dark');}catch(e){}applyThemeLabel();});}
+  if(spShare){spShare.addEventListener('click',function(){var data={title:'Dori Yums — Maison de Macarons',text:'ماكارون فرنسي أصيل يُصنع يدويًا في الجزائر',url:location.origin+location.pathname};if(navigator.share){navigator.share(data).catch(function(){});}else if(navigator.clipboard){navigator.clipboard.writeText(data.url).then(function(){spShare.querySelector('span').textContent='تم نسخ الرابط ✓';setTimeout(function(){spShare.querySelector('span').textContent='مشاركة التطبيق';},1800);});}});}
+})();
+
+/* Haptic feedback */
+(function(){
+  if(!('vibrate' in navigator)) return;
+  document.addEventListener('click',function(e){
+    var sel='button, .order-btn, .filter, .sp-item, .sp-lang button, .nav-settings, .cr-order';
+    if(e.target.closest&&e.target.closest(sel)) navigator.vibrate(12);
+  },{passive:true});
+})();
+
+/* In-app update checker - fires on every launch */
+(function(){
+  var APP_VERSION_CODE = 17;
+  var VERSION_URL = 'https://doria-macaron.pages.dev/version.json';
+  var BANNER_SHOW_DELAY = 4500;
+  var isStandalone = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches;
+  var isCapacitor  = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
+  if (!isStandalone && !isCapacitor) return;
+  function store(k, v){ try{ if(v==null) return localStorage.getItem(k); localStorage.setItem(k,v);}catch(e){} }
+  function lang(){ return (document.documentElement.lang || 'ar'); }
+  function checkUpdate(){
+    fetch(VERSION_URL + '?t=' + Date.now(), { cache: 'no-store' })
+      .then(function(r){ if(!r.ok) throw new Error('bad'); return r.json(); })
+      .then(function(info){
+        if (!info || !info.versionCode) return;
+        if (info.versionCode <= APP_VERSION_CODE) return;
+        if (store('doriyums_dismissed_v') === String(info.versionCode)) return;
+        setTimeout(function(){ showBanner(info); }, BANNER_SHOW_DELAY);
+      }).catch(function(){});
+  }
+  function showBanner(info){
+    if (document.getElementById('updateBanner')) return;
+    var notes = (info.notes && info.notes[lang()]) || (info.notes && info.notes.ar) || '';
+    var mandatory = !!info.mandatory;
+    var b = document.createElement('div');
+    b.className = 'update-banner';
+    b.id = 'updateBanner';
+    b.innerHTML =
+      '<div class="ub-head"><div class="ub-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div><div class="ub-title">تحديث متاح للتطبيق<span class="ub-version">النسخة ' + (info.versionName||'') + '</span></div>' + (mandatory?'':'<button class="ub-close" type="button" aria-label="إغلاق">×</button>') + '</div>' +
+      (notes ? '<p class="ub-notes">' + notes.replace(/[<>]/g,'') + '</p>' : '') +
+      '<div class="ub-actions"><a class="ub-install" href="' + (info.directApkUrl || 'https://doria-macaron.pages.dev/dori-yums.apk') + '" target="_blank" rel="noopener" download>حمّل التحديث</a>' + (mandatory?'':'<button class="ub-later" type="button">لاحقاً</button>') + '</div>';
+    document.body.appendChild(b);
+    requestAnimationFrame(function(){ b.classList.add('show'); });
+    function dismiss(remember){if (mandatory) return;if (remember) store('doriyums_dismissed_v', String(info.versionCode));b.classList.remove('show');setTimeout(function(){ if(b.parentNode) b.parentNode.removeChild(b); }, 400);}
+    var c = b.querySelector('.ub-close'); if (c) c.addEventListener('click', function(){ dismiss(true); });
+    var l = b.querySelector('.ub-later'); if (l) l.addEventListener('click', function(){ dismiss(false); });
+    b.querySelector('.ub-install').addEventListener('click', function(){ dismiss(true); });
+  }
+  setTimeout(checkUpdate, 3000);
+  setInterval(checkUpdate, 60 * 60 * 1000);
+})();
+
+/* Pull-to-refresh */
+(function(){
+  if(!('ontouchstart' in window)) return;
+  var startY=0,curY=0,pulling=false,threshold=72;
+  var ind=document.createElement('div');
+  ind.className='ptr-indicator';
+  ind.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-9 9c-2.5 0-4.78-1.02-6.42-2.66"/><path d="M3 12a9 9 0 0 1 9-9c2.5 0 4.78 1.02 6.42 2.66"/><polyline points="21 3 21 9 15 9"/><polyline points="3 21 3 15 9 15"/></svg>';
+  document.body.appendChild(ind);
+  document.addEventListener('touchstart',function(e){if(window.scrollY<=0){startY=e.touches[0].clientY;pulling=true;}},{passive:true});
+  document.addEventListener('touchmove',function(e){if(!pulling)return;curY=e.touches[0].clientY;var d=Math.min(curY-startY,threshold*1.6);if(d>5){ind.style.opacity=Math.min(d/threshold,1);ind.style.transform='translateY('+d+'px) rotate('+(d*3.5)+'deg)';}},{passive:true});
+  document.addEventListener('touchend',function(){if(!pulling)return;var d=curY-startY;if(d>threshold){ind.classList.add('refreshing');ind.style.transform='translateY('+threshold+'px)';ind.style.opacity='1';setTimeout(function(){location.reload();},320);}else{ind.style.transform='';ind.style.opacity='';}pulling=false;startY=curY=0;},{passive:true});
+})();
+</script>
+</body>
+</html>
