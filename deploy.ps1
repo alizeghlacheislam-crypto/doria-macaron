@@ -131,15 +131,18 @@ $htmlFiles = @(
 $pattern = "var APP_VERSION_CODE = \d+;"
 $replace = "var APP_VERSION_CODE = $newCode;"
 
+$utf8NoBomEnc = New-Object System.Text.UTF8Encoding $false
 foreach ($f in $htmlFiles) {
     if (-not (Test-Path $f)) { Warn "Missing: $f - skipping"; continue }
-    $content = Get-Content $f -Raw
+    # CRITICAL: read with explicit UTF-8 - otherwise Windows-1252 default corrupts Arabic
+    $content = [System.IO.File]::ReadAllText($f, [System.Text.Encoding]::UTF8)
     if ($content -notmatch $pattern) {
         Warn "$([System.IO.Path]::GetFileName($f)): no APP_VERSION_CODE line found - skipping"
         continue
     }
     $newContent = $content -replace $pattern, $replace
-    Set-Content -Path $f -Value $newContent -Encoding UTF8 -NoNewline
+    # Write back as UTF-8 without BOM (browsers/PowerShell-strict-mode prefer no-BOM)
+    [System.IO.File]::WriteAllText($f, $newContent, $utf8NoBomEnc)
     OK "Synced $([System.IO.Path]::GetFileName($f))"
 }
 
