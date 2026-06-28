@@ -1,8 +1,10 @@
 /* Dori Yums — minimal service worker (offline-first caching) */
-var CACHE = 'doriyums-v14';
+var CACHE = 'doriyums-v15';
+var OFFLINE_URL = 'offline.html';
 var ASSETS = [
   '/',
   'index.html',
+  'offline.html',
   'logo.png',
   'app.js',
   'features.js',
@@ -26,9 +28,6 @@ var ASSETS = [
   'images/m-coconut-choc.webp',
   'images/m-pecan.webp',
   'images/m-strawberry.webp',
-  'atelier-0.webp',
-  'atelier-2.webp',
-  'atelier-3.webp',
   'macarons_hero.webp'
 ];
 self.addEventListener('install', function (e) {
@@ -58,7 +57,10 @@ self.addEventListener('fetch', function (e) {
         caches.open(CACHE).then(function (c) { c.put(e.request, copy).catch(function(){}); });
         return resp;
       }).catch(function () {
-        return cached || caches.match('index.html');
+        if (e.request.mode === 'navigate' || (e.request.headers.get('accept')||'').indexOf('text/html') > -1) {
+          return cached || caches.match(OFFLINE_URL) || caches.match('index.html');
+        }
+        return cached;
       });
     })
   );

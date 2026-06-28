@@ -1,0 +1,25 @@
+{
+  "name": "doriyums-app",
+  "version": "1.0.0",
+  "description": "Dori Yums — Maison de Macarons Android wrapper",
+  "private": true,
+  "author": "AZIK Studio",
+  "license": "UNLICENSED",
+  "scripts": {
+    "cap:sync": "cap sync android",
+    "cap:open": "cap open android",
+    "android:debug": "cd android && gradlew.bat assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.2.1",
+    "@capacitor/app": "^6.0.3",
+    "@capacitor/cli": "^6.2.1",
+    "@capacitor/core": "^6.2.1",
+    "@capacitor/preferences": "^6.0.4",
+    "@capacitor/splash-screen": "^6.0.4",
+    "@capacitor/status-bar": "^6.0.3"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5"
+  }
+}

@@ -1,2 +1,18 @@
 
 .thumbnail
+
+# Node / Capacitor
+node_modules/
+
+# Android
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/.idea/
+
+# Keystores / signing
+*.keystore
+*.jks
+key.properties
+android/key.properties

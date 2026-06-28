@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Dori Yums — معرض الماكارون الفاخر · الجزائر</title>
-<script>(function(){try{var l=localStorage.getItem('doriyums_lang')||'ar';if(l!=='en')l='ar';document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';document.documentElement.setAttribute('data-theme','maison');}catch(e){}})();</script>
+<script>(function(){try{var l=localStorage.getItem('doriyums_lang')||'ar';if(l!=='fr'&&l!=='en')l='ar';document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';var th=localStorage.getItem('doriyums_theme');document.documentElement.setAttribute('data-theme',th==='dark'?'gallery':'maison');}catch(e){document.documentElement.setAttribute('data-theme','maison');}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@400;500;600&family=Tajawal:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@400;500;600&family=Tajawal:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" /></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" /></noscript>
 <link rel="preload" as="image" href="logo.webp" fetchpriority="high" type="image/webp" />
 <link rel="preload" as="image" href="images/m-rose.webp" fetchpriority="high" type="image/webp" />
 <!-- Open Graph / Social Sharing -->
@@ -383,7 +383,187 @@ html[data-theme="maison"] .theme-toggle::after{ opacity:1; }
 }
 .nav-cta:hover{background:var(--gold);color:#0A0A0A;box-shadow:0 8px 30px rgba(212,175,55,.28);}
 .nav-menu .nav-cta{display:none;} /* in-menu CTA only shows on mobile */
-.nav-actions{display:flex;align-items:center;gap:14px;}
+.nav-actions{display:flex;align-items:center;gap:14px;position:relative;}
+
+/* ── New: settings gear + dropdown panel ────────────────────────── */
+.nav-settings{
+  appearance:none;background:transparent;cursor:pointer;
+  width:42px;height:42px;border-radius:50%;
+  border:1px solid rgba(212,175,55,.45);color:var(--gold);
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:background .25s var(--ease),border-color .25s var(--ease),color .25s var(--ease);
+}
+.nav-settings svg{width:22px;height:22px;transition:transform .5s var(--ease);}
+.nav-settings:hover{background:rgba(212,175,55,.12);}
+.nav-settings:hover svg{transform:rotate(45deg);}
+.nav-settings[aria-expanded="true"]{background:rgba(212,175,55,.18);}
+.nav-settings[aria-expanded="true"] svg{transform:rotate(90deg);}
+html[data-theme="maison"] .nav-settings{border-color:rgba(224,149,158,.5);color:#9C5666;}
+html[data-theme="maison"] .nav-settings:hover{background:rgba(224,149,158,.12);}
+html[data-theme="maison"] .nav-settings[aria-expanded="true"]{background:rgba(224,149,158,.18);}
+
+.settings-panel{
+  position:absolute;top:calc(100% + 10px);
+  inset-inline-start:0;
+  width:260px;padding:10px;z-index:200;
+  background:rgba(8,8,8,.92);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  backdrop-filter:blur(14px) saturate(140%);
+  border:1px solid rgba(212,175,55,.35);
+  border-radius:12px;
+  box-shadow:0 24px 50px rgba(0,0,0,.45);
+  font-family:var(--ar-body);
+  opacity:0;transform:translateY(-8px) scale(.97);
+  pointer-events:none;
+  transition:opacity .22s var(--ease),transform .22s var(--ease);
+}
+html[data-theme="maison"] .settings-panel{
+  background:linear-gradient(160deg,#FFFAEC,#F5EBD1);
+  border-color:rgba(224,149,158,.45);
+  box-shadow:0 20px 44px rgba(156,86,102,.22);
+}
+.settings-panel.open{opacity:1;transform:none;pointer-events:auto;}
+.sp-section{padding:8px 4px;border-bottom:1px solid rgba(212,175,55,.18);}
+.sp-section:last-child{border-bottom:0;}
+html[data-theme="maison"] .sp-section{border-bottom-color:rgba(156,86,102,.14);}
+.sp-section h5{
+  font-family:var(--ar-body);font-size:11px;font-weight:600;
+  margin:0 0 8px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--gold);opacity:.85;
+}
+html[data-theme="maison"] .sp-section h5{color:#9C5666;}
+
+.sp-lang{display:flex;gap:6px;}
+.sp-lang button{
+  flex:1;appearance:none;cursor:pointer;
+  background:transparent;color:var(--champagne);
+  border:1px solid rgba(212,175,55,.35);border-radius:7px;
+  padding:8px 0;font-size:12.5px;font-weight:600;
+  font-family:var(--ar-body);
+  transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease);
+}
+.sp-lang button:hover{background:rgba(212,175,55,.12);}
+.sp-lang button[aria-pressed="true"]{
+  background:var(--gold);color:#0A0A0A;border-color:var(--gold);
+}
+html[data-theme="maison"] .sp-lang button{color:#3A1F1F;border-color:rgba(156,86,102,.3);}
+html[data-theme="maison"] .sp-lang button:hover{background:rgba(224,149,158,.14);}
+html[data-theme="maison"] .sp-lang button[aria-pressed="true"]{
+  background:#9C5666;color:#FFFAEC;border-color:#9C5666;
+}
+
+.sp-item{
+  display:flex;align-items:center;gap:10px;
+  width:100%;background:transparent;border:0;
+  text-align:start;text-decoration:none;cursor:pointer;
+  padding:10px 8px;border-radius:7px;
+  color:var(--champagne);font-size:14px;
+  font-family:var(--ar-body);
+  transition:background .18s var(--ease);
+}
+.sp-item:hover{background:rgba(212,175,55,.10);}
+.sp-item svg{width:18px;height:18px;flex-shrink:0;color:var(--gold);}
+html[data-theme="maison"] .sp-item{color:#3A1F1F;}
+html[data-theme="maison"] .sp-item:hover{background:rgba(224,149,158,.14);}
+html[data-theme="maison"] .sp-item svg{color:#9C5666;}
+
+/* ── New: logo image (replaces "Alger" text) on the right of brand ── */
+.logo-loc{
+  padding-inline-start:14px;
+  border-inline-start:1px solid rgba(212,175,55,.45);
+  background:none;
+}
+.logo-loc img{
+  width:38px;height:38px;border-radius:50%;
+  display:block;object-fit:contain;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.18));
+}
+html[data-theme="maison"] .logo-loc{border-inline-start-color:rgba(224,149,158,.45);}
+
+/* ─── #4: cream placeholder under catalog images so cards don't flash dark ─── */
+.card-frame .mat,.card-frame .art{background-color:#FBF4E4;}
+html:not([data-theme="maison"]) .card-frame .mat,
+html:not([data-theme="maison"]) .card-frame .art{background-color:#1a1208;}
+
+/* ─── #5: sticky bottom CTA bar on mobile ─── */
+.mobile-cta{display:none;}
+@media (max-width:540px){
+  .mobile-cta{
+    display:block;position:fixed;left:0;right:0;bottom:0;z-index:700;
+    padding:10px 14px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));
+    background:rgba(251,244,228,.94);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+    backdrop-filter:blur(14px) saturate(140%);
+    border-top:1px solid rgba(156,86,102,.18);
+  }
+  html:not([data-theme="maison"]) .mobile-cta{background:rgba(8,8,8,.9);border-top-color:rgba(212,175,55,.2);}
+  .mobile-cta-btn{
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    width:100%;padding:13px 18px;
+    background:#25D366;color:#fff;
+    border:0;border-radius:10px;cursor:pointer;
+    font-family:var(--ar-body);font-weight:700;font-size:15px;
+    text-decoration:none;letter-spacing:.02em;
+    box-shadow:0 6px 18px rgba(37,211,102,.4);
+    transition:transform .15s var(--ease);
+  }
+  .mobile-cta-btn:active{transform:scale(.97);}
+  .mobile-cta-btn svg{width:22px;height:22px;flex-shrink:0;}
+  body{padding-bottom:78px;}
+  .social-dock .wa{display:none;}
+  .social-dock{bottom:88px;}
+}
+
+/* ─── #7: PWA install banner ─── */
+.install-banner{
+  position:fixed;left:50%;bottom:18px;transform:translate(-50%,140%);
+  width:min(92vw,420px);padding:12px 14px;z-index:800;
+  display:flex;align-items:center;gap:12px;
+  background:linear-gradient(155deg,#FFFAEC,#F5EBD1);
+  border:1px solid rgba(224,149,158,.45);
+  border-radius:14px;
+  box-shadow:0 20px 50px rgba(156,86,102,.28);
+  font-family:var(--ar-body);
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1);
+}
+.install-banner.show{transform:translate(-50%,0);}
+.install-banner img{width:44px;height:44px;border-radius:50%;flex-shrink:0;}
+.install-banner .ib-text{flex:1;min-width:0;}
+.install-banner .ib-text b{display:block;color:#3A1F1F;font-size:14px;font-weight:700;line-height:1.25;}
+.install-banner .ib-text span{display:block;color:#7A5C5C;font-size:12px;margin-top:2px;}
+.install-banner .ib-install{
+  appearance:none;background:#9C5666;color:#FFFAEC;border:0;cursor:pointer;
+  padding:9px 16px;border-radius:8px;font-family:var(--ar-body);font-size:13px;font-weight:700;
+  white-space:nowrap;
+}
+.install-banner .ib-install:hover{background:#7d4252;}
+.install-banner .ib-close{
+  appearance:none;background:transparent;border:0;cursor:pointer;
+  width:30px;height:30px;border-radius:50%;color:#9C5666;font-size:22px;line-height:1;
+  flex-shrink:0;
+}
+.install-banner .ib-close:hover{background:rgba(156,86,102,.1);}
+@media (max-width:540px){.install-banner{bottom:90px;}}
+
+/* ─── #9: View Transitions API ─── */
+@supports (view-transition-name:none){
+  ::view-transition-old(root),::view-transition-new(root){animation-duration:.32s;}
+}
+
+/* ─── #10: pull-to-refresh indicator ─── */
+.ptr-indicator{
+  position:fixed;top:12px;left:50%;margin-inline-start:-18px;
+  width:36px;height:36px;z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(251,244,228,.96);
+  border:1px solid rgba(156,86,102,.3);border-radius:50%;
+  color:#9C5666;opacity:0;pointer-events:none;
+  box-shadow:0 6px 16px rgba(0,0,0,.18);
+  transition:opacity .2s var(--ease);
+}
+.ptr-indicator svg{width:18px;height:18px;}
+.ptr-indicator.refreshing svg{animation:ptrSpin .8s linear infinite;}
+@keyframes ptrSpin{to{transform:rotate(360deg);}}
 
 /* language switch */
 .lang-switch{
@@ -1427,10 +1607,10 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
 <!-- ══════════ NAV ══════════ -->
 <header class="nav" id="nav">
   <div class="wrap">
-    <a href="#top" class="logo" aria-label="Dori Yums — Alger">
+    <a href="#top" class="logo" aria-label="Dori Yums">
       <span class="logo-mark" aria-hidden="true"></span>
       <span class="logo-name">Dori Yums</span>
-      <span class="logo-loc"><svg class="pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Alger</span>
+      <span class="logo-loc"><img src="logo.webp" alt="" width="38" height="38" loading="eager" decoding="async" /></span>
     </a>
     <nav class="nav-menu" id="navMenu" aria-label="القائمة الرئيسية">
       <ul class="nav-links">
@@ -1441,11 +1621,38 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
       <button class="nav-cta order-btn" type="button" data-i18n="nav.order">اطلب الآن</button>
     </nav>
     <div class="nav-actions">
-      <div class="lang-switch" id="langSwitch" role="group" aria-label="Language / اللغة">
-        <button type="button" data-lang="en" aria-pressed="false" aria-label="English">EN</button>
-        <button type="button" data-lang="ar" aria-pressed="true" aria-label="العربية">AR</button>
+      <button class="nav-settings" id="navSettings" type="button" aria-label="الإعدادات" aria-expanded="false" aria-controls="settingsPanel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+      </button>
+      <div class="settings-panel" id="settingsPanel" role="menu" aria-hidden="true">
+        <div class="sp-section">
+          <h5>اللغة · Langue</h5>
+          <div class="sp-lang" id="langSwitch" role="group" aria-label="Language">
+            <button type="button" data-lang="ar" aria-pressed="true">العربية</button>
+            <button type="button" data-lang="fr" aria-pressed="false">Français</button>
+            <button type="button" data-lang="en" aria-pressed="false">English</button>
+          </div>
+        </div>
+        <div class="sp-section">
+          <button type="button" class="sp-item sp-theme" id="spTheme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <span class="sp-label">المظهر الليلي</span>
+          </button>
+        </div>
+        <div class="sp-section">
+          <a class="sp-item" id="spWhatsapp" href="https://wa.me/213551401704" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>
+            <span>تواصل واتساب</span>
+          </a>
+          <button type="button" class="sp-item" id="spShare">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            <span>مشاركة التطبيق</span>
+          </button>
+        </div>
       </div>
-      <button class="nav-cta order-btn nav-cta-desktop" type="button" data-i18n="nav.order">اطلب الآن</button>
     </div>
   </div>
 </header>
@@ -1546,6 +1753,14 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
   </div>
 </footer>
 
+<!-- mobile sticky order CTA -->
+<div class="mobile-cta" id="mobileCta">
+  <a class="mobile-cta-btn" href="https://wa.me/213551401704" target="_blank" rel="noopener" aria-label="اطلب عبر واتساب">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>
+    اطلب الآن عبر واتساب
+  </a>
+</div>
+
 <!-- floating social dock -->
 <div class="social-dock">
   <a class="wa" id="waFloat" href="https://web.whatsapp.com/send?phone=213551401704" target="_blank" rel="noopener" aria-label="WhatsApp">
@@ -1579,6 +1794,142 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
   window.addEventListener('load',function(){clearTimeout(t);setTimeout(function(){
     document.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in');});
   },800);});
+})();
+
+/* Settings panel: toggle, theme, share, outside-click close, ESC close */
+(function(){
+  var btn=document.getElementById('navSettings');
+  var panel=document.getElementById('settingsPanel');
+  var spTheme=document.getElementById('spTheme');
+  var spShare=document.getElementById('spShare');
+  if(!btn||!panel) return;
+
+  function close(){
+    panel.classList.remove('open');
+    panel.setAttribute('aria-hidden','true');
+    btn.setAttribute('aria-expanded','false');
+  }
+  function open(){
+    panel.classList.add('open');
+    panel.setAttribute('aria-hidden','false');
+    btn.setAttribute('aria-expanded','true');
+  }
+  btn.addEventListener('click',function(e){
+    e.stopPropagation();
+    if(panel.classList.contains('open')) close(); else open();
+  });
+  document.addEventListener('click',function(e){
+    if(!panel.classList.contains('open')) return;
+    if(panel.contains(e.target)||btn.contains(e.target)) return;
+    close();
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape') close();
+  });
+
+  /* Theme toggle */
+  function applyThemeLabel(){
+    var dark=document.documentElement.getAttribute('data-theme')!=='maison';
+    var lbl=spTheme&&spTheme.querySelector('.sp-label');
+    if(lbl) lbl.textContent=dark?'المظهر الفاتح':'المظهر الليلي';
+  }
+  applyThemeLabel();
+  if(spTheme){
+    spTheme.addEventListener('click',function(){
+      var dark=document.documentElement.getAttribute('data-theme')!=='maison';
+      var next=dark?'maison':'gallery';
+      document.documentElement.setAttribute('data-theme',next);
+      try{localStorage.setItem('doriyums_theme',next==='maison'?'light':'dark');}catch(e){}
+      applyThemeLabel();
+    });
+  }
+
+  /* Share */
+  if(spShare){
+    spShare.addEventListener('click',function(){
+      var data={title:'Dori Yums — Maison de Macarons',text:'ماكارون فرنسي أصيل يُصنع يدويًا في الجزائر',url:location.origin+location.pathname};
+      if(navigator.share){navigator.share(data).catch(function(){});}
+      else if(navigator.clipboard){
+        navigator.clipboard.writeText(data.url).then(function(){
+          spShare.querySelector('span').textContent='تم نسخ الرابط ✓';
+          setTimeout(function(){spShare.querySelector('span').textContent='مشاركة التطبيق';},1800);
+        });
+      }
+    });
+  }
+})();
+
+/* #6 Haptic feedback */
+(function(){
+  if(!('vibrate' in navigator)) return;
+  document.addEventListener('click',function(e){
+    var sel='button, .order-btn, .filter, .sp-item, .sp-lang button, .mobile-cta-btn, .nav-settings, .cr-order';
+    if(e.target.closest&&e.target.closest(sel)) navigator.vibrate(12);
+  },{passive:true});
+})();
+
+/* #7 PWA install banner */
+(function(){
+  var deferred=null,shown=false;
+  window.addEventListener('beforeinstallprompt',function(e){
+    e.preventDefault();deferred=e;
+    if(shown) return;
+    setTimeout(showBanner,30000);
+  });
+  function showBanner(){
+    if(!deferred||shown) return;
+    if(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches) return;
+    try{if(localStorage.getItem('doriyums_install_dismissed')) return;}catch(e){}
+    shown=true;
+    var b=document.createElement('div');
+    b.className='install-banner';
+    b.innerHTML='<img src="logo.webp" alt="" /><div class="ib-text"><b>ثبّت Dori Yums</b><span>تجربة أسرع وبدون متصفّح</span></div><button class="ib-install" type="button">تثبيت</button><button class="ib-close" type="button" aria-label="إغلاق">×</button>';
+    document.body.appendChild(b);
+    requestAnimationFrame(function(){b.classList.add('show');});
+    b.querySelector('.ib-install').addEventListener('click',function(){
+      if(deferred){deferred.prompt();deferred=null;}
+      b.classList.remove('show');setTimeout(function(){b.remove();},350);
+    });
+    b.querySelector('.ib-close').addEventListener('click',function(){
+      try{localStorage.setItem('doriyums_install_dismissed','1');}catch(e){}
+      b.classList.remove('show');setTimeout(function(){b.remove();},350);
+    });
+  }
+})();
+
+/* #10 Pull-to-refresh */
+(function(){
+  if(!('ontouchstart' in window)) return;
+  var startY=0,curY=0,pulling=false,threshold=72;
+  var ind=document.createElement('div');
+  ind.className='ptr-indicator';
+  ind.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-9 9c-2.5 0-4.78-1.02-6.42-2.66"/><path d="M3 12a9 9 0 0 1 9-9c2.5 0 4.78 1.02 6.42 2.66"/><polyline points="21 3 21 9 15 9"/><polyline points="3 21 3 15 9 15"/></svg>';
+  document.body.appendChild(ind);
+  document.addEventListener('touchstart',function(e){
+    if(window.scrollY<=0){startY=e.touches[0].clientY;pulling=true;}
+  },{passive:true});
+  document.addEventListener('touchmove',function(e){
+    if(!pulling) return;
+    curY=e.touches[0].clientY;
+    var d=Math.min(curY-startY,threshold*1.6);
+    if(d>5){
+      ind.style.opacity=Math.min(d/threshold,1);
+      ind.style.transform='translateY('+d+'px) rotate('+(d*3.5)+'deg)';
+    }
+  },{passive:true});
+  document.addEventListener('touchend',function(){
+    if(!pulling) return;
+    var d=curY-startY;
+    if(d>threshold){
+      ind.classList.add('refreshing');
+      ind.style.transform='translateY('+threshold+'px)';
+      ind.style.opacity='1';
+      setTimeout(function(){location.reload();},320);
+    }else{
+      ind.style.transform='';ind.style.opacity='';
+    }
+    pulling=false;startY=curY=0;
+  },{passive:true});
 })();
 </script>
 </body>
