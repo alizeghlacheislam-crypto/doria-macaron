@@ -76,7 +76,8 @@ $notesFR = ""
 $notesEN = ""
 
 if ($Quick) {
-    $notesAR = "تحديث وتحسينات"
+    # Build Arabic from Unicode escapes to avoid PowerShell encoding issues
+    $notesAR = [char]0x062A + [char]0x062D + [char]0x062F + [char]0x064A + [char]0x062B + [char]0x0020 + [char]0x0648 + [char]0x062A + [char]0x062D + [char]0x0633 + [char]0x064A + [char]0x0646 + [char]0x0627 + [char]0x062A
     $notesFR = "Mises a jour et ameliorations"
     $notesEN = "Updates and improvements"
     Info "Quick mode: using default notes"
