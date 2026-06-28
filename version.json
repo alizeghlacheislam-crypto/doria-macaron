@@ -1,13 +1,13 @@
 {
-  "versionCode": 5,
-  "versionName": "1.0.4",
-  "released": "2026-06-28",
-  "downloadUrl": "https://doria-macaron.pages.dev/download.html",
-  "directApkUrl": "https://doria-macaron.pages.dev/dori-yums.apk",
-  "mandatory": false,
-  "notes": {
-    "ar": "تحسين تجربة تحديث التطبيق",
-    "fr": "Mise a jour du systeme de notifications",
-    "en": "Notification system update"
-  }
+    "versionCode":  6,
+    "versionName":  "1.0.5",
+    "released":  "2026-06-28",
+    "downloadUrl":  "https://doria-macaron.pages.dev/download.html",
+    "directApkUrl":  "https://doria-macaron.pages.dev/dori-yums.apk",
+    "mandatory":  false,
+    "notes":  {
+                  "ar":  "تحديث وتحسينات",
+                  "fr":  "Mises a jour et ameliorations",
+                  "en":  "Updates and improvements"
+              }
 }
