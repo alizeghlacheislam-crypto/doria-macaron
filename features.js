@@ -282,10 +282,10 @@
     var host = $('#atelier-section'); if (!host) return;
     var captions = ['atelier.c1','atelier.c2','atelier.c3','atelier.c4'];
     var srcs = [
-      'images/atelier-photo-1.jpg',
-      'images/atelier-photo-2.jpg',
-      'images/atelier-photo-3.jpg',
-      'images/atelier-photo-4.jpg'
+      'atelier-0.webp',
+      'macarons_hero.webp',
+      'atelier-2.webp',
+      'atelier-3.webp'
     ];
     /* uniform 2×2 grid */
     var cells = ['','','',''];

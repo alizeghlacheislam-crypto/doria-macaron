@@ -1,0 +1,13 @@
+{
+  "versionCode": 2,
+  "versionName": "1.0.1",
+  "released": "2026-06-28",
+  "downloadUrl": "https://doria-macaron.pages.dev/download.html",
+  "directApkUrl": "https://doria-macaron.pages.dev/dori-yums.apk",
+  "mandatory": false,
+  "notes": {
+    "ar": "إصلاح زر الطلب — يبقى ظاهر دائماً في صفحة التفاصيل.",
+    "fr": "Correction du bouton commande — toujours visible sur la fiche produit.",
+    "en": "Fix: order button now stays visible on the product details page."
+  }
+}
