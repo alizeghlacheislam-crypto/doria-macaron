@@ -174,6 +174,86 @@ h1{
   font-family:monospace;font-size:13px;direction:ltr;display:inline-block;
 }
 
+/* iOS section */
+.ios-section{
+  margin-top:42px;
+  padding:28px 24px;
+  background:linear-gradient(155deg,rgba(255,250,236,.8),rgba(245,235,209,.5));
+  border:1px solid rgba(224,149,158,.3);
+  border-radius:18px;
+  box-shadow:0 14px 36px rgba(156,86,102,.08);
+}
+.ios-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 14px;border-radius:99px;
+  background:#3A1F1F;color:#FFFAEC;
+  font-size:13px;font-weight:600;letter-spacing:.04em;
+  margin-bottom:16px;
+}
+.ios-pill svg{width:18px;height:18px;}
+.ios-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:24px;font-weight:600;color:var(--brown-warm);
+  margin-bottom:8px;line-height:1.3;
+}
+.ios-sub{
+  color:var(--brown-mute);font-size:14px;line-height:1.7;
+  margin-bottom:22px;
+}
+.ios-steps{
+  display:grid;gap:14px;margin-bottom:20px;
+}
+.ios-step{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:14px;
+  background:#fff;
+  border:1px solid rgba(224,149,158,.2);
+  border-radius:12px;
+}
+.ios-num{
+  flex-shrink:0;
+  width:30px;height:30px;border-radius:50%;
+  background:var(--rose-deep);color:#FFFAEC;
+  font-family:'Cormorant Garamond',serif;font-weight:600;font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+}
+.ios-step-body{flex:1;min-width:0;}
+.ios-step-title{
+  font-size:14.5px;font-weight:700;color:var(--brown-warm);
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  margin-bottom:4px;
+}
+.ios-step-title b{color:var(--rose-deep);font-weight:700;}
+.ios-step-desc{font-size:13px;color:var(--brown-mute);line-height:1.6;}
+.ios-share{
+  display:inline-block;width:20px;height:20px;color:#007AFF;
+  vertical-align:middle;margin-inline:4px;
+}
+.ios-result{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:14px;
+  background:rgba(46,182,108,.10);
+  border:1px solid rgba(46,182,108,.3);
+  border-radius:10px;
+  font-size:13.5px;color:var(--brown-warm);line-height:1.7;
+}
+.ios-result svg{
+  width:22px;height:22px;flex-shrink:0;color:#2EB66C;margin-top:2px;
+}
+.ios-result b{color:#1F8A4E;}
+
+/* If we detect iOS, push the iOS section to the top and hide Android download */
+body.is-ios .hero .btn-download{display:none;}
+body.is-ios .hero .meta-row{display:none;}
+body.is-ios .ios-section{
+  order:-1;margin-top:0;margin-bottom:0;
+  border:2px solid var(--rose-deep);
+  background:linear-gradient(155deg,#FFFAEC,#F5EBD1);
+}
+body.is-ios .steps,body.is-ios .qr-block{display:none;}
+body.is-ios .hero .subtitle{display:none;}
+body.is-ios .hero{padding-bottom:18px;}
+
 /* QR */
 .qr-block{
   text-align:center;
@@ -317,6 +397,49 @@ details > div{
     </div>
   </div>
 
+  <!-- iOS SECTION -->
+  <section class="ios-section" id="iosSection">
+    <div class="ios-pill">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+      <span>iPhone أو iPad؟</span>
+    </div>
+    <h2 class="ios-title">أضف Dori Yums إلى شاشتك في 3 خطوات</h2>
+    <p class="ios-sub">App Store غير متاح حالياً، لكن iPhone يدعم إضافة الموقع كتطبيق كامل (يعمل بدون انترنت ويفتح كامل الشاشة).</p>
+
+    <div class="ios-steps">
+      <div class="ios-step">
+        <div class="ios-num">1</div>
+        <div class="ios-step-body">
+          <div class="ios-step-title">افتح هذي الصفحة في <b>Safari</b></div>
+          <div class="ios-step-desc">مهم: ليس Chrome ولا أي متصفّح آخر — فقط Safari الأزرق الأصلي.</div>
+        </div>
+      </div>
+      <div class="ios-step">
+        <div class="ios-num">2</div>
+        <div class="ios-step-body">
+          <div class="ios-step-title">اضغط زر <b>المشاركة</b>
+            <svg class="ios-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          </div>
+          <div class="ios-step-desc">المربّع مع السهم لأعلى — في شريط Safari السفلي.</div>
+        </div>
+      </div>
+      <div class="ios-step">
+        <div class="ios-num">3</div>
+        <div class="ios-step-body">
+          <div class="ios-step-title">اختر <b>"Add to Home Screen"</b> أو <b>"إضافة إلى الشاشة الرئيسية"</b></div>
+          <div class="ios-step-desc">سيظهر اسم "Dori Yums" — اضغط <b>Add</b> في الزاوية. الأيقونة تظهر على شاشة هاتفك مثل أي تطبيق.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ios-result">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      <div>
+        <b>النتيجة:</b> Dori Yums كتطبيق كامل على iPhone — يفتح ملء الشاشة، يعمل بدون انترنت، ويبدو تماماً مثل تطبيقات App Store.
+      </div>
+    </div>
+  </section>
+
   <!-- QR CODE -->
   <div class="qr-block">
     <img src="qr-download.png" alt="QR Code لتحميل تطبيق Dori Yums" class="qr-img" />
@@ -381,6 +504,20 @@ details > div{
   </div>
 
 </div>
+
+<script>
+/* Detect iOS so we surface the right instructions first */
+(function(){
+  var ua = navigator.userAgent || navigator.vendor || '';
+  var iOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (iOS) {
+    document.body.classList.add('is-ios');
+    /* Replace hero title for iOS context */
+    var h1 = document.querySelector('h1');
+    if (h1) h1.textContent = 'تطبيق Dori Yums على iPhone';
+  }
+})();
+</script>
 
 </body>
 </html>
