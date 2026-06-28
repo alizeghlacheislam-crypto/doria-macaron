@@ -1360,60 +1360,36 @@
 
   /* ── TOTALS ── */
   function renderDelivery() {
+    /* Simplified: no fee tiers, no option buttons - just one note + the form */
+    dDel.mode = 'far'; /* internal mode for order URL */
     $('.di-del-l', detailEl).textContent = t('del.title');
-    var fee = delFee();
-    $('.di-del-fee', detailEl).innerHTML = fee === 0
-      ? '<span class="del-free-tag">' + t('del.free') + '</span>'
-      : t('del.fee') + ' · <b>' + fee.toLocaleString('fr-FR') + ' ' + t('curr') + '</b>';
+    $('.di-del-fee', detailEl).innerHTML = '';
 
-    var opts = $('.del-opts', detailEl); opts.innerHTML = '';
-    DEL_OPTIONS.forEach(function (o) {
-      var b = el('button', 'del-opt' + (o.key === dDel.mode ? ' on' : ''));
-      b.type = 'button'; b.setAttribute('role','radio'); b.setAttribute('aria-checked', o.key === dDel.mode ? 'true' : 'false');
-      b.innerHTML =
-        '<span class="del-opt-l">' + t(o.labelK) + '</span>' +
-        '<span class="del-opt-h">' + t(o.hintK) + '</span>' +
-        '<span class="del-opt-f lat">' + (o.fee === 0 ? t('del.free') : '+' + o.fee + ' ' + t('curr')) + '</span>';
-      b.addEventListener('click', function () {
-        dDel.mode = o.key;
-        persistDel();
-        renderDelivery(); renderTotals();
-      });
-      opts.appendChild(b);
-    });
+    /* Replace option buttons with a single info card */
+    var opts = $('.del-opts', detailEl);
+    opts.innerHTML =
+      '<div class="del-allwilayas">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+          '<path d="M3 7l3-4h12l3 4M3 7v13a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V7M3 7h18M8 12h8"/>' +
+        '</svg>' +
+        '<span>' + (typeof t === 'function' && t('del.allwilayas') !== 'del.allwilayas' ? t('del.allwilayas') : 'التوصيل متوفر لجميع الولايات') + '</span>' +
+      '</div>';
 
+    /* Always render the full form (phone + address + note) */
     var form = $('.del-form', detailEl);
-    if (dDel.mode === 'pickup') {
-      form.innerHTML =
-        '<div class="del-pickup-card">' +
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' +
-          '<div><b>Alger</b> · <span class="del-pickup-phone lat"></span></div>' +
-        '</div>' +
-        '<div class="del-field">' +
-          '<label class="del-l">' + t('del.phone.l') + '</label>' +
-          '<input type="tel" class="del-phone lat" placeholder="' + t('del.phone.ph') + '" value="' + esc(dDel.phone) + '" inputmode="tel" />' +
-        '</div>' +
-        '<div class="del-field">' +
-          '<label class="del-l">' + t('del.note.l') + '</label>' +
-          '<textarea class="del-note" rows="2" placeholder="' + t('del.note.ph') + '">' + esc(dDel.note) + '</textarea>' +
-        '</div>';
-      var d = WA_NUMBER;
-      $('.del-pickup-phone', detailEl).textContent = '+' + d.slice(0, 3) + ' ' + d.slice(3).replace(/(\d{3})(?=\d)/g, '$1 ').trim();
-    } else {
-      form.innerHTML =
-        '<div class="del-field">' +
-          '<label class="del-l">' + t('del.phone.l') + ' <span class="req">*</span></label>' +
-          '<input type="tel" class="del-phone lat" placeholder="' + t('del.phone.ph') + '" value="' + esc(dDel.phone) + '" inputmode="tel" />' +
-        '</div>' +
-        '<div class="del-field">' +
-          '<label class="del-l">' + t('del.addr.l') + ' <span class="req">*</span></label>' +
-          '<input type="text" class="del-addr" placeholder="' + t('del.addr.ph') + '" value="' + esc(dDel.addr) + '" />' +
-        '</div>' +
-        '<div class="del-field">' +
-          '<label class="del-l">' + t('del.note.l') + '</label>' +
-          '<textarea class="del-note" rows="2" placeholder="' + t('del.note.ph') + '">' + esc(dDel.note) + '</textarea>' +
-        '</div>';
-    }
+    form.innerHTML =
+      '<div class="del-field">' +
+        '<label class="del-l">' + t('del.phone.l') + ' <span class="req">*</span></label>' +
+        '<input type="tel" class="del-phone lat" placeholder="' + t('del.phone.ph') + '" value="' + esc(dDel.phone) + '" inputmode="tel" />' +
+      '</div>' +
+      '<div class="del-field">' +
+        '<label class="del-l">' + t('del.addr.l') + ' <span class="req">*</span></label>' +
+        '<input type="text" class="del-addr" placeholder="' + t('del.addr.ph') + '" value="' + esc(dDel.addr) + '" />' +
+      '</div>' +
+      '<div class="del-field">' +
+        '<label class="del-l">' + t('del.note.l') + '</label>' +
+        '<textarea class="del-note" rows="2" placeholder="' + t('del.note.ph') + '">' + esc(dDel.note) + '</textarea>' +
+      '</div>';
 
     var ph = $('.del-phone', detailEl); if (ph) ph.addEventListener('input', function () { dDel.phone = ph.value; persistDel(); });
     var ad = $('.del-addr',  detailEl); if (ad) ad.addEventListener('input', function () { dDel.addr  = ad.value; persistDel(); });

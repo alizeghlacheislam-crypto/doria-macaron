@@ -1576,12 +1576,35 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
     overflow-y:auto;-webkit-overflow-scrolling:touch;
     padding:84px 18px calc(120px + env(safe-area-inset-bottom,0px));
     justify-content:flex-start;}
-  .di-order{
+  .dy-cta-row{
     position:sticky !important;bottom:calc(12px + env(safe-area-inset-bottom,0px));
-    width:100%;max-width:360px;margin:18px auto 0;
-    z-index:5;
-    box-shadow:0 12px 28px rgba(156,86,102,.35) !important;
+    z-index:5;padding:10px;
+    background:linear-gradient(to top, rgba(251,244,228,.98) 60%, rgba(251,244,228,0));
+    border-radius:14px;margin-top:14px;
   }
+  html:not([data-theme="maison"]) .dy-cta-row{
+    background:linear-gradient(to top, rgba(20,15,8,.98) 60%, rgba(20,15,8,0));
+  }
+  .di-order,.dy-add-cart{box-shadow:0 6px 16px rgba(156,86,102,.30) !important;}
+}
+
+.del-allwilayas{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;
+  background:linear-gradient(155deg,#FFFAEC,#F5EBD1);
+  border:1px solid rgba(224,149,158,.45);
+  border-radius:12px;
+  color:#3A1F1F;font-family:var(--ar-body);font-size:14px;font-weight:600;
+  margin-bottom:16px;
+}
+.del-allwilayas svg{width:24px;height:24px;flex-shrink:0;color:#9C5666;}
+html:not([data-theme="maison"]) .del-allwilayas{
+  background:linear-gradient(155deg,rgba(212,175,55,.10),rgba(212,175,55,.04));
+  border-color:rgba(212,175,55,.35);
+  color:var(--champagne);
+}
+html:not([data-theme="maison"]) .del-allwilayas svg{color:var(--gold);}
+@media (max-width:860px){
   .detail-stage{flex:none;width:100%;}
   .detail-frame{max-width:230px;}
   .detail-info{flex:none;width:100%;text-align:center;max-width:420px;margin:0 auto;}
@@ -1935,7 +1958,7 @@ html[data-theme="maison"] .di-total-grand{ color:var(--gold-deep); } html[data-t
 
 /* In-app update checker */
 (function(){
-  var APP_VERSION_CODE = 7;
+  var APP_VERSION_CODE = 8;
   var VERSION_URL = 'https://doria-macaron.pages.dev/version.json';
   var CHECK_INTERVAL_MS = 24 * 60 * 60 * 1000;
   var isStandalone = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches;
