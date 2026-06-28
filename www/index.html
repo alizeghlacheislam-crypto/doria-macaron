@@ -1155,6 +1155,10 @@ html[data-theme="maison"] .wa-badge{background:#25D366;}
 
 /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• CUSTOM CURSOR (Off / Dot / Ring) â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .cursor-dot,.cursor-ring{position:fixed;top:0;left:0;border-radius:50%;pointer-events:none;z-index:9999;opacity:0;}
+/* hide custom cursor on touch devices - prevents the white circle on every tap */
+@media (hover:none),(pointer:coarse){.cursor-dot,.cursor-ring{display:none !important;}}
+/* kill the default Android grey tap-highlight flash */
+*{-webkit-tap-highlight-color:transparent;}
 .cursor-dot{width:9px;height:9px;background:var(--gold);transform:translate(-50%,-50%);
   transition:opacity .25s,width .2s,height .2s,background .2s;box-shadow:0 0 10px rgba(212,175,55,.5);}
 .cursor-ring{width:36px;height:36px;border:1px solid rgba(212,175,55,.7);transform:translate(-50%,-50%);
@@ -2016,7 +2020,7 @@ html:not([data-theme="maison"]) .del-allwilayas svg{color:var(--gold);}
 /* In-app update checker: runs only inside installed APK/PWA, checks every 24h.
    Bump APP_VERSION_CODE before each release to mark this build's version. */
 (function(){
-  var APP_VERSION_CODE = 11;             /* === BUMP THIS ON EACH RELEASE === */
+  var APP_VERSION_CODE = 12;             /* === BUMP THIS ON EACH RELEASE === */
   var VERSION_URL = 'https://doria-macaron.pages.dev/version.json';
   var BANNER_SHOW_DELAY = 4500;         /* show 4.5s after page settled */
 
