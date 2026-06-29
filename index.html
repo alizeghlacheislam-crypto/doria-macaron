@@ -2,7 +2,22 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0" />
+<!-- iOS PWA: full-screen, status-bar style, prevent phone-number auto-detect -->
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="Dori Yums" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="color-scheme" content="light" />
+<!-- iOS touch icons (multiple sizes for proper density) -->
+<link rel="apple-touch-icon" href="icons/apple-touch-icon-180.png" />
+<link rel="apple-touch-icon" sizes="76x76" href="icons/apple-touch-icon-76.png" />
+<link rel="apple-touch-icon" sizes="120x120" href="icons/apple-touch-icon-120.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="icons/apple-touch-icon-152.png" />
+<link rel="apple-touch-icon" sizes="167x167" href="icons/apple-touch-icon-167.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon-180.png" />
+<link rel="mask-icon" href="logo.webp" color="#9C5666" />
 <title>Dori Yums — معرض الماكارون الفاخر · الجزائر</title>
 <script>(function(){try{var l=localStorage.getItem('doriyums_lang')||'ar';if(l!=='fr'&&l!=='en')l='ar';document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';var th=localStorage.getItem('doriyums_theme');document.documentElement.setAttribute('data-theme',th==='dark'?'gallery':'maison');}catch(e){document.documentElement.setAttribute('data-theme','maison');}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -1155,10 +1170,30 @@ html[data-theme="maison"] .wa-badge{background:#25D366;}
 
 /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• CUSTOM CURSOR (Off / Dot / Ring) â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .cursor-dot,.cursor-ring{position:fixed;top:0;left:0;border-radius:50%;pointer-events:none;z-index:9999;opacity:0;}
-/* hide custom cursor on touch devices - prevents the white circle on every tap */
+/* hide custom cursor on touch devices */
 @media (hover:none),(pointer:coarse){.cursor-dot,.cursor-ring{display:none !important;}}
-/* kill the default Android grey tap-highlight flash */
+/* kill default tap-highlight + iOS callout/selection annoyances */
 *{-webkit-tap-highlight-color:transparent;}
+html,body{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;}
+/* but allow text selection in text fields and content sections */
+input,textarea,p,h1,h2,h3,h4,h5,h6,span,.detail-info,.di-name,.di-flavor,.di-note,.cr-name,.cr-flavor,.placard{
+  -webkit-user-select:text;user-select:text;-webkit-touch-callout:default;
+}
+/* iOS auto-zooms when input font-size < 16px - prevent it */
+input,textarea,select{font-size:16px !important;}
+/* notch / home-bar safe areas everywhere */
+body{
+  padding-top:env(safe-area-inset-top,0);
+  padding-left:env(safe-area-inset-left,0);
+  padding-right:env(safe-area-inset-right,0);
+}
+.nav,.social-dock{
+  padding-left:env(safe-area-inset-left,0);
+  padding-right:env(safe-area-inset-right,0);
+}
+/* iOS 100vh problem: use dvh (dynamic viewport height) where supported */
+.hero{min-height:100vh;min-height:100dvh;}
+.detail{height:100vh;height:100dvh;}
 .cursor-dot{width:9px;height:9px;background:var(--gold);transform:translate(-50%,-50%);
   transition:opacity .25s,width .2s,height .2s,background .2s;box-shadow:0 0 10px rgba(212,175,55,.5);}
 .cursor-ring{width:36px;height:36px;border:1px solid rgba(212,175,55,.7);transform:translate(-50%,-50%);
@@ -1948,7 +1983,7 @@ html:not([data-theme="maison"]) .del-allwilayas svg{color:var(--gold);}
 
 /* In-app update checker - fires on every launch */
 (function(){
-  var APP_VERSION_CODE = 17;
+  var APP_VERSION_CODE = 18;
   var VERSION_URL = 'https://doria-macaron.pages.dev/version.json';
   var BANNER_SHOW_DELAY = 4500;
   var isStandalone = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches;
@@ -1988,9 +2023,13 @@ html:not([data-theme="maison"]) .del-allwilayas svg{color:var(--gold);}
   setInterval(checkUpdate, 60 * 60 * 1000);
 })();
 
-/* Pull-to-refresh */
+/* Pull-to-refresh (Android only - iOS Safari has its own native + would conflict) */
 (function(){
   if(!('ontouchstart' in window)) return;
+  /* skip on iOS: Safari pull-to-refresh + standalone PWA can already reload natively */
+  var ua = navigator.userAgent || '';
+  var isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (isIOS) return;
   var startY=0,curY=0,pulling=false,threshold=72;
   var ind=document.createElement('div');
   ind.className='ptr-indicator';

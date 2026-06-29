@@ -89,8 +89,47 @@ h1{
   max-width:480px;margin:0 auto 32px;
 }
 
+/* PLATFORM CARDS - 2 side by side (Android + iPhone) */
+.platform-cards{
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;
+  margin:8px 0 18px;
+}
+.pcard{
+  display:flex;align-items:center;gap:14px;
+  padding:18px 16px;
+  border-radius:14px;
+  text-decoration:none;
+  text-align:start;
+  transition:transform .25s var(--ease),box-shadow .25s var(--ease);
+}
+.pcard:hover{transform:translateY(-2px);}
+.pcard-android{
+  background:linear-gradient(135deg,#3DDC84 0%,#2BB36B 100%);
+  color:#0A2B1A;
+  box-shadow:0 12px 28px rgba(61,220,132,.32);
+}
+.pcard-android:hover{box-shadow:0 18px 36px rgba(61,220,132,.42);}
+.pcard-ios{
+  background:linear-gradient(135deg,#3A1F1F 0%,#1F0E12 100%);
+  color:#FFFAEC;
+  box-shadow:0 12px 28px rgba(31,14,18,.4);
+}
+.pcard-ios:hover{box-shadow:0 18px 36px rgba(31,14,18,.5);}
+.pcard-icon{width:36px;height:36px;flex-shrink:0;}
+.pcard-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}
+.pcard-eyebrow{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;opacity:.7;}
+.pcard-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;letter-spacing:.04em;line-height:1.2;}
+.pcard-sub{font-size:11.5px;opacity:.75;font-family:'Inter',sans-serif;letter-spacing:.02em;}
+.pcard-arrow{width:22px;height:22px;flex-shrink:0;opacity:.7;}
+@media (max-width:540px){
+  .platform-cards{grid-template-columns:1fr;gap:10px;}
+  .pcard{padding:16px 14px;}
+}
+
 /* DOWNLOAD BUTTON */
 .btn-download{
+  display:none;}
+.btn-download.legacy-keep{
   display:inline-flex;align-items:center;gap:14px;
   padding:18px 36px;
   background:linear-gradient(135deg,#9C5666,#7d4252);
@@ -242,17 +281,11 @@ h1{
 }
 .ios-result b{color:#1F8A4E;}
 
-/* If we detect iOS, push the iOS section to the top and hide Android download */
-body.is-ios .hero .btn-download{display:none;}
-body.is-ios .hero .meta-row{display:none;}
+/* If we detect iOS, push the iOS section to the top (still show Android card too) */
 body.is-ios .ios-section{
-  order:-1;margin-top:0;margin-bottom:0;
   border:2px solid var(--rose-deep);
   background:linear-gradient(155deg,#FFFAEC,#F5EBD1);
 }
-body.is-ios .steps,body.is-ios .qr-block{display:none;}
-body.is-ios .hero .subtitle{display:none;}
-body.is-ios .hero{padding-bottom:18px;}
 
 /* QR */
 .qr-block{
@@ -334,31 +367,38 @@ details > div{
       تجربة أسرع، شاشة كاملة بدون متصفّح، وتعمل حتى بدون انترنت بعد أوّل فتح.
     </p>
 
-    <a class="btn-download" href="dori-yums.apk" download="Dori-Yums.apk">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-        <polyline points="7 10 12 15 17 10"/>
-        <line x1="12" y1="15" x2="12" y2="3"/>
-      </svg>
-      <span>
-        حمّل التطبيق
-        <span class="size-tag">APK · 14.4 MB · Android 7+</span>
-      </span>
-    </a>
+    <div class="platform-cards">
+      <a class="pcard pcard-android" href="dori-yums.apk" download="Dori-Yums.apk">
+        <svg class="pcard-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M17.523 15.342c-.5 0-.92-.42-.92-.92s.42-.92.92-.92.92.42.92.92-.42.92-.92.92m-11.046 0c-.5 0-.92-.42-.92-.92s.42-.92.92-.92.92.42.92.92-.42.92-.92.92m11.378-6.21l1.84-3.184a.386.386 0 00-.142-.526.386.386 0 00-.526.142l-1.862 3.226c-1.42-.648-3.013-1.01-4.695-1.01s-3.275.362-4.695 1.01L5.913 5.564a.386.386 0 00-.526-.142.386.386 0 00-.142.526l1.84 3.184C3.93 10.78 1.857 13.78 1.5 17.342h21c-.357-3.562-2.43-6.562-5.585-8.21"/>
+        </svg>
+        <div class="pcard-body">
+          <span class="pcard-eyebrow">Android · APK</span>
+          <span class="pcard-title">تثبيت مباشر</span>
+          <span class="pcard-sub">14.4 MB · Android 7+</span>
+        </div>
+        <svg class="pcard-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 5v14"/><polyline points="19 12 12 19 5 12"/>
+        </svg>
+      </a>
+
+      <a class="pcard pcard-ios" href="#iosSection">
+        <svg class="pcard-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+        <div class="pcard-body">
+          <span class="pcard-eyebrow">iPhone · iPad</span>
+          <span class="pcard-title">إضافة إلى Safari</span>
+          <span class="pcard-sub">يعمل بدون انترنت</span>
+        </div>
+        <svg class="pcard-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 5v14"/><polyline points="19 12 12 19 5 12"/>
+        </svg>
+      </a>
+    </div>
 
     <div class="meta-row">
-      <span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-        موقّع رقميًا
-      </span>
-      <span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        آمن 100%
-      </span>
-      <span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-        تحديثات تلقائية من الموقع
-      </span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> موقّع رقميًا</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> آمن 100%</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> تحديثات تلقائية</span>
     </div>
   </section>
 
