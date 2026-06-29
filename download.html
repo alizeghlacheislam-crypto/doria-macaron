@@ -287,6 +287,43 @@ body.is-ios .ios-section{
   background:linear-gradient(155deg,#FFFAEC,#F5EBD1);
 }
 
+/* Download / action toast — slides up from bottom */
+.dl-toast{
+  position:fixed;left:50%;bottom:24px;transform:translate(-50%,140%);
+  display:flex;align-items:center;gap:12px;
+  padding:14px 18px;min-width:280px;max-width:92vw;
+  background:#9C5666;color:#FFFAEC;
+  border-radius:14px;
+  box-shadow:0 18px 42px rgba(156,86,102,.45);
+  z-index:9999;
+  font-family:'Tajawal',sans-serif;
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1),background .25s;
+}
+.dl-toast.show{transform:translate(-50%,0);}
+.dl-toast.warn{background:#C9883E;box-shadow:0 18px 42px rgba(201,136,62,.45);}
+.dl-toast-icon{
+  width:28px;height:28px;flex-shrink:0;
+  background:rgba(255,255,255,.18);border-radius:50%;padding:4px;
+}
+.dl-toast-body{display:flex;flex-direction:column;line-height:1.35;}
+.dl-toast-title{font-size:14px;font-weight:700;}
+.dl-toast-sub{font-size:12px;opacity:.85;margin-top:2px;}
+
+/* Download arrow on Android card pulses to invite the tap */
+.pcard-dl{animation:dlBounce 1.6s ease-in-out infinite;}
+@keyframes dlBounce{
+  0%,100%{transform:translateY(0);opacity:.7;}
+  50%{transform:translateY(3px);opacity:1;}
+}
+.pcard:hover .pcard-dl{animation:none;opacity:1;}
+
+/* Highlight iOS section briefly when scrolled-to */
+.ios-section.flash{animation:iosFlash 1.2s ease-out;}
+@keyframes iosFlash{
+  0%{box-shadow:0 0 0 0 rgba(224,149,158,.7);}
+  100%{box-shadow:0 0 0 20px rgba(224,149,158,0);}
+}
+
 /* QR */
 .qr-block{
   text-align:center;
@@ -368,7 +405,7 @@ details > div{
     </p>
 
     <div class="platform-cards">
-      <a class="pcard pcard-android" href="dori-yums.apk" download="Dori-Yums.apk">
+      <a class="pcard pcard-android" href="dori-yums.apk" download="Dori-Yums.apk" id="cardAndroid" data-platform="android">
         <svg class="pcard-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M17.523 15.342c-.5 0-.92-.42-.92-.92s.42-.92.92-.92.92.42.92.92-.42.92-.92.92m-11.046 0c-.5 0-.92-.42-.92-.92s.42-.92.92-.92.92.42.92.92-.42.92-.92.92m11.378-6.21l1.84-3.184a.386.386 0 00-.142-.526.386.386 0 00-.526.142l-1.862 3.226c-1.42-.648-3.013-1.01-4.695-1.01s-3.275.362-4.695 1.01L5.913 5.564a.386.386 0 00-.526-.142.386.386 0 00-.142.526l1.84 3.184C3.93 10.78 1.857 13.78 1.5 17.342h21c-.357-3.562-2.43-6.562-5.585-8.21"/>
         </svg>
@@ -377,12 +414,12 @@ details > div{
           <span class="pcard-title">تثبيت مباشر</span>
           <span class="pcard-sub">14.4 MB · Android 7+</span>
         </div>
-        <svg class="pcard-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 5v14"/><polyline points="19 12 12 19 5 12"/>
+        <svg class="pcard-arrow pcard-dl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
         </svg>
       </a>
 
-      <a class="pcard pcard-ios" href="#iosSection">
+      <a class="pcard pcard-ios" href="#iosSection" id="cardIos" data-platform="ios">
         <svg class="pcard-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
         <div class="pcard-body">
           <span class="pcard-eyebrow">iPhone · iPad</span>
@@ -390,9 +427,20 @@ details > div{
           <span class="pcard-sub">يعمل بدون انترنت</span>
         </div>
         <svg class="pcard-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 5v14"/><polyline points="19 12 12 19 5 12"/>
+          <path d="M5 12h14"/><polyline points="12 5 19 12 12 19"/>
         </svg>
       </a>
+    </div>
+
+    <!-- Toast for download/feedback -->
+    <div class="dl-toast" id="dlToast" role="status" aria-live="polite">
+      <svg class="dl-toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/>
+      </svg>
+      <div class="dl-toast-body">
+        <b class="dl-toast-title">بدأ تحميل التطبيق</b>
+        <span class="dl-toast-sub">سيظهر في إشعارات هاتفك خلال ثوانٍ...</span>
+      </div>
     </div>
 
     <div class="meta-row">
@@ -546,16 +594,59 @@ details > div{
 </div>
 
 <script>
-/* Detect iOS so we surface the right instructions first */
+/* Platform detection + smart download UX */
 (function(){
   var ua = navigator.userAgent || navigator.vendor || '';
   var iOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var Android = /Android/.test(ua);
+  var isMobile = iOS || Android;
+
   if (iOS) {
     document.body.classList.add('is-ios');
-    /* Replace hero title for iOS context */
     var h1 = document.querySelector('h1');
     if (h1) h1.textContent = 'تطبيق Dori Yums على iPhone';
   }
+  if (Android) document.body.classList.add('is-android');
+
+  var toast = document.getElementById('dlToast');
+  function showToast(title, sub, kind, ms){
+    if (!toast) return;
+    toast.classList.remove('warn');
+    if (kind === 'warn') toast.classList.add('warn');
+    toast.querySelector('.dl-toast-title').textContent = title;
+    toast.querySelector('.dl-toast-sub').textContent = sub;
+    toast.classList.add('show');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function(){ toast.classList.remove('show'); }, ms || 4500);
+  }
+
+  /* Android card click */
+  var aBtn = document.getElementById('cardAndroid');
+  if (aBtn) aBtn.addEventListener('click', function(e){
+    if (iOS) {
+      e.preventDefault();
+      showToast('غير متوافق مع iPhone', 'استخدم بطاقة "iPhone · iPad" بالأسفل لإضافة التطبيق.', 'warn');
+      // also scroll to iOS section to show them where to go
+      var ios = document.getElementById('iosSection');
+      if (ios) { ios.scrollIntoView({behavior:'smooth', block:'start'}); ios.classList.add('flash'); setTimeout(function(){ios.classList.remove('flash');}, 1200); }
+      return;
+    }
+    // Android or desktop - let the download proceed, but confirm visually
+    showToast('بدأ تحميل التطبيق', isMobile ? 'سيظهر في الإشعارات — اضغطه ثم "تثبيت"' : 'ابحث عن Dori-Yums.apk في مجلد التحميلات.', null, 6000);
+    if ('vibrate' in navigator) navigator.vibrate(20);
+  });
+
+  /* iOS card click */
+  var iBtn = document.getElementById('cardIos');
+  if (iBtn) iBtn.addEventListener('click', function(e){
+    // Always scroll to iOS section (already does via href)
+    var ios = document.getElementById('iosSection');
+    if (ios) {
+      ios.classList.add('flash');
+      setTimeout(function(){ios.classList.remove('flash');}, 1200);
+    }
+    if (Android) showToast('هذي الخطوات لمستخدمي iPhone', 'لـ Android، اضغط البطاقة الخضراء بالأعلى مباشرة.', 'warn');
+  });
 })();
 </script>
 
